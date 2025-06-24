@@ -1,4 +1,5 @@
 namespace Biblioteca.Domain.Shared.Entities;
+using System;
 //usando o IEquatable para comparar entidades, pois o Entity Framework precisa comparar as entidades para verificar se são iguais 
 public abstract class Entity(Guid id) : IEquatable<Guid>
 {

@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "nXUfB5h1h6k=",
+  "dgSpecHash": "x1/46U0e4zM=",
   "success": true,
-  "projectFilePath": "C:\\Dev\\GerenciamentoBiblioteca\\Biblioteca.Infrastructure\\Biblioteca.Infrastructure.csproj",
+  "projectFilePath": "C:\\Dev\\api-biblioteca-clean\\Biblioteca.Infrastructure\\Biblioteca.Infrastructure.csproj",
   "expectedPackageFiles": [],
   "logs": []
 }

@@ -13,11 +13,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Dev\\GerenciamentoBiblioteca\\Biblioteca.Domain\\Biblioteca.Domain.csproj",
+      "projectUniqueName": "C:\\Dev\\api-biblioteca-clean\\Biblioteca.Domain\\Biblioteca.Domain.csproj",
       "projectName": "Biblioteca.Domain",
-      "projectPath": "C:\\Dev\\GerenciamentoBiblioteca\\Biblioteca.Domain\\Biblioteca.Domain.csproj",
+      "projectPath": "C:\\Dev\\api-biblioteca-clean\\Biblioteca.Domain\\Biblioteca.Domain.csproj",
       "packagesPath": "C:\\Users\\Matheus\\.nuget\\packages\\",
-      "outputPath": "C:\\Dev\\GerenciamentoBiblioteca\\Biblioteca.Domain\\obj\\",
+      "outputPath": "C:\\Dev\\api-biblioteca-clean\\Biblioteca.Domain\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\Matheus\\AppData\\Roaming\\NuGet\\NuGet.Config",

@@ -1,11 +1,48 @@
 {
   "version": 3,
   "targets": {
-    "net8.0": {}
+    "net8.0": {
+      "Biblioteca.Application/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v8.0",
+        "dependencies": {
+          "Biblioteca.Domain": "1.0.0"
+        },
+        "compile": {
+          "bin/placeholder/Biblioteca.Application.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/Biblioteca.Application.dll": {}
+        }
+      },
+      "Biblioteca.Domain/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v8.0",
+        "compile": {
+          "bin/placeholder/Biblioteca.Domain.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/Biblioteca.Domain.dll": {}
+        }
+      }
+    }
   },
-  "libraries": {},
+  "libraries": {
+    "Biblioteca.Application/1.0.0": {
+      "type": "project",
+      "path": "../Biblioteca.Application/Biblioteca.Application.csproj",
+      "msbuildProject": "../Biblioteca.Application/Biblioteca.Application.csproj"
+    },
+    "Biblioteca.Domain/1.0.0": {
+      "type": "project",
+      "path": "../Biblioteca.Domain/Biblioteca.Domain.csproj",
+      "msbuildProject": "../Biblioteca.Domain/Biblioteca.Domain.csproj"
+    }
+  },
   "projectFileDependencyGroups": {
-    "net8.0": []
+    "net8.0": [
+      "Biblioteca.Application >= 1.0.0"
+    ]
   },
   "packageFolders": {
     "C:\\Users\\Matheus\\.nuget\\packages\\": {}
@@ -13,11 +50,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Dev\\GerenciamentoBiblioteca\\Biblioteca.Infrastructure\\Biblioteca.Infrastructure.csproj",
+      "projectUniqueName": "C:\\Dev\\api-biblioteca-clean\\Biblioteca.Infrastructure\\Biblioteca.Infrastructure.csproj",
       "projectName": "Biblioteca.Infrastructure",
-      "projectPath": "C:\\Dev\\GerenciamentoBiblioteca\\Biblioteca.Infrastructure\\Biblioteca.Infrastructure.csproj",
+      "projectPath": "C:\\Dev\\api-biblioteca-clean\\Biblioteca.Infrastructure\\Biblioteca.Infrastructure.csproj",
       "packagesPath": "C:\\Users\\Matheus\\.nuget\\packages\\",
-      "outputPath": "C:\\Dev\\GerenciamentoBiblioteca\\Biblioteca.Infrastructure\\obj\\",
+      "outputPath": "C:\\Dev\\api-biblioteca-clean\\Biblioteca.Infrastructure\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\Matheus\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -34,7 +71,11 @@
       "frameworks": {
         "net8.0": {
           "targetAlias": "net8.0",
-          "projectReferences": {}
+          "projectReferences": {
+            "C:\\Dev\\api-biblioteca-clean\\Biblioteca.Application\\Biblioteca.Application.csproj": {
+              "projectPath": "C:\\Dev\\api-biblioteca-clean\\Biblioteca.Application\\Biblioteca.Application.csproj"
+            }
+          }
         }
       },
       "warningProperties": {

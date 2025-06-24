@@ -1,8 +1,13 @@
+using Biblioteca.Domain.Shared.Entities;
+
 namespace Biblioteca.Domain.Entities;
 
-public class Livro
+public class Livro : Entity
 {
-    public int Id { get; set; }
+    public Livro() : base(Guid.NewGuid())
+    {
+
+    }
     public string Titulo { get; set; }
     public string Autor { get; set; }
     public string Genero { get; set; }

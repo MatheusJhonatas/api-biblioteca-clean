@@ -4,6 +4,7 @@ namespace Biblioteca.Domain.ValueObjects;
 
 public sealed record Nome : ValueObject
 {
+    
     #region Constructors
     public Nome(string primeiroNome, string ultimoNome)
     {

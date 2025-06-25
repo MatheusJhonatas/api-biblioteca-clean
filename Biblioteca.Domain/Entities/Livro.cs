@@ -5,15 +5,22 @@ namespace Biblioteca.Domain.Entities;
 public class Livro : Entity
 {
     #region Constructors
-     public Livro() : base(Guid.NewGuid())
+     public Livro(string titulo, string autor, string genero, int anoPublicacao, bool disponivel) : base(Guid.NewGuid())
      {
-        
+        Titulo = titulo;
+        Autor = autor;
+        Genero = genero;
+        AnoPublicacao = anoPublicacao;
+        Disponivel = disponivel;
      }
+     
      #endregion
-    public string Titulo { get; set; } = string.Empty;
-    public string Autor { get; set; } = string.Empty;
-    public string Genero { get; set; } = string.Empty;
-    public int AnoPublicacao { get; set; } = 0;
-    public bool Disponivel { get; set; } = true;
+     #region Properties
+    public string Titulo { get;} = string.Empty;
+    public string Autor { get;} = string.Empty;
+    public string Genero { get;} = string.Empty;
+    public int AnoPublicacao { get; } = 0;
+    public bool Disponivel { get; } = true;
+    #endregion
 
 }

@@ -13,6 +13,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Biblioteca.API", "Bibliotec
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Biblioteca.Domain.Test", "Biblioteca.Domain.Test\Biblioteca.Domain.Test.csproj", "{05A12CF9-3275-4C46-9551-5821348572CF}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{1B4AE2F9-86C2-421E-A3E5-A036AC2775B7}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -42,5 +44,8 @@ Global
 		{05A12CF9-3275-4C46-9551-5821348572CF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{05A12CF9-3275-4C46-9551-5821348572CF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{05A12CF9-3275-4C46-9551-5821348572CF}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{05A12CF9-3275-4C46-9551-5821348572CF} = {1B4AE2F9-86C2-421E-A3E5-A036AC2775B7}
 	EndGlobalSection
 EndGlobal

@@ -15,10 +15,12 @@ public class Livro : Entity
      }
      
      #endregion
+     #region Properties
     public string Titulo { get;} = string.Empty;
     public string Autor { get;} = string.Empty;
     public string Genero { get;} = string.Empty;
     public int AnoPublicacao { get; } = 0;
     public bool Disponivel { get; } = true;
+    #endregion
 
 }

@@ -20,4 +20,12 @@
         <Using Include="Xunit"/>
     </ItemGroup>
 
+    <ItemGroup>
+      <Folder Include="Entities\" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\Biblioteca.Domain\Biblioteca.Domain.csproj" />
+    </ItemGroup>
+
 </Project>

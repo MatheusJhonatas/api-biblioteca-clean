@@ -1,4 +1,5 @@
 using Biblioteca.Domain.Entities;
+using Biblioteca.Domain.ValueObjects;
 
 namespace Biblioteca.DomainTest;
 
@@ -10,7 +11,7 @@ public class LivroTest
         var livro = new Livro(
             "O Senhor dos Anéis",
             "J.R.R. Tolkien",
-            "Fantasia",
+            new Genero("Fantasia"),
             1954,
             true
         );

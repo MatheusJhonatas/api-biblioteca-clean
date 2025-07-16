@@ -5,12 +5,13 @@ using System.Collections.Generic;
 using Biblioteca.Domain.ValueObjects;
 namespace Biblioteca.Domain.Entities
 {
-    public class Livro
+    public sealed class Livro
     {
         public string Titulo { get; private set; }
         public Autor Autor { get; private set; }
         public ISBN ISBN { get; private set; }
         public int AnoPublicacao { get; private set; }
+        public int CategoriaId { get; private set; }
         public List<Categoria> Categorias { get; private set; }
     }
 }

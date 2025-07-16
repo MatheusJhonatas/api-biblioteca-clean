@@ -1,3 +1,7 @@
+// Usuário/Leitor (User ou Reader)
+// Atributos: Nome, Email, CPF, Endereço, Data de Cadastro.
+
+// Regras: Pode emprestar livros, tem limite de empréstimos, pode estar inadimplente.
 public sealed class Usuario
 {
 

@@ -20,5 +20,6 @@ public sealed class Categoria
 
     public ICollection<Livro> Livros { get; private set; } = new List<Livro>();
     // Regras: Um livro pode ter uma ou mais categorias.
+
 }
 

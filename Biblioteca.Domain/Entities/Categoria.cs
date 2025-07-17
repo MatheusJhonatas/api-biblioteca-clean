@@ -3,9 +3,11 @@ namespace Biblioteca.Domain.Entities;
 // Isso é útil para garantir que a estrutura da categoria não seja alterada por heranças indesejadas.
 public sealed class Categoria
 {
+    #region Propriedades
     public int Id { get; private set; }
     public string Nome { get; private set; }
     public string Descricao { get; private set; }
+    #endregion
     public Categoria(string nome, string descricao)
     {
         Nome = nome;

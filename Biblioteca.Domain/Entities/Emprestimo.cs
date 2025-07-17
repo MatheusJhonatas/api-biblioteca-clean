@@ -6,10 +6,13 @@ namespace Biblioteca.Domain.Entities;
 
 public class Emprestimo
 {
+    #region Propriedades
+    // Propriedades do Empréstimo, incluindo referências ao Usuário e Livro.
     public Usuario Usuario { get; private set; }
     public Livro Livro { get; private set; }
     public DateTime DataEmprestimo { get; private set; }
     public DateTime DataPrevistaDevolucao { get; private set; }
     public DateTime? DataRealDevolucao { get; private set; }
-    public string Status { get; private set; } // Ex: "Ativo", "Finalizado", "Atrasado"
+    public string Status { get; private set; } // Ex: "Ativo", "Finalizado", "Atrasado".
+    #endregion
 }

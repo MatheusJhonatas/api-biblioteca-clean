@@ -4,10 +4,14 @@ namespace Biblioteca.Domain.Entities;
 public sealed class Categoria
 {
     #region Propriedades
+
     public int Id { get; private set; }
     public string Nome { get; private set; }
     public string Descricao { get; private set; }
+    public List<Livro> Livros { get; private set; } = new List<Livro>();
     #endregion
+    #region Construtores
+    // Construtores para inicializar a categoria com nome e descrição, podendo receber um Id
     public Categoria(string nome, string descricao)
     {
         Nome = nome;
@@ -19,8 +23,8 @@ public sealed class Categoria
         Nome = nome;
         Descricao = descricao;
     }
-
-    public ICollection<Livro> Livros { get; private set; } = new List<Livro>();
+    #endregion
+    
     // Regras: Um livro pode ter uma ou mais categorias.
 
 }

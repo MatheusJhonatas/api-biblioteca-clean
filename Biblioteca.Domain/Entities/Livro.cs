@@ -12,7 +12,33 @@ namespace Biblioteca.Domain.Entities
         public ISBN ISBN { get; private set; }
         public int AnoPublicacao { get; private set; }
         public int CategoriaId { get; private set; }
-        #endregion
+        public bool Disponivel { get; private set; }
         public List<Categoria> Categorias { get; private set; }
+        #endregion
+        #region Contrutores
+        public Livro()
+        {
+
+        }
+        #endregion
+        #region Metodos
+        public void Emprestar()
+        {
+
+        }
+        public void Devolver()
+        {
+
+        }
+        public bool VerificaDisponibilidade()
+        {
+            if (Disponivel)
+            {
+                var status = Emprestimo.Status;
+                return true;
+            }
+            return false;
+        }
+        #endregion
     }
 }

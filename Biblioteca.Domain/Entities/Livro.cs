@@ -1,6 +1,7 @@
 // Atributos: Título, Autor, ISBN (VO), Ano de Publicação, Categoria(s), Disponibilidade
 // Regras: Pode estar disponível ou emprestado, ISBN deve ser válido
 // Métodos: Emprestar, Devolver, Verificar disponibilidade
+using Biblioteca.Domain.ValueObjects;
 namespace Biblioteca.Domain.Entities
 {
     public sealed class Livro

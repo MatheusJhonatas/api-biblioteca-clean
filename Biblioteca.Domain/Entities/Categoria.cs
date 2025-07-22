@@ -24,8 +24,10 @@ public sealed class Categoria
         Descricao = descricao;
     }
     #endregion
-    
+    #region Métodos
+    // Método para adicionar um livro à categoria
     // Regras: Um livro pode ter uma ou mais categorias.
 
+    #endregion
 }
 

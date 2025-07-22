@@ -3,7 +3,7 @@
 // Uso: User, Author, Librarian
 namespace Biblioteca.Domain.ValueObjects;
 
-public class NomeCompleto
+public class NomeCompleto : ValueObject
 {
     #region Propriedades
     public string PrimeiroNome { get; private set; }

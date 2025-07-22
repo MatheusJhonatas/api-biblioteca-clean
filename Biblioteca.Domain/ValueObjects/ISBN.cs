@@ -2,7 +2,8 @@
 // Regras: Deve ter 10 ou 13 dígitos e seguir o padrão internacional
 // Uso: Book
 namespace Biblioteca.Domain.ValueObjects;
-public class ISBN
+
+public class ISBN : ValueObject
 {
     #region Propriedades
     public string Codigo { get; private set; }

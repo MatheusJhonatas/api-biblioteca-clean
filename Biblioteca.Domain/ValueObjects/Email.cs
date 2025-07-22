@@ -3,7 +3,7 @@
 // Uso: User, Author, Librarian
 namespace Biblioteca.Domain.ValueObjects;
 
-public class Email
+public class Email : ValueObject
 {
     #region Propriedades
     public string EnderecoEmail { get; private set; }

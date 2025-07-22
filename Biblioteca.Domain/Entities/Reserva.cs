@@ -1,6 +1,7 @@
 // Atributos: Usuário, Livro, Data da Reserva, Status (ativa, cancelada, atendida)
 // Regras: Apenas possível se o livro estiver emprestado, reserva tem tempo de validade
 // Métodos: Cancelar reserva, Tornar reserva ativa/inativa.
+
 namespace Biblioteca.Domain.Entities;
 
 public class Reserva
@@ -11,5 +12,5 @@ public class Reserva
     public DateTime DataReserva { get; private set; }
     public string Status { get; private set; } // ativa, cancelada, atendida
     #endregion
-    
+
 }

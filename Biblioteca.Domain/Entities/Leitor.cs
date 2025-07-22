@@ -8,7 +8,7 @@ namespace Biblioteca.Domain.Entities;
 public class Leitor
 {
     #region Propriedades
-    public string NomeCompleto { get; private set; }
+    public NomeCompleto NomeCompleto { get; private set; }
     public Email Email { get; private set; }
     public CPF CPF { get; private set; }
     public Endereco Endereco { get; private set; }

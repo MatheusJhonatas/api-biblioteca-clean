@@ -16,28 +16,35 @@ namespace Biblioteca.Domain.Entities
         public List<Categoria> Categorias { get; private set; }
         #endregion
         #region Contrutores
-        public Livro()
+        public Livro(string titulo, Autor autor, ISBN isbn, int anoPublicacao, int categoriaId, List<Categoria> categorias)
         {
-
+            Titulo = titulo;
+            Autor = autor;
+            ISBN = isbn;
+            AnoPublicacao = anoPublicacao;
+            CategoriaId = categoriaId;
+            Categorias = categorias ?? new List<Categoria>();
+            Disponivel = true;
         }
         #endregion
         #region Metodos
         public void Emprestar()
         {
+            if (!Disponivel)
+                throw new InvalidOperationException("O livro já está emprestado.");
 
+            Disponivel = false;
         }
         public void Devolver()
         {
+            if (Disponivel)
+                throw new InvalidOperationException("O livro já está disponível.");
 
+            Disponivel = true;
         }
         public bool VerificaDisponibilidade()
         {
-            if (Disponivel)
-            {
-                var status = Emprestimo.Status;
-                return true;
-            }
-            return false;
+            return Disponivel;
         }
         #endregion
     }

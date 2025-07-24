@@ -1,9 +1,10 @@
 // Atributos: Número do CPF
 // Regras: Deve ser um CPF válido (com validação de dígitos verificadores)
 // Uso: User
+using System;
 namespace Biblioteca.Domain.ValueObjects;
 
-public class CPF : ValueObject
+public record CPF : ValueObject
 {
     #region Propriedades
     public string Numero { get; private set; }
@@ -26,10 +27,5 @@ public class CPF : ValueObject
         // Exemplo: Verificar se o CPF tem 11 dígitos e calcular os dígitos verificadores
         return true; // Placeholder para a lógica de validação real
     }
-
-    protected override IEnumerable<object> GetEqualityComponents()
-    {
-        yield return Numero;
-    }
-    #endregion
+    #endregion  
 }

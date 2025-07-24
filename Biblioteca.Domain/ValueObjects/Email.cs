@@ -1,9 +1,11 @@
 // Atributos: Endereço de e-mail
 // Regras: Deve conter formato válido (ex: nome@dominio.com)
 // Uso: User, Author, Librarian
+using System;
+
 namespace Biblioteca.Domain.ValueObjects;
 
-public class Email : ValueObject
+public record class Email : ValueObject
 {
     #region Propriedades
     public string EnderecoEmail { get; private set; }

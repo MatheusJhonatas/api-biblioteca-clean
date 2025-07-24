@@ -1,9 +1,11 @@
 // Atributos: Rua, Número, Bairro, Cidade, Estado, CEP
 // Regras: Todos os campos obrigatórios; CEP deve ser válido
 // Uso: User, possivelmente Library
+using System;
+using System.Collections.Generic;
 namespace Biblioteca.Domain.ValueObjects;
 
-public class Endereco : ValueObject
+public record class Endereco : ValueObject
 {
     #region Propriedades
     public string Rua { get; private set; }
@@ -40,14 +42,5 @@ public class Endereco : ValueObject
         return true; // Placeholder para a lógica de validação real
     }
 
-    protected override IEnumerable<object> GetEqualityComponents()
-    {
-        yield return Rua;
-        yield return Numero;
-        yield return Bairro;
-        yield return Cidade;
-        yield return Estado;
-        yield return CEP;
-    }
     #endregion
 }

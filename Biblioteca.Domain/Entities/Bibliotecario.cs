@@ -5,7 +5,7 @@ using Biblioteca.Domain.ValueObjects;
 
 namespace Biblioteca.Domain.Entities;
 
-public class Bibliotecario : Usuario
+public class Bibliotecario
 {
     #region Propriedades
     public NomeCompleto NomeCompleto { get; private set; }
@@ -17,7 +17,6 @@ public class Bibliotecario : Usuario
     #region Construtores
     // Construtor para inicializar as propriedades do bibliotecário.
     public Bibliotecario(string nomeCompleto, string email, string matricula, string cargo)
-        : base(nomeCompleto, email)
     {
         Matricula = matricula;
         Cargo = cargo;

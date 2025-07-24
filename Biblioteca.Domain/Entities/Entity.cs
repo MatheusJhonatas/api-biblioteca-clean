@@ -1,3 +1,5 @@
+using System;
+
 namespace Biblioteca.Domain.Entities;
 
 public abstract class Entity(Guid id) : IEquatable<Guid>, IEquatable<Entity>

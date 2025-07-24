@@ -2,6 +2,8 @@
 // Regras: Apenas possível se o livro estiver emprestado, reserva tem tempo de validade
 // Métodos: Cancelar reserva, Tornar reserva ativa/inativa.
 
+using System;
+
 namespace Biblioteca.Domain.Entities;
 
 public class Reserva

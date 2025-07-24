@@ -1,9 +1,11 @@
 // Atributos: Primeiro nome, Último nome
 // Regras: Nenhum dos nomes pode ser vazio ou nulo
 // Uso: User, Author, Librarian
+using System;
+
 namespace Biblioteca.Domain.ValueObjects;
 
-public class NomeCompleto : ValueObject
+public record class NomeCompleto : ValueObject
 {
     #region Propriedades
     public string PrimeiroNome { get; private set; }

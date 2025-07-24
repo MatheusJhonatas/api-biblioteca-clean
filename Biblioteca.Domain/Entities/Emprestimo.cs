@@ -2,6 +2,9 @@
 // Regras: Um empréstimo só pode ser criado se o usuário não estiver inadimplente e o livro estiver disponível
 // Métodos: Finalizar empréstimo (com devolução), Calcular multa por atraso
 
+using System;
+using System.Collections.Generic;
+
 namespace Biblioteca.Domain.Entities;
 
 public class Emprestimo

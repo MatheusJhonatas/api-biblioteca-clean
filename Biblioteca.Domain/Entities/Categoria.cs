@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+
 namespace Biblioteca.Domain.Entities;
 //Classe está como sealed para evitar herança, fazendo assim com que a Categoria seja uma entidade final.
 // Isso é útil para garantir que a estrutura da categoria não seja alterada por heranças indesejadas.

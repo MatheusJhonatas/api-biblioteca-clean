@@ -1,4 +1,3 @@
-using System;
 using Biblioteca.Domain.Entities;
 using Biblioteca.Domain.ValueObjects;
 using FluentAssertions;

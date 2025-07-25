@@ -50,10 +50,22 @@ public class LivroTest
     {
         //Arrange Prepare o cenário do teste (instancie objetos, defina valores).
         var livro = Criar_Livro_Valido();
+        livro.Emprestar();
         //Act Execute a ação que está sendo testada (chame o método ou função).
         livro.Devolver();
         //Assert Verifique se o resultado está correto (use métodos como Assert.Equal, Assert.True etc)
         livro.Disponivel.Should().BeTrue();
+    }
+    [Fact]
+    public void Dado_Um_LivroJaDisponivel_Deve_LancarExecaoAoDevolver()
+    {
+        //Assert
+        var livro = Criar_Livro_Valido();
+        //Act
+        Action act = () => livro.Devolver();
+        //Assert
+        act.Should().Throw<InvalidOperationException>()
+        .WithMessage("O livro já está disponível.");
     }
     #endregion
 }

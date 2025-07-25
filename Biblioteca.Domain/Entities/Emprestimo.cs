@@ -4,6 +4,7 @@
 
 using System;
 using System.Collections.Generic;
+using Biblioteca.Domain.Enums;
 
 namespace Biblioteca.Domain.Entities;
 
@@ -12,11 +13,12 @@ public class Emprestimo
     #region Propriedades
     // Propriedades do Empréstimo, incluindo referências ao Usuário e Livro.
     public Leitor Usuario { get; private set; }
+    public Guid Id { get; private set; } = Guid.NewGuid();
     public Livro Livro { get; private set; }
     public DateTime DataEmprestimo { get; private set; }
     public DateTime DataPrevistaDevolucao { get; private set; }
     public DateTime? DataRealDevolucao { get; private set; }
-    public string Status { get; private set; } // Ex: "Ativo", "Finalizado", "Atrasado".
+    public EStatusEmprestimo Status { get; private set; }
     #endregion
     #region Construtores
     // Construtor para inicializar um novo empréstimo.
@@ -26,7 +28,7 @@ public class Emprestimo
         Livro = livro;
         DataEmprestimo = dataEmprestimo;
         DataPrevistaDevolucao = dataPrevistaDevolucao;
-        Status = "Ativo"; // Inicialmente o status é "Ativo".
+        Status = EStatusEmprestimo.Ativo; // Inicialmente o status é "Ativo".
     }
     public Emprestimo() // Construtor vazio para ORM ou serialização.
     {
@@ -39,7 +41,7 @@ public class Emprestimo
     public void FinalizarEmprestimo(DateTime dataDevolucao)
     {
         DataRealDevolucao = dataDevolucao;
-        Status = "Finalizado";
+        Status = EStatusEmprestimo.Finalizado;
         // Lógica para calcular multas, se necessário.
     }
     public decimal CalcularMulta()
@@ -54,13 +56,13 @@ public class Emprestimo
     }
     public bool EstaAtivo()
     {
-        return Status == "Ativo";
+        return Status == EStatusEmprestimo.Ativo;
     }
     public bool EstaAtrasado()
     {
         return DataRealDevolucao.HasValue && DataRealDevolucao > DataPrevistaDevolucao;
     }
-    public void AtualizarStatus(string novoStatus)
+    public void AtualizarStatus(EStatusEmprestimo novoStatus)
     {
         Status = novoStatus;
     }
@@ -72,6 +74,10 @@ public class Emprestimo
             Emprestos = new List<Emprestimo>();
         }
         Emprestos.Add(emprestimo);
+    }
+    public bool EmprestimoEmAndamento()
+    {
+        return Status == EStatusEmprestimo.Ativo && DataRealDevolucao == null;
     }
     #endregion
 }

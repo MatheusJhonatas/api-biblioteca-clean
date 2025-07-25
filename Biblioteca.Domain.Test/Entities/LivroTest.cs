@@ -3,7 +3,7 @@ using Biblioteca.Domain.ValueObjects;
 using FluentAssertions;
 using Xunit;
 namespace Biblioteca.Domain.Test;
-
+[TestClass]
 public class LivroTest
 {
     #region Factory methods

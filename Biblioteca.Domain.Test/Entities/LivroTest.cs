@@ -17,21 +17,8 @@ public class LivroTest
         var categorias = new List<Categoria> { new Categoria(Enums.ETipoCategoria.Romance) };
         return new Livro("A sorte segue a coragem.", autor, isbn, 2008, 23, categorias);
     }
-
-    private Livro Criar_Livro_Invalido()
-    {
-        // Exemplo: título vazio, autor nulo, ISBN inválido, ano negativo, páginas zero, categorias vazias
-        var isbn = new ISBN(""); // ISBN inválido
-        return new Livro(
-            "", // título inválido
-            null, // autor nulo
-            isbn,
-            -1, // ano inválido
-            0, // páginas inválidas
-            new List<Categoria>() // categorias vazias
-        );
-    }
     #endregion
+    #region Testes Unitários
     [Fact]
     public void Dado_Um_LivroIndisponivel_Deve_LancarExcecaoAoEmprestar()
     {
@@ -46,16 +33,27 @@ public class LivroTest
         act.Should().Throw<InvalidOperationException>()
         .WithMessage("O livro já está emprestado.");
     }
-    [Fact]
+    [Fact]//O atributo [Fact] vem do framework de testes xUnit. Ele indica que o método abaixo é um teste unitário que deve ser executado pelo runner de testes. Não recebe parâmetros e é usado para testes simples.
     public void Dado_Um_Livro_Disponivel_Deve_Emprestar_ComSucesso()
     {
-        // Arrange
+        // Arrange Prepare o cenário do teste (instancie objetos, defina valores).
         var livro = Criar_Livro_Valido();
 
-        //Act
+        //Act Execute a ação que está sendo testada (chame o método ou função).
         livro.Emprestar();
 
-        //Assert
+        //Assert Verifique se o resultado está correto (use métodos como Assert.Equal, Assert.True etc)
         livro.Disponivel.Should().BeFalse();
     }
+    [Fact]
+    public void Dado_Um_LivroEmprestado_Deve_DevolverComsucesso()
+    {
+        //Arrange Prepare o cenário do teste (instancie objetos, defina valores).
+        var livro = Criar_Livro_Valido();
+        //Act Execute a ação que está sendo testada (chame o método ou função).
+        livro.Devolver();
+        //Assert Verifique se o resultado está correto (use métodos como Assert.Equal, Assert.True etc)
+        livro.Disponivel.Should().BeTrue();
+    }
+    #endregion
 }

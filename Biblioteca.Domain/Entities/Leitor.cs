@@ -17,4 +17,26 @@ public class Leitor
     public DateTime DataCadastro { get; private set; }
     public List<Emprestimo> Emprestimos { get; private set; }
     #endregion
+    #region Metodos
+    //Realizar empréstimo,
+    public void Emprestimo()
+    {
+
+    }
+    //  Devolver livro, 
+    public void DevolverLivro()
+    {
+
+    }
+    // Verificar inadimplência
+    public void VerificarInadiplencia()
+    {
+
+    }
+    //  Atualizar endereço
+    public void AtualizarEndereco()
+    {
+
+    }
+    #endregion
 }

@@ -46,4 +46,16 @@ public class LivroTest
         act.Should().Throw<InvalidOperationException>()
         .WithMessage("O livro já está emprestado.");
     }
+    [Fact]
+    public void Dado_Um_Livro_Disponivel_Deve_Emprestar_ComSucesso()
+    {
+        // Arrange
+        var livro = Criar_Livro_Valido();
+
+        //Act
+        livro.Emprestar();
+
+        //Assert
+        livro.Disponivel.Should().BeFalse();
+    }
 }

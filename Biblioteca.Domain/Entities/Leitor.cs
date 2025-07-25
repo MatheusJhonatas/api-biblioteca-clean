@@ -17,6 +17,17 @@ public class Leitor
     public DateTime DataCadastro { get; private set; }
     public List<Emprestimo> Emprestimos { get; private set; }
     #endregion
+    #region Construtores
+    public Leitor(NomeCompleto nomeCompleto, Email email, CPF cPF, Endereco endereco, DateTime dataCadastro, List<Emprestimo> emprestimos)
+    {
+        NomeCompleto = nomeCompleto;
+        Email = email;
+        CPF = cPF;
+        Endereco = endereco;
+        DataCadastro = dataCadastro;
+        Emprestimos = emprestimos;
+    }
+    #endregion
     #region Metodos
     //Realizar empréstimo,
     public void Emprestimo()

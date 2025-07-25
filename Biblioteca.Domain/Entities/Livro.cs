@@ -3,6 +3,7 @@
 // Métodos: Emprestar, Devolver, Verificar disponibilidade
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using Biblioteca.Domain.ValueObjects;
 namespace Biblioteca.Domain.Entities
 {
@@ -15,7 +16,7 @@ namespace Biblioteca.Domain.Entities
         public int AnoPublicacao { get; private set; }
         public int CategoriaId { get; private set; }
         public bool Disponivel { get; private set; }
-        public List<Categoria> Categorias { get; private set; }
+        public List<Categoria> Categorias { get; private set; } = new();
         #endregion
         #region Contrutores
         public Livro(string titulo, Autor autor, ISBN isbn, int anoPublicacao, int categoriaId, List<Categoria> categorias)
@@ -47,6 +48,15 @@ namespace Biblioteca.Domain.Entities
         public bool VerificaDisponibilidade()
         {
             return Disponivel;
+        }
+        public void AdicionarCategoria(Categoria categoria)
+        {
+            if (categoria == null)
+                throw new ArgumentNullException(nameof(categoria));
+
+            if (Categorias.Any(c => c.Id == categoria.Id))
+                return;// Categoria já adicionada, evitar duplicidade
+            Categorias.Add(categoria);
         }
         #endregion
     }

@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using Biblioteca.Domain.Enums;
 
 namespace Biblioteca.Domain.Entities;
@@ -10,7 +11,6 @@ namespace Biblioteca.Domain.Entities;
 public sealed class Categoria
 {
     #region Propriedades
-
     public int Id { get; private set; }
     public string Nome { get; private set; }
     public ETipoCategoria Tipo { get; private set; }
@@ -24,7 +24,6 @@ public sealed class Categoria
     }
     #endregion
     #region Métodos
-    // Método para adicionar um livro à categoria
     // Regras: Um livro pode ter uma ou mais categorias.
 
     #endregion

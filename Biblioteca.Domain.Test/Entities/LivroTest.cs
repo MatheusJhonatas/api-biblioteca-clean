@@ -67,5 +67,17 @@ public class LivroTest
         act.Should().Throw<InvalidOperationException>()
         .WithMessage("O livro já está disponível.");
     }
+    [Fact]
+    public void Deve_VerificarDisponibilidade_Corretamente()
+    {
+        //Arrange
+        var livro = Criar_Livro_Valido();
+        //Act
+        livro.VerificaDisponibilidade().Should().BeTrue();
+
+        livro.Emprestar();
+        livro.VerificaDisponibilidade().Should().BeFalse();
+        //Assert
+    }
     #endregion
 }

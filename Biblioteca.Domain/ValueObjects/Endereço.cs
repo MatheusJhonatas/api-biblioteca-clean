@@ -3,6 +3,7 @@
 // Uso: User, possivelmente Library
 using System;
 using System.Collections.Generic;
+using System.Text.RegularExpressions;
 namespace Biblioteca.Domain.ValueObjects;
 
 public record class Endereco : ValueObject
@@ -38,8 +39,7 @@ public record class Endereco : ValueObject
     #region Métodos
     private bool IsValidCEP(string cep)
     {
-        // Implementar a lógica de validação do CEP
-        return true; // Placeholder para a lógica de validação real
+        return Regex.IsMatch(cep, @"^\d{8}$");
     }
 
     #endregion

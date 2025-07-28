@@ -1,3 +1,3 @@
 namespace Biblioteca.Domain.ValueObjects;
 
-public abstract record class ValueObject;
+public record class ValueObject;

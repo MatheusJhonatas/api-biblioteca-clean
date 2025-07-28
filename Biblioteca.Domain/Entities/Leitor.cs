@@ -30,6 +30,7 @@ public class Leitor
         CPF = cPF;
         Endereco = endereco;
         DataCadastro = dataCadastro;
+        _emprestimos = new List<Emprestimo>();
     }
     #endregion
     #region Metodos

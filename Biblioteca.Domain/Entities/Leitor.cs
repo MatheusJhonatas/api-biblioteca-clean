@@ -10,6 +10,7 @@ namespace Biblioteca.Domain.Entities;
 
 public class Leitor
 {
+    public Guid Id { get; private set; } = Guid.NewGuid();
     private IList<Emprestimo> _emprestimos;
     #region Propriedades
     public NomeCompleto NomeCompleto { get; private set; }
@@ -29,37 +30,29 @@ public class Leitor
         CPF = cPF;
         Endereco = endereco;
         DataCadastro = dataCadastro;
-        _emprestimos = new List<Emprestimo>();
     }
     #endregion
     #region Metodos
-    //Realizar empréstimo,
-    public void Emprestimo(Emprestimo novoEmprestimo)
-    {
-        if (EstaInadimplente)
-            throw new InvalidOperationException("Usuário está inadimplente e não pode realizar novos empréstimos.");
-        int emprestimosAtivos = _emprestimos.Count(e => e.EmprestimoEmAndamento());
-        if (emprestimosAtivos >= LimiteEmprestimosAtivos)
-            throw new InvalidOperationException("Usuário atingiu o limite de empréstimos ativos.");
-        _emprestimos.Add(novoEmprestimo);
-    }
-    //  Devolver livro, 
-    public void DevolverLivro(Guid emprestimoId)
-    {
-        var emprestimo = _emprestimos.FirstOrDefault(e => e.Id == emprestimoId);
-        if (emprestimo == null)
-            throw new InvalidOperationException("Empréstimo não encontrado");
-        emprestimo.FinalizarEmprestimo(DateTime.Now);
-    }
     // Verificar inadimplência
     public bool VerificarInadiplencia()
     {
         return EstaInadimplente;
     }
     //  Atualizar endereço
-    public void AtualizarEndereco()
+    public void AtualizarEndereco(Endereco novoEndereco)
     {
+        if (novoEndereco == null)
+            throw new ArgumentNullException(nameof(novoEndereco));
 
+        Endereco = novoEndereco;
+    }
+    internal void AdicionarEmprestimo(Emprestimo emprestimo)
+    {
+        _emprestimos.Add(emprestimo);
+    }
+    internal Emprestimo ObterEmprestimoPorId(Guid id)
+    {
+        return _emprestimos.FirstOrDefault(e => e.Id == id);
     }
     #endregion
 }

@@ -10,7 +10,7 @@ namespace Biblioteca.Domain.Entities;
 
 public class Leitor
 {
-    public Guid Id { get; private set; } = Guid.NewGuid();
+    public string Id { get; private set; }
     private IList<Emprestimo> _emprestimos;
     #region Propriedades
     public NomeCompleto NomeCompleto { get; private set; }
@@ -25,11 +25,13 @@ public class Leitor
     #region Construtores
     public Leitor(NomeCompleto nomeCompleto, Email email, CPF cPF, Endereco endereco, DateTime dataCadastro)
     {
+        Id = Guid.NewGuid().ToString().Replace("-", "").Substring(0, 10).ToUpper();
         NomeCompleto = nomeCompleto;
         Email = email;
         CPF = cPF;
         Endereco = endereco;
         DataCadastro = dataCadastro;
+        _emprestimos = new List<Emprestimo>();
     }
     #endregion
     #region Metodos

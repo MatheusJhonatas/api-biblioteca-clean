@@ -1,31 +1,121 @@
-// Atributos: Número do CPF
-// Regras: Deve ser um CPF válido (com validação de dígitos verificadores)
-// Uso: User
 using System;
-namespace Biblioteca.Domain.ValueObjects;
+using System.Linq;
 
-public record CPF : ValueObject
+namespace Biblioteca.Domain.ValueObjects
 {
-    #region Propriedades
-    public string Numero { get; private set; }
-    #endregion
-    #region Construtores
-    // Construtor da classe CPF que recebe o número do CPF e verifica se é válido
-
-    public CPF(string numero)
+    /// <summary>
+    /// Value Object responsável por encapsular a lógica e validação de um CPF.
+    /// </summary>
+    public class CPF
     {
-        if (string.IsNullOrWhiteSpace(numero) || !IsValid(numero))
-            throw new ArgumentException("CPF inválido.", nameof(numero));
+        #region Propriedades
 
-        Numero = numero;
+        /// <summary>
+        /// Número do CPF armazenado apenas com os dígitos numéricos.
+        /// </summary>
+        public string Numero { get; }
+
+        #endregion
+
+        #region Construtores
+
+        /// <summary>
+        /// Cria uma nova instância do CPF após validar o número fornecido.
+        /// </summary>
+        /// <param name="numero">CPF em formato string (com ou sem máscara).</param>
+        /// <exception cref="ArgumentException">Lança exceção se o CPF for inválido.</exception>
+        public CPF(string numero)
+        {
+            if (string.IsNullOrWhiteSpace(numero))
+                throw new ArgumentException("CPF não pode ser nulo ou vazio.", nameof(numero));
+
+            // Remove caracteres não numéricos
+            numero = new string(numero.Where(char.IsDigit).ToArray());
+
+            if (!IsValid(numero))
+                throw new ArgumentException("CPF inválido.", nameof(numero));
+
+            Numero = numero;
+        }
+
+        #endregion
+
+        #region Métodos de Validação
+
+        /// <summary>
+        /// Verifica se o CPF é válido com base na regra dos dígitos verificadores.
+        /// </summary>
+        /// <param name="cpf">CPF apenas com dígitos numéricos.</param>
+        /// <returns>True se o CPF for válido, false caso contrário.</returns>
+        private bool IsValid(string cpf)
+        {
+            // Verifica se tem 11 dígitos e não são todos iguais
+            if (cpf.Length != 11 || cpf.Distinct().Count() == 1)
+                return false;
+
+            int[] multiplicador1 = { 10, 9, 8, 7, 6, 5, 4, 3, 2 };
+            int[] multiplicador2 = { 11, 10, 9, 8, 7, 6, 5, 4, 3, 2 };
+
+            string tempCpf = cpf.Substring(0, 9);
+            int soma = 0;
+
+            for (int i = 0; i < 9; i++)
+                soma += int.Parse(tempCpf[i].ToString()) * multiplicador1[i];
+
+            int resto = soma % 11;
+            resto = resto < 2 ? 0 : 11 - resto;
+
+            string digito = resto.ToString();
+            tempCpf += digito;
+
+            soma = 0;
+            for (int i = 0; i < 10; i++)
+                soma += int.Parse(tempCpf[i].ToString()) * multiplicador2[i];
+
+            resto = soma % 11;
+            resto = resto < 2 ? 0 : 11 - resto;
+
+            digito += resto.ToString();
+
+            return cpf.EndsWith(digito);
+        }
+
+        #endregion
+
+        #region Métodos Utilitários
+
+        /// <summary>
+        /// Retorna o CPF formatado com máscara: 000.000.000-00
+        /// </summary>
+        /// <returns>CPF formatado.</returns>
+        public override string ToString()
+        {
+            return Convert.ToUInt64(Numero).ToString(@"000\.000\.000\-00");
+        }
+
+        /// <summary>
+        /// Compara dois objetos CPF por igualdade de valor.
+        /// </summary>
+        /// <param name="obj">Outro objeto CPF.</param>
+        /// <returns>True se os números forem iguais.</returns>
+        public override bool Equals(object obj)
+        {
+            if (obj is null || GetType() != obj.GetType())
+                return false;
+
+            var other = (CPF)obj;
+            return Numero == other.Numero;
+        }
+
+        /// <summary>
+        /// Retorna o código hash do CPF.
+        /// </summary>
+        /// <returns>Código hash baseado no número do CPF.</returns>
+        public override int GetHashCode()
+        {
+            return Numero.GetHashCode();
+        }
+
+        #endregion
     }
-    #endregion
-    #region Métodos
-    private bool IsValid(string cpf)
-    {
-        // Implementar a lógica de validação do CPF
-        // Exemplo: Verificar se o CPF tem 11 dígitos e calcular os dígitos verificadores
-        return true; // Placeholder para a lógica de validação real
-    }
-    #endregion  
 }

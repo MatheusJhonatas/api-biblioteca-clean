@@ -72,12 +72,12 @@ public class LivroTest
     {
         //Arrange
         var livro = Criar_Livro_Valido();
-        //Act
+        //Act, Assert
         livro.VerificaDisponibilidade().Should().BeTrue();
 
         livro.Emprestar();
         livro.VerificaDisponibilidade().Should().BeFalse();
-        //Assert
+
     }
     #endregion
 }

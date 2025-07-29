@@ -58,6 +58,20 @@ namespace Biblioteca.Domain.Entities
                 return;// Categoria já adicionada, evitar duplicidade
             Categorias.Add(categoria);
         }
+        public void AlterarTitulo(string novoTitulo)
+        {
+            if (string.IsNullOrWhiteSpace(novoTitulo))
+                throw new ArgumentException("Título inválido.");
+            Titulo = novoTitulo;
+        }
+
+        public void AlterarAnoPublicacao(int novoAno)
+        {
+            if (novoAno < 1800 || novoAno > DateTime.Now.Year)
+                throw new ArgumentException("Ano inválido.");
+            AnoPublicacao = novoAno;
+        }
+
         #endregion
     }
 }

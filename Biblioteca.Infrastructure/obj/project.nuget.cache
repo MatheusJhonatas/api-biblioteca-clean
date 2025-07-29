@@ -1,8 +1,10 @@
 {
   "version": 2,
-  "dgSpecHash": "BN5QtpSe+B8=",
+  "dgSpecHash": "gmUlxRVDd6k=",
   "success": true,
   "projectFilePath": "C:\\Dev\\api-biblioteca-clean\\Biblioteca.Infrastructure\\Biblioteca.Infrastructure.csproj",
-  "expectedPackageFiles": [],
+  "expectedPackageFiles": [
+    "C:\\Users\\Matheus\\.nuget\\packages\\flunt\\2.0.5\\flunt.2.0.5.nupkg.sha512"
+  ],
   "logs": []
 }

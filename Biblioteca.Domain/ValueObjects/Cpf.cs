@@ -6,24 +6,15 @@ namespace Biblioteca.Domain.ValueObjects
     /// <summary>
     /// Value Object responsável por encapsular a lógica e validação de um CPF.
     /// </summary>
-    public class CPF
+    public record class CPF : ValueObject
     {
         #region Propriedades
-
-        /// <summary>
-        /// Número do CPF armazenado apenas com os dígitos numéricos.
-        /// </summary>
         public string Numero { get; }
 
         #endregion
 
         #region Construtores
 
-        /// <summary>
-        /// Cria uma nova instância do CPF após validar o número fornecido.
-        /// </summary>
-        /// <param name="numero">CPF em formato string (com ou sem máscara).</param>
-        /// <exception cref="ArgumentException">Lança exceção se o CPF for inválido.</exception>
         public CPF(string numero)
         {
             if (string.IsNullOrWhiteSpace(numero))
@@ -98,14 +89,14 @@ namespace Biblioteca.Domain.ValueObjects
         /// </summary>
         /// <param name="obj">Outro objeto CPF.</param>
         /// <returns>True se os números forem iguais.</returns>
-        public override bool Equals(object obj)
-        {
-            if (obj is null || GetType() != obj.GetType())
-                return false;
+        // public override bool Equals(object obj)
+        // {
+        //     if (obj is null || GetType() != obj.GetType())
+        //         return false;
 
-            var other = (CPF)obj;
-            return Numero == other.Numero;
-        }
+        //     var other = (CPF)obj;
+        //     return Numero == other.Numero;
+        // }
 
         /// <summary>
         /// Retorna o código hash do CPF.

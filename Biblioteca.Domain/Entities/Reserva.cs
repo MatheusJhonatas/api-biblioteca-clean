@@ -3,16 +3,46 @@
 // Métodos: Cancelar reserva, Tornar reserva ativa/inativa.
 
 using System;
+using Biblioteca.Domain.Enums;
 
 namespace Biblioteca.Domain.Entities;
 
-public class Reserva
+public class Reserva : Entity
 {
     #region Propriedades
     public Leitor Usuario { get; private set; }
     public Livro Livro { get; private set; }
     public DateTime DataReserva { get; private set; }
-    public string Status { get; private set; } // ativa, cancelada, atendida
+    public EStatusReserva Status { get; private set; } // ativa, cancelada, atendida
     #endregion
+    #region Construtor
+    public Reserva(Leitor usuario, Livro livro)
+        : base(Guid.NewGuid())
+    {
+        Usuario = usuario ?? throw new ArgumentNullException(nameof(usuario));
+        Livro = livro ?? throw new ArgumentNullException(nameof(livro));
+        DataReserva = DateTime.Now;
+        Status = EStatusReserva.Ativa;
+    }
+    #endregion
+    #region Metodos
+    public void Cancelar()
+    {
+        if (Status != EStatusReserva.Ativa)
+            throw new InvalidOperationException("Reserva já cancelada ou atendida.");
+        Status = EStatusReserva.Cancelada;
+    }
 
+    public void MarcarComoAtendida()
+    {
+        if (Status != EStatusReserva.Ativa)
+            throw new InvalidOperationException("A reserva já foi finalizada.");
+        Status = EStatusReserva.Atendida;
+    }
+
+    public bool EstaValida()
+    {
+        return Status == EStatusReserva.Ativa && DataReserva.AddDays(3) > DateTime.Now;
+    }
+    #endregion
 }

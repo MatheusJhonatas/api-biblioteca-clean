@@ -8,9 +8,8 @@ using Biblioteca.Domain.ValueObjects;
 
 namespace Biblioteca.Domain.Entities;
 
-public class Leitor
+public class Leitor : Entity
 {
-    public string Id { get; private set; }
     private IList<Emprestimo> _emprestimos;
     #region Propriedades
     public NomeCompleto NomeCompleto { get; private set; }
@@ -23,9 +22,8 @@ public class Leitor
     public int LimiteEmprestimosAtivos { get; private set; } = 5;
     #endregion
     #region Construtores
-    public Leitor(NomeCompleto nomeCompleto, Email email, CPF cPF, Endereco endereco, DateTime dataCadastro)
+    public Leitor(NomeCompleto nomeCompleto, Email email, CPF cPF, Endereco endereco, DateTime dataCadastro) : base(Guid.NewGuid())
     {
-        Id = Guid.NewGuid().ToString().Replace("-", "").Substring(0, 10).ToUpper();
         NomeCompleto = nomeCompleto;
         Email = email;
         CPF = cPF;
@@ -35,11 +33,6 @@ public class Leitor
     }
     #endregion
     #region Metodos
-    // Verificar inadimplência
-    public bool VerificarInadiplencia()
-    {
-        return EstaInadimplente;
-    }
     //  Atualizar endereço
     public void AtualizarEndereco(Endereco novoEndereco)
     {

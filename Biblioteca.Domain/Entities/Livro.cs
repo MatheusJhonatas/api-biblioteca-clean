@@ -7,7 +7,7 @@ using System.Linq;
 using Biblioteca.Domain.ValueObjects;
 namespace Biblioteca.Domain.Entities
 {
-    public sealed class Livro
+    public sealed class Livro : Entity
     {
         #region Propriedades
         public string Titulo { get; private set; }
@@ -19,7 +19,7 @@ namespace Biblioteca.Domain.Entities
         public List<Categoria> Categorias { get; private set; } = new();
         #endregion
         #region Contrutores
-        public Livro(string titulo, Autor autor, ISBN isbn, int anoPublicacao, int categoriaId, List<Categoria> categorias)
+        public Livro(string titulo, Autor autor, ISBN isbn, int anoPublicacao, int categoriaId, List<Categoria> categorias) : base(Guid.NewGuid())
         {
             Titulo = titulo;
             Autor = autor;

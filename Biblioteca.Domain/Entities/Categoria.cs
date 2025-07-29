@@ -8,18 +8,18 @@ namespace Biblioteca.Domain.Entities;
 // Isso é útil para garantir que a estrutura da categoria não seja alterada por heranças indesejadas.
 
 
-public sealed class Categoria
+public sealed class Categoria : Entity
 {
     #region Propriedades
-    public int Id { get; private set; }
     public string Nome { get; private set; }
     public ETipoCategoria Tipo { get; private set; }
-    public List<Livro> Livros { get; private set; } = new List<Livro>();
     #endregion
     #region Construtores
     // Construtores para inicializar a categoria com nome, descrição e tipo, podendo receber um Id
-    public Categoria(ETipoCategoria tipo)
+    public Categoria(string nome, ETipoCategoria tipo)
+        : base(Guid.NewGuid())
     {
+        Nome = nome ?? throw new ArgumentNullException(nameof(nome));
         Tipo = tipo;
     }
     #endregion

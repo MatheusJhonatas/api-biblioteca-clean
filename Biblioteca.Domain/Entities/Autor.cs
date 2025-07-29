@@ -5,7 +5,7 @@ using System;
 using Biblioteca.Domain.ValueObjects;
 namespace Biblioteca.Domain.Entities;
 
-public class Autor
+public class Autor : Entity
 {
     #region Propriedades
     // Propriedades do Autor, incluindo NomeCompleto e Email como Value Objects
@@ -15,7 +15,7 @@ public class Autor
     #endregion
     #region Construtores
     // Construtor da classe Autor que recebe NomeCompleto, Email e DataNascimento.
-    public Autor(NomeCompleto nomeCompleto, Email email, DateTime dataNascimento)
+    public Autor(NomeCompleto nomeCompleto, Email email, DateTime dataNascimento) : base(Guid.NewGuid())
     {
         NomeCompleto = nomeCompleto;
         Email = email;

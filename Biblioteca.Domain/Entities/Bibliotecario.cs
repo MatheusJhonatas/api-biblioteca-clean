@@ -1,11 +1,12 @@
 // Atributos: Nome completo (VO), Email (VO), Matrícula, Cargo
 // Regras: Pode cadastrar livros, excluir, atualizar cadastros, processar devoluções
 // Métodos: Cadastrar livro, Atualizar estoque, Visualizar empréstimos ativos
+using System;
 using Biblioteca.Domain.ValueObjects;
 
 namespace Biblioteca.Domain.Entities;
 
-public class Bibliotecario
+public class Bibliotecario : Entity
 {
     #region Propriedades
     public NomeCompleto NomeCompleto { get; private set; }
@@ -16,26 +17,13 @@ public class Bibliotecario
 
     #region Construtores
     // Construtor para inicializar as propriedades do bibliotecário.
-    public Bibliotecario(string nomeCompleto, string email, string matricula, string cargo)
+    public Bibliotecario(NomeCompleto nomeCompleto, Email email, string matricula, string cargo)
+         : base(Guid.NewGuid())
     {
-        Matricula = matricula;
-        Cargo = cargo;
-    }
-    #endregion
-    #region Métodos
-    public void CadastrarLivro(Livro livro)
-    {
-        // Lógica para cadastrar livro
-    }
-
-    public void AtualizarEstoque(Livro livro, int quantidade)
-    {
-        // Lógica para atualizar estoque do livro
-    }
-
-    public void VisualizarEmprestimosAtivos()
-    {
-        // Lógica para visualizar empréstimos ativos
+        NomeCompleto = nomeCompleto ?? throw new ArgumentNullException(nameof(nomeCompleto));
+        Email = email ?? throw new ArgumentNullException(nameof(email));
+        Matricula = matricula ?? throw new ArgumentException("Matrícula inválida.");
+        Cargo = cargo ?? throw new ArgumentException("Cargo inválido.");
     }
     #endregion
 }

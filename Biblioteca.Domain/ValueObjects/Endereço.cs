@@ -20,12 +20,12 @@ public record class Endereco : ValueObject
     #region Construtores
     public Endereco(string rua, string numero, string bairro, string cidade, string estado, string cep)
     {
-        if (string.IsNullOrWhiteSpace(rua) || string.IsNullOrWhiteSpace(numero) ||
-            string.IsNullOrWhiteSpace(bairro) || string.IsNullOrWhiteSpace(cidade) ||
-            string.IsNullOrWhiteSpace(estado) || !IsValidCEP(cep))
-        {
-            throw new ArgumentException("Endereço inválido.");
-        }
+        if (string.IsNullOrWhiteSpace(rua)) throw new ArgumentException("Rua é obrigatória.");
+        if (string.IsNullOrWhiteSpace(numero)) throw new ArgumentException("Número é obrigatório.");
+        if (string.IsNullOrWhiteSpace(bairro)) throw new ArgumentException("Bairro é obrigatório.");
+        if (string.IsNullOrWhiteSpace(cidade)) throw new ArgumentException("Cidade é obrigatória.");
+        if (string.IsNullOrWhiteSpace(estado)) throw new ArgumentException("Estado é obrigatório.");
+        if (!IsValidCEP(cep)) throw new ArgumentException("CEP inválido. Deve conter exatamente 8 dígitos numéricos.");
 
         Rua = rua;
         Numero = numero;

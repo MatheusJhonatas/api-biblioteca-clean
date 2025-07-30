@@ -23,7 +23,8 @@ public record class NomeCompleto : ValueObject
             throw new ArgumentException("Primeiro nome não pode ser vazio ou nulo.", nameof(primeiroNome));
         if (string.IsNullOrWhiteSpace(ultimoNome))
             throw new ArgumentException("Último nome não pode ser vazio ou nulo.", nameof(ultimoNome));
-
+        PrimeiroNome = primeiroNome;
+        UltimoNome = ultimoNome;
     }
     #endregion
 }

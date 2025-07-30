@@ -18,7 +18,7 @@ public class BibliotecarioServiceTest
 
         var livro = service.CadastrarLivro("Samsung Essentials", autor, new ISBN("1234567800"), 2020, categorias);
         livro.Should().NotBeNull();
-        livro.Titulo.Should().Be("Samsung Essential");
+        livro.Titulo.Should().Be("Samsung Essentials");
         livro.Autor.Should().Be(autor);
 
     }

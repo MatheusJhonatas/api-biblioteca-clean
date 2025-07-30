@@ -14,7 +14,7 @@ public class LivroTest
         var dataNascimento = new DateTime(1964, 3, 14);
         var autor = new Autor(nomeCompleto, email, dataNascimento);
         var isbn = new ISBN("1234567890");
-        var categorias = new List<Categoria> { new Categoria(Enums.ETipoCategoria.Romance) };
+        var categorias = new List<Categoria> { new Categoria("Romance", Enums.ETipoCategoria.Romance) };
         return new Livro("A sorte segue a coragem.", autor, isbn, 2008, 23, categorias);
     }
     #endregion

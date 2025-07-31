@@ -5,6 +5,7 @@ using Biblioteca.Domain.ValueObjects;
 using Biblioteca.Domain.Services;
 using FluentAssertions;
 using System.ComponentModel.Design;
+namespace Biblioteca.Domain.Test.Services;
 
 public class EmprestimoServiceTest
 {

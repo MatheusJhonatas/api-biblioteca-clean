@@ -5,6 +5,8 @@ using Biblioteca.Domain.Services;
 using Biblioteca.Domain.ValueObjects;
 using FluentAssertions;
 using Xunit;
+namespace Biblioteca.Domain.Test.Services;
+
 public class BibliotecarioServiceTest
 {
     [Fact]

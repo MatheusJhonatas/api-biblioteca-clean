@@ -8,5 +8,6 @@ public enum ETipoCategoria
     Historia = 4,
     Ciencia = 5,
     AutoAjuda = 6,
-    Outra = 7
+    Terror = 7,
+    Outra = 8
 }

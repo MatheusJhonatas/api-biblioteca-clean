@@ -41,7 +41,7 @@ public class Leitor : Entity
 
         Endereco = novoEndereco;
     }
-    internal void AdicionarEmprestimo(Emprestimo emprestimo)
+    public void AdicionarEmprestimo(Emprestimo emprestimo)
     {
         _emprestimos.Add(emprestimo);
     }

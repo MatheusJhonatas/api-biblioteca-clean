@@ -4,6 +4,7 @@ using Biblioteca.Domain.Entities;
 using Biblioteca.Domain.ValueObjects;
 using Biblioteca.Domain.Services;
 using FluentAssertions;
+using System.ComponentModel.Design;
 
 public class EmprestimoServiceTest
 {
@@ -53,6 +54,34 @@ public class EmprestimoServiceTest
         emprestimo.Livro.Should().Be(livro);
         emprestimo.Usuario.Should().Be(leitor);
         livro.Disponivel.Should().BeFalse();
+    }
+    [Fact]
+    public void Nao_Deve_Realizar_Emprestimo_Se_Leitor_Estiver_Inadimplente()
+    {
+        // Arrange
+        var leitor = CriarLeitorValido();
+        var livro = CriarLivroValido();
+        var emprestimoService = new EmprestimoService();
+
+        // Cria um empréstimo atrasado
+        var emprestimoAtrasado = new Emprestimo(
+            leitor,
+            livro,
+            DateTime.Now.AddDays(-10),
+            DateTime.Now.AddDays(-5)
+        );
+
+        livro.Emprestar(); // importante: marca o livro como emprestado
+        emprestimoAtrasado.FinalizarEmprestimo(DateTime.Now); // devolução atrasada
+
+        leitor.AdicionarEmprestimo(emprestimoAtrasado); // leitor agora está inadimplente
+
+        // Act
+        Action act = () => emprestimoService.RealizarEmprestimo(leitor, livro);
+
+        // Assert
+        act.Should().Throw<InvalidOperationException>()
+            .WithMessage("Leitor inadimplente não pode realizar empréstimos.");
     }
     #endregion
 }

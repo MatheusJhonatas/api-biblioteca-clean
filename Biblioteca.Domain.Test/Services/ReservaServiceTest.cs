@@ -52,5 +52,17 @@ public class ReservaServiceTest
         reserva.Usuario.Should().Be(leitor);
 
     }
+    [Fact]
+    public void Nao_Deve_Reservar_Livro_Disponivel()
+    {
+        var leitor = CriarLeitorValido();
+        var livro = CriarLivroIndisponivel();
+        livro.Devolver();
+
+        var service = new ReservaService();
+
+        Action act = () => service.CriarReserva(leitor, livro);
+        act.Should().Throw<InvalidOperationException>().WithMessage("Não é possível reservar um livro disponível.");
+    }
     #endregion
 }

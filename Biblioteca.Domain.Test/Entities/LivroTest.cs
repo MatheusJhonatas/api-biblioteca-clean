@@ -2,7 +2,7 @@ using Biblioteca.Domain.Entities;
 using Biblioteca.Domain.ValueObjects;
 using FluentAssertions;
 using Xunit;
-namespace Biblioteca.Domain.Test;
+namespace Biblioteca.Domain.Test.Entites;
 
 public class LivroTest
 {

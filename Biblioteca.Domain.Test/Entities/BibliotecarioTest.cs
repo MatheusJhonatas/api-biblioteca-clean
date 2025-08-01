@@ -31,5 +31,18 @@ public class BibliotecarioTest
         bibliotecario.Matricula.Should().Be("HEN789");
         bibliotecario.Cargo.Should().Be("Supervisor");
     }
+    [Fact]
+    public void Nao_Deve_Criar_Bibliotecario_Com_Nome_Nulo()
+    {
+        //Arrange
+        var email = new Email("henriquesilva@hotmail.com");
+        var matricula = "HEN789";
+        var cargo = "Administrador";
+        //Act
+        Action act = () => new Bibliotecario(null, email, matricula, cargo);
+        //Assert
+        act.Should().Throw<ArgumentNullException>()
+       .Where(e => e.ParamName == "nomeCompleto");
+    }
     #endregion
 }

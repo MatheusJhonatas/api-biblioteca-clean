@@ -30,5 +30,24 @@ public class AutorTest
         autor.Email.EnderecoEmail.Should().Be("jkrolling@gmail.com");
         autor.DataNascimento.Should().Be(new DateTime(1978, 12, 10));
     }
+    [Theory]//Essa anotação do xUnit indica que este teste será executado múltiplas vezes, com diferentes valores de entrada.
+    [InlineData(null, "Rolling")]
+    [InlineData("JK", null)]
+    [InlineData("", "Rolling")]
+    [InlineData("JK", "")]
+    public void Nao_Deve_Criar_Autor_Com_Nome_Valido(string primeiroNome, string ultimoNome)
+    {
+        // Arrange, Aqui começa a preparação dos dados para o teste.O e-mail e a data de nascimento são válidos (para garantir que a falha virá do nome inválido e não de outro campo).
+        var email = new Email("jkrolling@gmail.com");
+        var nascimento = new DateTime(1978, 12, 10);
+        // Act
+        Action act = () =>
+        {
+            var nome = new NomeCompleto(primeiroNome, ultimoNome);
+            var autor = new Autor(nome, email, nascimento);
+        };
+        // Assert
+        act.Should().Throw<ArgumentException>();
+    }
     #endregion
 }

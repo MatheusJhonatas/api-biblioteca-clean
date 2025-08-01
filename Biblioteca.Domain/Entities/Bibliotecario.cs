@@ -22,8 +22,14 @@ public class Bibliotecario : Entity
     {
         NomeCompleto = nomeCompleto ?? throw new ArgumentNullException(nameof(nomeCompleto));
         Email = email ?? throw new ArgumentNullException(nameof(email));
-        Matricula = matricula ?? throw new ArgumentException("Matrícula inválida.");
-        Cargo = cargo ?? throw new ArgumentException("Cargo inválido.");
+        if (string.IsNullOrWhiteSpace(matricula))
+            throw new ArgumentException("Matrícula inválida.", nameof(matricula));
+
+        if (string.IsNullOrWhiteSpace(cargo))
+            throw new ArgumentException("Cargo inválido.", nameof(cargo));
+        Matricula = matricula;
+        Cargo = cargo;
+
     }
     #endregion
 }

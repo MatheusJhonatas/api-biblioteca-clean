@@ -44,5 +44,56 @@ public class BibliotecarioTest
         act.Should().Throw<ArgumentNullException>()
        .Where(e => e.ParamName == "nomeCompleto");
     }
+    [Fact]
+    public void Nao_Deve_Criar_Bibliotecario_Com_Email_Nulo()
+    {
+        //Arrange
+        var nome = new NomeCompleto("Helio", "Sebastião");
+        var matricula = "HEN789";
+        var cargo = "Auxiliar";
+        //Act
+        Action act = () => new Bibliotecario(nome, null, matricula, cargo);
+        //Assert
+        act.Should().Throw<ArgumentNullException>()
+       .Where(e => e.ParamName == "email");
+    }
+    [Theory]
+    [InlineData(null)]
+    [InlineData("")]
+    public void Nao_Deve_Criar_Bibliotecario_Com_Matricula_Invalida(string matriculaInvalida)
+    {
+        // Arrange
+        var nome = new NomeCompleto("Clara", "Lima");
+        var email = new Email("clara.lima@teste.com");
+        var cargo = "Coordenadora";
+
+        // Act
+        Action act = () => new Bibliotecario(nome, email, matriculaInvalida, cargo);
+
+        // Assert
+        act.Should().Throw<ArgumentException>()
+       .WithMessage("Matrícula inválida*")
+       .Where(e => e.ParamName == "matricula");
+    }
+
+    [Theory]
+    [InlineData(null)]
+    [InlineData("")]
+    public void Nao_Deve_Criar_Bibliotecario_Com_Cargo_Invalido(string cargoInvalido)
+    {
+        // Arrange
+        var nome = new NomeCompleto("Carlos", "Ferreira");
+        var email = new Email("carlos@teste.com");
+        var matricula = "MAT999";
+
+        // Act
+        Action act = () => new Bibliotecario(nome, email, matricula, cargoInvalido);
+
+        // Assert
+        act.Should().Throw<ArgumentException>()
+      .WithMessage("Cargo inválido*")
+      .Where(e => e.ParamName == "cargo");
+    }
+
     #endregion
 }

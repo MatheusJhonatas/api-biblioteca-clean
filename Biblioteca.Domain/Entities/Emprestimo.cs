@@ -31,7 +31,8 @@ public class Emprestimo : Entity
 
         DataRealDevolucao = dataDevolucao;
         Status = EStatusEmprestimo.Finalizado;
-        Livro.Devolver(); // retorna o livro como disponível
+        if (!Livro.Disponivel) // <- adiciona essa proteção aqui
+            Livro.Devolver();
     }
 
     public bool EstaAtrasado()

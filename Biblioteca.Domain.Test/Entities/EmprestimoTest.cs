@@ -73,17 +73,16 @@ public class EmprestimoTest
         act.Should().Throw<ArgumentNullException>().Where(e => e.ParamName == "usuario");
     }
 
-    // [Fact]
-    // public void Nao_Deve_Criar_Emprestimo_Com_Livro_Nulo()
-    // {
-    //     var leitor = CriarLeitorValido();
-    //     var dataEmprestimo = DateTime.Today;
-    //     var dataPrevista = dataEmprestimo.AddDays(7);
+    [Fact]
+    public void Nao_Deve_Criar_Emprestimo_Com_Livro_Nulo()
+    {
+        var leitor = CriarLeitorValido();
+        var dataEmprestimo = DateTime.Today;
+        var dataPrevista = dataEmprestimo.AddDays(7);
+        Action act = () => new Emprestimo(leitor, null, dataEmprestimo, dataPrevista);
 
-    //     Action act = () => new Emprestimo(leitor, null, dataEmprestimo, dataPrevista);
-
-    //     act.Should().Throw<ArgumentNullException>().Where(e => e.ParamName == "livro");
-    // }
+        act.Should().Throw<ArgumentNullException>().Where(e => e.ParamName == "livro");
+    }
 
     // [Fact]
     // public void Deve_Finalizar_Emprestimo_Ativo()

@@ -9,10 +9,11 @@ public enum ETipoCategoria
     Ciencia = 5,
     AutoAjuda = 6,
     Terror = 7,
-    Literatura = 8, // Alias for Romance
+    Literatura = 8,
     LiteraturaInfantil = 9,
     LiteraturaJuvenil = 10,
-    LiteraturaInfantojuvenil = 11, // Alias for LiteraturaJuvenil
+    LiteraturaInfantojuvenil = 11,
     Fantasia = 12,
-    Outra = 13
+    Lideranca = 13,
+    Outra = 14
 }

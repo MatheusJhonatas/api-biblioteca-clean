@@ -142,32 +142,31 @@ public class EmprestimoTest
         emprestimo.EstaAtrasado().Should().BeTrue();
     }
 
-    // [Fact]
-    // public void Deve_Calcular_Multa_Corretamente()
-    // {
-    //     var leitor = CriarLeitorValido();
-    //     var livro = CriarLivroValido();
-    //     var dataEmprestimo = DateTime.Today.AddDays(-10);
-    //     var dataPrevista = DateTime.Today.AddDays(-5);
-    //     var emprestimo = new Emprestimo(leitor, livro, dataEmprestimo, dataPrevista);
+    [Fact]
+    public void Deve_Calcular_Multa_Corretamente()
+    {
+        var leitor = CriarLeitorValido();
+        var livro = CriarLivroValido();
+        var dataEmprestimo = DateTime.Today.AddDays(-10);
+        var dataPrevista = DateTime.Today.AddDays(-5);
+        var emprestimo = new Emprestimo(leitor, livro, dataEmprestimo, dataPrevista);
 
-    //     emprestimo.FinalizarEmprestimo(DateTime.Today);
+        emprestimo.FinalizarEmprestimo(DateTime.Today);
+        emprestimo.CalcularMulta().Should().Be(5.00m);
+    }
 
-    //     emprestimo.CalcularMulta().Should().Be(5.00m);
-    // }
+    [Fact]
+    public void Nao_Deve_Calcular_Multa_Se_Nao_Esta_Atrasado()
+    {
+        var leitor = CriarLeitorValido();
+        var livro = CriarLivroValido();
+        var dataEmprestimo = DateTime.Today;
+        var dataPrevista = DateTime.Today.AddDays(5);
+        var emprestimo = new Emprestimo(leitor, livro, dataEmprestimo, dataPrevista);
 
-    // [Fact]
-    // public void Nao_Deve_Calcular_Multa_Se_Nao_Esta_Atrasado()
-    // {
-    //     var leitor = CriarLeitorValido();
-    //     var livro = CriarLivroValido();
-    //     var dataEmprestimo = DateTime.Today;
-    //     var dataPrevista = DateTime.Today.AddDays(5);
-    //     var emprestimo = new Emprestimo(leitor, livro, dataEmprestimo, dataPrevista);
+        emprestimo.FinalizarEmprestimo(DateTime.Today);
 
-    //     emprestimo.FinalizarEmprestimo(DateTime.Today);
-
-    //     emprestimo.CalcularMulta().Should().Be(0.00m);
-    // }
+        emprestimo.CalcularMulta().Should().Be(0.00m);
+    }
     #endregion
 }

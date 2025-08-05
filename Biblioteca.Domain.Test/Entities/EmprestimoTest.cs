@@ -84,89 +84,89 @@ public class EmprestimoTest
         act.Should().Throw<ArgumentNullException>().Where(e => e.ParamName == "livro");
     }
 
-    // [Fact]
-    // public void Deve_Finalizar_Emprestimo_Ativo()
-    // {
-    //     var leitor = CriarLeitorValido();
-    //     var livro = CriarLivroValido();
-    //     var dataEmprestimo = DateTime.Today;
-    //     var dataPrevista = dataEmprestimo.AddDays(7);
-    //     var emprestimo = new Emprestimo(leitor, livro, dataEmprestimo, dataPrevista);
+    [Fact]
+    public void Deve_Finalizar_Emprestimo_Ativo()
+    {
+        // Arrange é quando preparamos os dados necessários para o teste.
+        var leitor = CriarLeitorValido();
+        var livro = CriarLivroValido(); var dataEmprestimo = DateTime.Today;
+        var dataPrevista = dataEmprestimo.AddDays(7);
+        var emprestimo = new Emprestimo(leitor, livro, dataEmprestimo, dataPrevista);
+        livro.Emprestar(); // Simulando que o livro está emprestado.
+        // Act é quando executamos a ação que queremos testar. aqui no caso é a finalização do empréstimo.
+        emprestimo.FinalizarEmprestimo(DateTime.Today.AddDays(8));
+        // Assert é quando verificamos se o resultado é o esperado.
+        emprestimo.Status.Should().Be(EStatusEmprestimo.Finalizado);
+        emprestimo.DataRealDevolucao.Should().Be(DateTime.Today.AddDays(8));
+        livro.Disponivel.Should().BeTrue();
+    }
 
-    //     emprestimo.FinalizarEmprestimo(DateTime.Today.AddDays(8));
+    [Fact]
+    public void Nao_Deve_Finalizar_Emprestimo_Ja_Finalizado()
+    {
+        var leitor = CriarLeitorValido();
+        var livro = CriarLivroValido();
+        var dataEmprestimo = DateTime.Today;
+        var dataPrevista = dataEmprestimo.AddDays(7);
+        var emprestimo = new Emprestimo(leitor, livro, dataEmprestimo, dataPrevista);
+        livro.Emprestar(); // Simulando que o livro está emprestado.
+        emprestimo.FinalizarEmprestimo(DateTime.Today.AddDays(8));
 
-    //     emprestimo.Status.Should().Be(EStatusEmprestimo.Finalizado);
-    //     emprestimo.DataRealDevolucao.Should().Be(DateTime.Today.AddDays(8));
-    //     livro.Disponivel.Should().BeTrue();
-    // }
+        Action act = () => emprestimo.FinalizarEmprestimo(DateTime.Today.AddDays(9));
+        act.Should().Throw<InvalidOperationException>().WithMessage("Este empréstimo já foi finalizado.");
+    }
 
-    // [Fact]
-    // public void Nao_Deve_Finalizar_Emprestimo_Ja_Finalizado()
-    // {
-    //     var leitor = CriarLeitorValido();
-    //     var livro = CriarLivroValido();
-    //     var dataEmprestimo = DateTime.Today;
-    //     var dataPrevista = dataEmprestimo.AddDays(7);
-    //     var emprestimo = new Emprestimo(leitor, livro, dataEmprestimo, dataPrevista);
+    [Fact]
+    public void Deve_Retornar_Emprestimo_Em_Andamento_Quando_Ativo_E_Sem_Devolucao()
+    {
+        var leitor = CriarLeitorValido();
+        var livro = CriarLivroValido();
+        var dataEmprestimo = DateTime.Today;
+        var dataPrevista = dataEmprestimo.AddDays(7);
+        var emprestimo = new Emprestimo(leitor, livro, dataEmprestimo, dataPrevista);
 
-    //     emprestimo.FinalizarEmprestimo(DateTime.Today.AddDays(8));
+        emprestimo.EmprestimoEmAndamento().Should().BeTrue();
+    }
 
-    //     Action act = () => emprestimo.FinalizarEmprestimo(DateTime.Today.AddDays(9));
-    //     act.Should().Throw<InvalidOperationException>().WithMessage("Este empréstimo já foi finalizado.");
-    // }
+    [Fact]
+    public void Deve_Retornar_EstaAtrasado_True_Quando_Apos_DataPrevista()
+    {
+        var leitor = CriarLeitorValido();
+        var livro = CriarLivroValido();
+        var dataEmprestimo = DateTime.Today.AddDays(-10);
+        var dataPrevista = DateTime.Today.AddDays(-5);
+        var emprestimo = new Emprestimo(leitor, livro, dataEmprestimo, dataPrevista);
 
-    // [Fact]
-    // public void Deve_Retornar_Emprestimo_Em_Andamento_Quando_Ativo_E_Sem_Devolucao()
-    // {
-    //     var leitor = CriarLeitorValido();
-    //     var livro = CriarLivroValido();
-    //     var dataEmprestimo = DateTime.Today;
-    //     var dataPrevista = dataEmprestimo.AddDays(7);
-    //     var emprestimo = new Emprestimo(leitor, livro, dataEmprestimo, dataPrevista);
+        emprestimo.FinalizarEmprestimo(DateTime.Today);
 
-    //     emprestimo.EmprestimoEmAndamento().Should().BeTrue();
-    // }
+        emprestimo.EstaAtrasado().Should().BeTrue();
+    }
 
-    // [Fact]
-    // public void Deve_Retornar_EstaAtrasado_True_Quando_Apos_DataPrevista()
-    // {
-    //     var leitor = CriarLeitorValido();
-    //     var livro = CriarLivroValido();
-    //     var dataEmprestimo = DateTime.Today.AddDays(-10);
-    //     var dataPrevista = DateTime.Today.AddDays(-5);
-    //     var emprestimo = new Emprestimo(leitor, livro, dataEmprestimo, dataPrevista);
+    [Fact]
+    public void Deve_Calcular_Multa_Corretamente()
+    {
+        var leitor = CriarLeitorValido();
+        var livro = CriarLivroValido();
+        var dataEmprestimo = DateTime.Today.AddDays(-10);
+        var dataPrevista = DateTime.Today.AddDays(-5);
+        var emprestimo = new Emprestimo(leitor, livro, dataEmprestimo, dataPrevista);
 
-    //     emprestimo.FinalizarEmprestimo(DateTime.Today);
+        emprestimo.FinalizarEmprestimo(DateTime.Today);
+        emprestimo.CalcularMulta().Should().Be(5.00m);
+    }
 
-    //     emprestimo.EstaAtrasado().Should().BeTrue();
-    // }
+    [Fact]
+    public void Nao_Deve_Calcular_Multa_Se_Nao_Esta_Atrasado()
+    {
+        var leitor = CriarLeitorValido();
+        var livro = CriarLivroValido();
+        var dataEmprestimo = DateTime.Today;
+        var dataPrevista = DateTime.Today.AddDays(5);
+        var emprestimo = new Emprestimo(leitor, livro, dataEmprestimo, dataPrevista);
 
-    // [Fact]
-    // public void Deve_Calcular_Multa_Corretamente()
-    // {
-    //     var leitor = CriarLeitorValido();
-    //     var livro = CriarLivroValido();
-    //     var dataEmprestimo = DateTime.Today.AddDays(-10);
-    //     var dataPrevista = DateTime.Today.AddDays(-5);
-    //     var emprestimo = new Emprestimo(leitor, livro, dataEmprestimo, dataPrevista);
+        emprestimo.FinalizarEmprestimo(DateTime.Today);
 
-    //     emprestimo.FinalizarEmprestimo(DateTime.Today);
-
-    //     emprestimo.CalcularMulta().Should().Be(5.00m);
-    // }
-
-    // [Fact]
-    // public void Nao_Deve_Calcular_Multa_Se_Nao_Esta_Atrasado()
-    // {
-    //     var leitor = CriarLeitorValido();
-    //     var livro = CriarLivroValido();
-    //     var dataEmprestimo = DateTime.Today;
-    //     var dataPrevista = DateTime.Today.AddDays(5);
-    //     var emprestimo = new Emprestimo(leitor, livro, dataEmprestimo, dataPrevista);
-
-    //     emprestimo.FinalizarEmprestimo(DateTime.Today);
-
-    //     emprestimo.CalcularMulta().Should().Be(0.00m);
-    // }
+        emprestimo.CalcularMulta().Should().Be(0.00m);
+    }
     #endregion
 }

@@ -116,31 +116,31 @@ public class EmprestimoTest
         act.Should().Throw<InvalidOperationException>().WithMessage("Este empréstimo já foi finalizado.");
     }
 
-    // [Fact]
-    // public void Deve_Retornar_Emprestimo_Em_Andamento_Quando_Ativo_E_Sem_Devolucao()
-    // {
-    //     var leitor = CriarLeitorValido();
-    //     var livro = CriarLivroValido();
-    //     var dataEmprestimo = DateTime.Today;
-    //     var dataPrevista = dataEmprestimo.AddDays(7);
-    //     var emprestimo = new Emprestimo(leitor, livro, dataEmprestimo, dataPrevista);
+    [Fact]
+    public void Deve_Retornar_Emprestimo_Em_Andamento_Quando_Ativo_E_Sem_Devolucao()
+    {
+        var leitor = CriarLeitorValido();
+        var livro = CriarLivroValido();
+        var dataEmprestimo = DateTime.Today;
+        var dataPrevista = dataEmprestimo.AddDays(7);
+        var emprestimo = new Emprestimo(leitor, livro, dataEmprestimo, dataPrevista);
 
-    //     emprestimo.EmprestimoEmAndamento().Should().BeTrue();
-    // }
+        emprestimo.EmprestimoEmAndamento().Should().BeTrue();
+    }
 
-    // [Fact]
-    // public void Deve_Retornar_EstaAtrasado_True_Quando_Apos_DataPrevista()
-    // {
-    //     var leitor = CriarLeitorValido();
-    //     var livro = CriarLivroValido();
-    //     var dataEmprestimo = DateTime.Today.AddDays(-10);
-    //     var dataPrevista = DateTime.Today.AddDays(-5);
-    //     var emprestimo = new Emprestimo(leitor, livro, dataEmprestimo, dataPrevista);
+    [Fact]
+    public void Deve_Retornar_EstaAtrasado_True_Quando_Apos_DataPrevista()
+    {
+        var leitor = CriarLeitorValido();
+        var livro = CriarLivroValido();
+        var dataEmprestimo = DateTime.Today.AddDays(-10);
+        var dataPrevista = DateTime.Today.AddDays(-5);
+        var emprestimo = new Emprestimo(leitor, livro, dataEmprestimo, dataPrevista);
 
-    //     emprestimo.FinalizarEmprestimo(DateTime.Today);
+        emprestimo.FinalizarEmprestimo(DateTime.Today);
 
-    //     emprestimo.EstaAtrasado().Should().BeTrue();
-    // }
+        emprestimo.EstaAtrasado().Should().BeTrue();
+    }
 
     // [Fact]
     // public void Deve_Calcular_Multa_Corretamente()

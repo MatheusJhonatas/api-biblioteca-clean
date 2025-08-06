@@ -6,6 +6,7 @@ namespace Biblioteca.Domain.Test.ValueObjects;
 
 public class CpfTest
 {
+    #region Testes Unitários
     [Fact]
     public void Deve_Criar_Cpf_Valido()
     {
@@ -26,4 +27,25 @@ public class CpfTest
         // Act & Assert
         action.Should().Throw<ArgumentException>().WithMessage("CPF inválido*");
     }
+    [Fact]
+    public void Nao_Deve_Criar_Cpf_Com_Numero_Nulo()
+    {
+        // Arrange
+        Action action = () => new CPF(null);
+
+        // Act & Assert
+        action.Should().Throw<ArgumentException>().WithMessage("CPF não pode ser nulo ou vazio*")
+            .And.ParamName.Should().Be("numero");
+    }
+    [Fact]
+    public void Nao_Deve_Criar_Cpf_Com_Numero_Vazio()
+    {
+        // Arrange
+        Action action = () => new CPF("");
+
+        // Act & Assert
+        action.Should().Throw<ArgumentException>().WithMessage("CPF não pode ser nulo ou vazio*")
+            .And.ParamName.Should().Be("numero");
+    }
+    #endregion
 }

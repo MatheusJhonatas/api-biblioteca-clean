@@ -1,6 +1,7 @@
 using System;
 using Biblioteca.Domain.Entities;
 using Biblioteca.Domain.Enums;
+using Biblioteca.Domain.Extensions;
 
 public class Emprestimo : Entity
 {
@@ -37,7 +38,7 @@ public class Emprestimo : Entity
 
     public bool EstaAtrasado()
     {
-        var referencia = DataRealDevolucao ?? DateTime.Now;
+        var referencia = DataRealDevolucao ?? DateTime.Now.ToBrasiliaTime();
         return referencia > DataPrevistaDevolucao;
     }
 
@@ -45,7 +46,7 @@ public class Emprestimo : Entity
     {
         if (!EstaAtrasado()) return 0m;
 
-        var diasAtraso = ((DataRealDevolucao ?? DateTime.Now) - DataPrevistaDevolucao).Days;
+        var diasAtraso = ((DataRealDevolucao ?? DateTime.Now.ToBrasiliaTime()) - DataPrevistaDevolucao).Days;
         return diasAtraso * 1.00m;
     }
 

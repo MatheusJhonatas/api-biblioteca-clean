@@ -4,6 +4,7 @@
 
 using System;
 using Biblioteca.Domain.Enums;
+using Biblioteca.Domain.Extensions;
 
 namespace Biblioteca.Domain.Entities;
 
@@ -21,7 +22,7 @@ public class Reserva : Entity
     {
         Usuario = usuario ?? throw new ArgumentNullException(nameof(usuario));
         Livro = livro ?? throw new ArgumentNullException(nameof(livro));
-        DataReserva = DateTime.Now;
+        DataReserva = DateTime.Now.ToBrasiliaTime();
         Status = EStatusReserva.Ativa;
     }
     #endregion
@@ -42,7 +43,7 @@ public class Reserva : Entity
 
     public bool EstaValida()
     {
-        return Status == EStatusReserva.Ativa && DataReserva.AddDays(3) > DateTime.Now;
+        return Status == EStatusReserva.Ativa && DataReserva.AddDays(3) > DateTime.Now.ToBrasiliaTime();
     }
     #endregion
 }

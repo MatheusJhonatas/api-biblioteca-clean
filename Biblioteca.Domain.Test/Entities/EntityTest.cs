@@ -2,6 +2,7 @@ using System;
 using Biblioteca.Domain.Entities;
 using Xunit;
 using FluentAssertions;
+namespace Biblioteca.Domain.Test.Entities;
 
 public class EntityFake : Entity
 {

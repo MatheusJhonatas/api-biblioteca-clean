@@ -3,6 +3,7 @@ using Biblioteca.Domain.Enums;
 using Xunit;
 using FluentAssertions;
 using Biblioteca.Domain.ValueObjects;
+namespace Biblioteca.Domain.Test.Entities;
 
 public class EmprestimoTest
 {

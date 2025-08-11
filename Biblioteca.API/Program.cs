@@ -1,5 +1,5 @@
 using Biblioteca.Application.UseCases;
-
+using Biblioteca.Infrastructure.Persistense;
 var builder = WebApplication.CreateBuilder(args);
 
 // Banco de dados (exemplo SQL Server)

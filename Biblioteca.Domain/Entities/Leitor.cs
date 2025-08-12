@@ -10,6 +10,7 @@ namespace Biblioteca.Domain.Entities;
 
 public class Leitor : Entity
 {
+    private readonly List<Reserva> _reservas = new();
     private IList<Emprestimo> _emprestimos;
     #region Propriedades
     public NomeCompleto NomeCompleto { get; private set; }
@@ -18,6 +19,7 @@ public class Leitor : Entity
     public Endereco Endereco { get; private set; }
     public DateTime DataCadastro { get; private set; }
     public IReadOnlyCollection<Emprestimo> Emprestimos { get { return _emprestimos.ToArray(); } }
+    public IReadOnlyCollection<Reserva> Reservas { get { return _reservas.ToArray(); } }
     public bool EstaInadimplente => _emprestimos.Any(e => e.EstaAtrasado());
     public int LimiteEmprestimosAtivos { get; private set; } = 5;
     #endregion

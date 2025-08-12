@@ -1,6 +1,7 @@
 using Biblioteca.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
+namespace Biblioteca.Infrastructure.Persistence.Mappings;
 
 public class LivroMap : IEntityTypeConfiguration<Livro>
 {

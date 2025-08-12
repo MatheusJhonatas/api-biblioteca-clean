@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using Biblioteca.Domain.Entities;
+using Biblioteca.Infrastructure.Persistence.Mappings;
 
 namespace Biblioteca.Infrastructure.Persistense
 {
@@ -14,9 +15,14 @@ namespace Biblioteca.Infrastructure.Persistense
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
-
             // Configurações adicionais de entidades podem ser feitas aqui
             // modelBuilder.Entity<Livro>().ToTable("Livros");
+            modelBuilder.ApplyConfiguration(new LivroMap());
+            modelBuilder.ApplyConfiguration(new AutorMap());
+            modelBuilder.ApplyConfiguration(new LeitorMap());
+            modelBuilder.ApplyConfiguration(new EmprestimoMap());
+            modelBuilder.ApplyConfiguration(new ReservaMap());
+            modelBuilder.ApplyConfiguration(new BibliotecarioMap());
         }
     }
 }

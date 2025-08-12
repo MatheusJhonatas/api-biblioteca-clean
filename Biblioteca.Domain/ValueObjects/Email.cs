@@ -14,6 +14,7 @@ public record class Email : ValueObject
     #region Construtores
     // Construtor da classe Email que recebe o endereço de e-mail e verifica se é válido.
     // Se o endereço for inválido, uma exceção (ArgumentException) é lançada. 
+    public Email() { }
     public Email(string enderecoEmail)
     {
         if (string.IsNullOrWhiteSpace(enderecoEmail) || !enderecoEmail.Contains("@"))

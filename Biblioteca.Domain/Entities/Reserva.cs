@@ -18,6 +18,7 @@ public class Reserva : Entity
     public EStatusReserva Status { get; private set; } // ativa, cancelada, atendida
     #endregion
     #region Construtor
+    public Reserva() : base(Guid.NewGuid()) { }
     public Reserva(Leitor usuario, Livro livro)
         : base(Guid.NewGuid())
     {

@@ -1,6 +1,8 @@
 using Biblioteca.Domain.Entities;
+using Biblioteca.Domain.ValueObjects;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
+
 namespace Biblioteca.Infrastructure.Persistence.Mappings;
 
 public class LivroMap : IEntityTypeConfiguration<Livro>
@@ -15,9 +17,15 @@ public class LivroMap : IEntityTypeConfiguration<Livro>
             .IsRequired()
             .HasMaxLength(200);
 
+        // Mapeando ISBN como Value Object (usando ValueConverter)
         builder.Property(l => l.ISBN)
+            .HasConversion(
+                v => v.Codigo,           // Como salvar no banco (string)
+                v => new ISBN(v)         // Como ler do banco (Value Object)
+            )
+            .HasColumnName("ISBN")
             .IsRequired()
-            .HasMaxLength(13);
+            .HasMaxLength(20);
 
         // Relacionamento com Autor
         builder.HasOne(l => l.Autor)
@@ -25,9 +33,10 @@ public class LivroMap : IEntityTypeConfiguration<Livro>
             .HasForeignKey("AutorId")
             .OnDelete(DeleteBehavior.Restrict);
 
+        // Relacionamento N:N com Categorias (usando campo privado se desejar)
         builder
-    .HasMany(l => l.Categorias)
-    .WithMany() // ou .WithMany(c => c.Livros) se Categoria tiver coleção de livros
+    .HasMany<Categoria>("_categorias")
+    .WithMany()
     .UsingEntity<Dictionary<string, object>>(
         "LivroCategoria",
         j => j.HasOne<Categoria>().WithMany().HasForeignKey("CategoriaId"),

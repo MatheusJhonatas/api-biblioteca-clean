@@ -24,7 +24,7 @@ namespace Biblioteca.Domain.Services
 
             // Supondo que o parâmetro int seja 'numeroPaginas', defina um valor apropriado, por exemplo 0 ou solicite como argumento do método
             int numeroPaginas = 0; // ajuste conforme necessário
-            return new Livro(titulo, autor, isbn, anoPublicacao, numeroPaginas, categorias);
+            return new Livro(titulo, autor, isbn, numeroPaginas, anoPublicacao, categorias);
         }
 
         public void EditarLivro(

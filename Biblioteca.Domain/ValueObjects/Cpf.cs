@@ -14,6 +14,7 @@ namespace Biblioteca.Domain.ValueObjects
         #endregion
 
         #region Construtores
+        public CPF() { }
 
         public CPF(string numero)
         {

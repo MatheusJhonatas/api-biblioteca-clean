@@ -8,9 +8,10 @@ public class BibliotecaDbContextFactory : IDesignTimeDbContextFactory<Biblioteca
 {
     public BibliotecaDbContext CreateDbContext(string[] args)
     {
+        var basePath = Path.Combine(Directory.GetCurrentDirectory(), "..", "Biblioteca.API");
         // Configura builder para ler o appsettings.json
         IConfigurationRoot configuration = new ConfigurationBuilder()
-            .SetBasePath(Directory.GetCurrentDirectory()) // caminho atual
+            .SetBasePath(basePath) // caminho atual
             .AddJsonFile("appsettings.json")
             .Build();
 

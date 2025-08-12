@@ -12,6 +12,7 @@ public record class ISBN : ValueObject
     #endregion
 
     #region Construtores
+    public ISBN() { }
     public ISBN(string codigo)
     {
         if (string.IsNullOrWhiteSpace(codigo) || (codigo.Length != 10 && codigo.Length != 13))

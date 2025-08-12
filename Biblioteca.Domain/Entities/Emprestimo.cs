@@ -17,6 +17,8 @@ public class Emprestimo : Entity
     public EStatusEmprestimo Status { get; private set; }
     #endregion
     #region Construtor
+    public Emprestimo() : base(Guid.NewGuid()) { }
+
     public Emprestimo(Leitor usuario, Livro livro, DateTime dataEmprestimo, DateTime dataPrevistaDevolucao)
         : base(Guid.NewGuid())
     {

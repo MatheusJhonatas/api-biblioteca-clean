@@ -19,6 +19,7 @@ public record class Endereco : ValueObject
     #endregion
 
     #region Construtores
+    public Endereco() { }
     public Endereco(string rua, string numero, string bairro, string cidade, string estado, string cep)
     {
         if (string.IsNullOrWhiteSpace(rua)) throw new ArgumentException("Rua é obrigatória.");

@@ -17,6 +17,8 @@ public class Bibliotecario : Entity
 
     #region Construtores
     // Construtor para inicializar as propriedades do bibliotecário.
+    public Bibliotecario() : base(Guid.NewGuid()) { }
+
     public Bibliotecario(NomeCompleto nomeCompleto, Email email, string matricula, string cargo)
          : base(Guid.NewGuid())
     {

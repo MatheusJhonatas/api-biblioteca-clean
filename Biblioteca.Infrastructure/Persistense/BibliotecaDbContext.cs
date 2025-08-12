@@ -10,6 +10,7 @@ namespace Biblioteca.Infrastructure.Persistense
         public DbSet<Leitor> Usuarios { get; set; }
         public DbSet<Emprestimo> Emprestimos { get; set; }
         public DbSet<Reserva> Reservas { get; set; }
+        public DbSet<Bibliotecario> Bibliotecarios { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);

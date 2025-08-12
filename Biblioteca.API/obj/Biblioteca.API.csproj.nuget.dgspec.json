@@ -29,6 +29,9 @@
               "C:\\Dev\\api-biblioteca-clean\\Biblioteca.Application\\Biblioteca.Application.csproj": {
                 "projectPath": "C:\\Dev\\api-biblioteca-clean\\Biblioteca.Application\\Biblioteca.Application.csproj"
               },
+              "C:\\Dev\\api-biblioteca-clean\\Biblioteca.Domain\\Biblioteca.Domain.csproj": {
+                "projectPath": "C:\\Dev\\api-biblioteca-clean\\Biblioteca.Domain\\Biblioteca.Domain.csproj"
+              },
               "C:\\Dev\\api-biblioteca-clean\\Biblioteca.Infrastructure\\Biblioteca.Infrastructure.csproj": {
                 "projectPath": "C:\\Dev\\api-biblioteca-clean\\Biblioteca.Infrastructure\\Biblioteca.Infrastructure.csproj"
               }
@@ -49,6 +52,16 @@
       "frameworks": {
         "net8.0": {
           "targetAlias": "net8.0",
+          "dependencies": {
+            "Microsoft.AspNetCore.OpenApi": {
+              "target": "Package",
+              "version": "[8.0.18, )"
+            },
+            "Swashbuckle.AspNetCore": {
+              "target": "Package",
+              "version": "[6.6.2, )"
+            }
+          },
           "imports": [
             "net461",
             "net462",
@@ -61,6 +74,9 @@
           "assetTargetFallback": true,
           "warn": true,
           "frameworkReferences": {
+            "Microsoft.AspNetCore.App": {
+              "privateAssets": "none"
+            },
             "Microsoft.NETCore.App": {
               "privateAssets": "all"
             }
@@ -237,6 +253,22 @@
       "frameworks": {
         "net8.0": {
           "targetAlias": "net8.0",
+          "dependencies": {
+            "Microsoft.EntityFrameWorkCore": {
+              "target": "Package",
+              "version": "[9.0.8, )"
+            },
+            "Microsoft.EntityFrameWorkCore.SqlServer": {
+              "target": "Package",
+              "version": "[9.0.8, )"
+            },
+            "Microsoft.EntityFrameWorkCore.design": {
+              "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[9.0.8, )"
+            }
+          },
           "imports": [
             "net461",
             "net462",

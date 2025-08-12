@@ -7,6 +7,9 @@ public class Emprestimo : Entity
 {
     #region Propriedades
     public Leitor Usuario { get; private set; }
+    public Guid UsuarioId => Usuario.Id;
+    public Guid LivroId => Livro.Id;
+
     public Livro Livro { get; private set; }
     public DateTime DataEmprestimo { get; private set; }
     public DateTime DataPrevistaDevolucao { get; private set; }

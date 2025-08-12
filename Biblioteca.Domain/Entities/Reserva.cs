@@ -13,6 +13,7 @@ public class Reserva : Entity
     #region Propriedades
     public Leitor Usuario { get; private set; }
     public Livro Livro { get; private set; }
+    public Guid LivroId => Livro.Id;
     public DateTime DataReserva { get; private set; }
     public EStatusReserva Status { get; private set; } // ativa, cancelada, atendida
     #endregion

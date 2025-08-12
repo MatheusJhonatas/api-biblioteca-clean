@@ -16,6 +16,7 @@ public record class NomeCompleto : ValueObject
     #region Construtores
     //Construtor da classe NomeCompleto que recebe o primeiro e último nome, e verifica se são válidos.
     // Se algum dos nomes for inválido, uma exceção (ArgumentException) é lançada.
+    public NomeCompleto() { }
     public NomeCompleto(string primeiroNome, string ultimoNome)
     {
 

@@ -15,6 +15,7 @@ public class Autor : Entity
     #endregion
     #region Construtores
     // Construtor da classe Autor que recebe NomeCompleto, Email e DataNascimento.
+    public Autor() : base(Guid.NewGuid()) { }
     public Autor(NomeCompleto nomeCompleto, Email email, DateTime dataNascimento) : base(Guid.NewGuid())
     {
         NomeCompleto = nomeCompleto;

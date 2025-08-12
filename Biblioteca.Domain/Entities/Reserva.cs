@@ -13,11 +13,12 @@ public class Reserva : Entity
     #region Propriedades
     public Leitor Usuario { get; private set; }
     public Livro Livro { get; private set; }
-    public Guid LivroId => Livro.Id;
+    public Guid LivroId { get; private set; }
     public DateTime DataReserva { get; private set; }
     public EStatusReserva Status { get; private set; } // ativa, cancelada, atendida
     #endregion
     #region Construtor
+    public Reserva() : base(Guid.NewGuid()) { }
     public Reserva(Leitor usuario, Livro livro)
         : base(Guid.NewGuid())
     {

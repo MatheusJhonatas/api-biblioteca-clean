@@ -17,34 +17,39 @@ public class LivroMap : IEntityTypeConfiguration<Livro>
             .IsRequired()
             .HasMaxLength(200);
 
-        // Mapeando ISBN como Value Object (usando ValueConverter)
+        builder.Property(l => l.NumeroPaginas)
+            .IsRequired();
+
         builder.Property(l => l.ISBN)
             .HasConversion(
-                v => v.Codigo,           // Como salvar no banco (string)
-                v => new ISBN(v)         // Como ler do banco (Value Object)
+                v => v.Codigo,
+                v => new ISBN(v)
             )
             .HasColumnName("ISBN")
             .IsRequired()
             .HasMaxLength(20);
 
-        // Relacionamento com Autor
         builder.HasOne(l => l.Autor)
-            .WithMany() // ou .WithMany(a => a.Livros) se existir na entidade Autor
+            .WithMany()
             .HasForeignKey("AutorId")
             .OnDelete(DeleteBehavior.Restrict);
 
-        // Relacionamento N:N com Categorias (usando campo privado se desejar)
+        // Ignora a propriedade pública para evitar conflito com o campo privado
+        builder.Ignore(l => l.Categorias);
+
+        // Mapeia relacionamento N:N usando campo privado
         builder
-    .HasMany<Categoria>("_categorias")
-    .WithMany()
-    .UsingEntity<Dictionary<string, object>>(
-        "LivroCategoria",
-        j => j.HasOne<Categoria>().WithMany().HasForeignKey("CategoriaId"),
-        j => j.HasOne<Livro>().WithMany().HasForeignKey("LivroId"),
-        j =>
-        {
-            j.HasKey("LivroId", "CategoriaId");
-            j.ToTable("LivroCategoria");
-        });
+            .HasMany<Categoria>("_categorias")
+            .WithMany()
+            .UsingEntity<Dictionary<string, object>>(
+                "LivroCategoria",
+                j => j.HasOne<Categoria>().WithMany().HasForeignKey("CategoriaId"),
+                j => j.HasOne<Livro>().WithMany().HasForeignKey("LivroId"),
+                j =>
+                {
+                    j.HasKey("LivroId", "CategoriaId");
+                    j.ToTable("LivroCategoria");
+                });
     }
+
 }

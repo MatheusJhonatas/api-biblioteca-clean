@@ -16,7 +16,7 @@ namespace Biblioteca.Domain.Entities
         public bool Disponivel { get; private set; }
 
         // Encapsulamento correto para coleção de navegação
-        private readonly List<Categoria> _categorias = new();
+        private readonly List<Categoria> _categorias;
         public IReadOnlyCollection<Categoria> Categorias => _categorias.AsReadOnly();
         #endregion
 

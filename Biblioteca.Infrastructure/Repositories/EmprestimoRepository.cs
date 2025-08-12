@@ -1,5 +1,5 @@
 using Biblioteca.Domain.Interfaces;
-using Biblioteca.Infrastructure.Persistense;
+using Biblioteca.Infrastructure.Persistence;
 
 namespace Biblioteca.Infrastructure.Repositories;
 

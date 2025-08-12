@@ -1,6 +1,6 @@
 using Biblioteca.Domain.Entities;
 using Biblioteca.Domain.Interfaces;
-using Biblioteca.Infrastructure.Persistense;
+using Biblioteca.Infrastructure.Persistence;
 namespace Biblioteca.Infrastructure.Repositories;
 
 public class BibliotecarioRepository : IBibliotecarioRepository

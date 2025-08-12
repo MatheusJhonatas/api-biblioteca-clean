@@ -11,15 +11,15 @@ namespace Biblioteca.Domain.Entities;
 public class Leitor : Entity
 {
     private readonly List<Reserva> _reservas = new();
-    private IList<Emprestimo> _emprestimos;
+    private readonly List<Emprestimo> _emprestimos = new();
     #region Propriedades
     public NomeCompleto NomeCompleto { get; private set; }
     public Email Email { get; private set; }
     public CPF CPF { get; private set; }
     public Endereco Endereco { get; private set; }
     public DateTime DataCadastro { get; private set; }
-    public IReadOnlyCollection<Emprestimo> Emprestimos { get { return _emprestimos.ToArray(); } }
-    public IReadOnlyCollection<Reserva> Reservas { get { return _reservas.ToArray(); } }
+    public IReadOnlyCollection<Emprestimo> Emprestimos { get { return _emprestimos.AsReadOnly(); } }
+    public IReadOnlyCollection<Reserva> Reservas { get { return _reservas.AsReadOnly(); } }
     public bool EstaInadimplente => _emprestimos.Any(e => e.EstaAtrasado());
     public int LimiteEmprestimosAtivos { get; private set; } = 5;
     #endregion

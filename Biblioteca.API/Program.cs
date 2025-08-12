@@ -6,6 +6,7 @@ using Biblioteca.Domain.Interfaces;
 using Biblioteca.Domain.Services;
 using Microsoft.EntityFrameworkCore;
 using Biblioteca.Infrastructure.Persistense;
+using Biblioteca.Infrastructure.Repositories;
 
 
 var builder = WebApplication.CreateBuilder(args);

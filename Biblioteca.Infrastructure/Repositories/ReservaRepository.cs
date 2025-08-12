@@ -2,6 +2,7 @@ using Biblioteca.Domain.Entities;
 using Biblioteca.Domain.Interfaces;
 using Biblioteca.Infrastructure.Persistense;
 using Microsoft.EntityFrameworkCore;
+namespace Biblioteca.Infrastructure.Repositories;
 
 public class ReservaRepository : IReservaRepository
 {

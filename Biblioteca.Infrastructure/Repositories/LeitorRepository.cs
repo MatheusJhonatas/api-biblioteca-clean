@@ -1,6 +1,7 @@
 using Biblioteca.Domain.Entities;
 using Biblioteca.Domain.Interfaces;
 using Biblioteca.Infrastructure.Persistense;
+namespace Biblioteca.Infrastructure.Repositories;
 
 public class LeitorRepository : ILeitorRepository
 {

@@ -8,6 +8,8 @@ namespace Biblioteca.Infrastructure.Persistense
         public DbSet<Livro> Livros { get; set; }
         public DbSet<Autor> Autores { get; set; }
         public DbSet<Leitor> Usuarios { get; set; }
+        public DbSet<Emprestimo> Emprestimos { get; set; }
+        public DbSet<Reserva> Reservas { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);

@@ -16,7 +16,7 @@ namespace Biblioteca.Application.UseCases.Livros
             _bibliotecarioService = bibliotecarioService;
         }
 
-        public LivroResponse Execute(CadastrarLivroRequest request)
+        public async Task<LivroResponse> Execute(CadastrarLivroRequest request)
         {
             var livro = _bibliotecarioService.CadastrarLivro(
                 request.Titulo,

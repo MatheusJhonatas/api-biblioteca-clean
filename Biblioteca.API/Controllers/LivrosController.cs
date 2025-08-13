@@ -15,7 +15,7 @@ public class LivrosController : ControllerBase
     {
         _cadastrarLivro = cadastrarLivro;
     }
-    [HttpPost]
+    [HttpPost("v1/livros")]
     public async Task<IActionResult> CadastrarLivro(
         [FromBody] CadastrarLivroRequest request)
     {

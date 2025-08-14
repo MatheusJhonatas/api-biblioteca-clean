@@ -53,11 +53,11 @@ public class LivroRepository : ILivroRepository
     public async Task<Livro?> ObterPorTituloEAutorAsync(string titulo, string nomeCompletoAutor)
     {
         return await _context.Livros
-             .Include(l => l.Autor)
-             .FirstOrDefaultAsync(l =>
-                 l.Titulo.ToLower() == titulo.ToLower() &&
-                 l.Autor.NomeCompleto.ToString().ToLower() == nomeCompletoAutor.ToLower()
-             );
+            .Include(l => l.Autor)
+            .FirstOrDefaultAsync(l =>
+                l.Titulo.ToLower() == titulo.ToLower() &&
+                l.Autor.NomeCompleto.ToString().ToLower() == nomeCompletoAutor.ToLower()
+            );
 
     }
 }

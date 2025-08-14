@@ -9,4 +9,5 @@ public interface ILivroRepository
     void Salvar(Livro livro);
     void Remover(Livro livro);
     IEnumerable<Livro> ListarDisponiveis();
+    Task<Livro?> ObterPorTituloEAutorAsync(string titulo, string nomeCompletoAutor);
 }

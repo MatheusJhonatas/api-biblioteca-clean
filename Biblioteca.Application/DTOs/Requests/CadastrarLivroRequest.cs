@@ -9,6 +9,7 @@ namespace Biblioteca.Application.DTOs.Requests
         public AutorRequest Autor { get; set; }
         public string ISBN { get; set; }
         public int AnoPublicacao { get; set; }
+        public int NumeroPaginas { get; set; }
         public List<CategoriaRequest> Categorias { get; set; }
     }
 

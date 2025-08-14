@@ -12,6 +12,7 @@ namespace Biblioteca.Domain.Services
             Autor autor,
             ISBN isbn,
             int anoPublicacao,
+            int numeroPaginas,
             List<Categoria> categorias)
         {
             if (string.IsNullOrWhiteSpace(titulo)) throw new ArgumentException("Título inválido.");
@@ -23,7 +24,7 @@ namespace Biblioteca.Domain.Services
                 throw new ArgumentException("O livro deve ter ao menos uma categoria.");
 
             // Supondo que o parâmetro int seja 'numeroPaginas', defina um valor apropriado, por exemplo 0 ou solicite como argumento do método
-            int numeroPaginas = 0; // ajuste conforme necessário
+            // int numeroPaginas = 0; // ajuste conforme necessário
             return new Livro(titulo, autor, isbn, numeroPaginas, anoPublicacao, categorias);
         }
 

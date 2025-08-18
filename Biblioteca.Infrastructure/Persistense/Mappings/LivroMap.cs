@@ -28,6 +28,9 @@ public class LivroMap : IEntityTypeConfiguration<Livro>
             .HasColumnName("ISBN")
             .IsRequired()
             .HasMaxLength(20);
+        builder.HasIndex(l => l.ISBN)
+            .IsUnique()
+            .HasDatabaseName("IX_Livro_ISBN");
 
         builder.HasOne(l => l.Autor)
             .WithMany()

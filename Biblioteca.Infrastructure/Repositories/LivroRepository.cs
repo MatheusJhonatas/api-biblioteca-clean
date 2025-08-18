@@ -14,33 +14,36 @@ namespace Biblioteca.Infrastructure.Repositories
             _context = context;
         }
 
-        public Livro ObterPorId(Guid id)
+        public async Task<Livro?> ObterPorIdAsync(Guid id)
         {
-            return _context.Livros
+            return await _context.Livros
                 .Include(l => l.Autor)
                 .Include(l => l.Categorias)
-                .FirstOrDefault(l => l.Id == id);
+                .FirstOrDefaultAsync(l => l.Id == id);
         }
 
-        public void Salvar(Livro livro)
+        public async Task<Livro> SalvarAsync(Livro livro)
         {
-            _context.Livros.Add(livro);
-            _context.SaveChanges();
+            await _context.Livros.AddAsync(livro);
+            await _context.SaveChangesAsync();
+            return livro;
         }
 
-        public void Atualizar(Livro livro)
+        public async Task<Livro> AtualizarAsync(Livro livro)
         {
             _context.Livros.Update(livro);
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
+            return livro;
         }
 
-        public void Remover(Livro livro)
+        public async Task<Livro> RemoverAsync(Livro livro)
         {
             _context.Livros.Remove(livro);
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
+            return livro;
         }
 
-        public IEnumerable<Livro> ListarDisponiveis()
+        public async Task<IEnumerable<Livro>> ListarDisponiveisAsync()
         {
             return _context.Livros
                 .Include(l => l.Autor)
@@ -51,18 +54,18 @@ namespace Biblioteca.Infrastructure.Repositories
         public async Task<Livro?> ObterPorTituloEAutorAsync(string titulo, string nomeCompletoAutor)
         {
             return await _context.Livros
-                .Include(l => l.Autor)
-                .AsEnumerable() // força execução em memória
-                .FirstOrDefault(l =>
-                    l.Titulo.Equals(titulo, StringComparison.OrdinalIgnoreCase) &&
-                    l.Autor.NomeCompleto.ToString().Equals(nomeCompletoAutor, StringComparison.OrdinalIgnoreCase)
-                );
+    .Include(l => l.Autor)
+    .FirstOrDefaultAsync(l =>
+        l.Titulo.ToLower() == titulo.ToLower() &&
+        (l.Autor.NomeCompleto.PrimeiroNome + " " + l.Autor.NomeCompleto.UltimoNome).ToLower() == nomeCompletoAutor.ToLower()
+    );
         }
 
         public async Task<Livro?> ObterPorISBNAsync(string isbn)
         {
             return await _context.Livros
-                .FirstOrDefaultAsync(l => l.ISBN.Codigo == isbn);
+                .FirstOrDefaultAsync(l => l.ISBN.Codigo == isbn)
+                ;
         }
     }
 }

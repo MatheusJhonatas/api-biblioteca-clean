@@ -6,6 +6,6 @@ namespace Biblioteca.Domain.Interfaces
     {
         Task<Autor?> ObterPorEmailAsync(string email);
         Task<Autor?> ObterPorIdAsync(Guid id);
-        void Salvar(Autor autor);
+        Task<Autor> SalvarAsync(Autor autor);
     }
 }

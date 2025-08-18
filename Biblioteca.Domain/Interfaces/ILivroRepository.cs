@@ -4,11 +4,11 @@ namespace Biblioteca.Domain.Interfaces
 {
     public interface ILivroRepository
     {
-        Livro ObterPorId(Guid id);
-        void Salvar(Livro livro);
-        void Atualizar(Livro livro);
-        void Remover(Livro livro);
-        IEnumerable<Livro> ListarDisponiveis();
+        Task<Livro?> ObterPorIdAsync(Guid id);
+        Task<Livro> SalvarAsync(Livro livro);
+        Task<Livro> AtualizarAsync(Livro livro);
+        Task<Livro> RemoverAsync(Livro livro);
+        Task<IEnumerable<Livro>> ListarDisponiveisAsync();
 
         Task<Livro?> ObterPorTituloEAutorAsync(string titulo, string nomeCompletoAutor);
         Task<Livro?> ObterPorISBNAsync(string isbn); // ✅ novo método

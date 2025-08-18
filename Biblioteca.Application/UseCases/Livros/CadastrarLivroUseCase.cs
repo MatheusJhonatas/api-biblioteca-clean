@@ -4,17 +4,22 @@ using Biblioteca.Domain.Entities;
 using Biblioteca.Domain.Interfaces;
 using Biblioteca.Domain.Services;
 using Biblioteca.Domain.ValueObjects;
+
 namespace Biblioteca.Application.UseCases.Livros
 {
     public class CadastrarLivroUseCase
     {
         private readonly ILivroRepository _livroRepo;
+        private readonly IAutorRepository _autorRepo;
         private readonly BibliotecarioService _bibliotecarioService;
 
-
-        public CadastrarLivroUseCase(ILivroRepository livroRepo, BibliotecarioService bibliotecarioService)
+        public CadastrarLivroUseCase(
+            ILivroRepository livroRepo,
+            IAutorRepository autorRepo,
+            BibliotecarioService bibliotecarioService)
         {
             _livroRepo = livroRepo;
+            _autorRepo = autorRepo;
             _bibliotecarioService = bibliotecarioService;
         }
 
@@ -22,14 +27,7 @@ namespace Biblioteca.Application.UseCases.Livros
         {
             try
             {
-                // Verificar duplicidade
-                var livroExistente = await _livroRepo.ObterPorTituloEAutorAsync(request.Titulo, request.Autor.NomeCompleto);
-                if (livroExistente != null)
-                {
-                    return ResultResponse<LivroResponse>.Fail("Já existe um livro cadastrado com este título e autor.");
-                }
-
-                // 🔹 Validações básicas
+                // 🔹 1. Validações de entrada
                 if (string.IsNullOrWhiteSpace(request.Titulo))
                     return ResultResponse<LivroResponse>.Fail("O título do livro é obrigatório.");
 
@@ -39,22 +37,42 @@ namespace Biblioteca.Application.UseCases.Livros
                 if (request.Autor == null)
                     return ResultResponse<LivroResponse>.Fail("As informações do autor são obrigatórias.");
 
-                //criando o autor, e dado o value object Nome completo, estamos garantindo que o nome esteja sempre em um formato válido, que é "Nome Sobrenome"
-                var autor = new Autor(
-                    new NomeCompleto(
-                        request.Autor.NomeCompleto.Split(' ')[0],
-                        request.Autor.NomeCompleto.Split(' ').Skip(1).DefaultIfEmpty("").FirstOrDefault()
-                    ),
-                    new Email(request.Autor.Email),
-                    request.Autor.DataNascimento
-                );
-                //criando as categorias e dado o value object TipoCategoria, estamos garantindo que o tipo esteja sempre em um formato válido. Então fazemos o select criando uma nova categoria e batento nos Enums cadastrados.
+                if (string.IsNullOrWhiteSpace(request.ISBN))
+                    return ResultResponse<LivroResponse>.Fail("O ISBN é obrigatório.");
+
+                // 🔹 2. Verificar duplicidade de livro (ISBN deve ser único)
+                var livroExistente = await _livroRepo.ObterPorISBNAsync(request.ISBN);
+                if (livroExistente != null)
+                    return ResultResponse<LivroResponse>.Fail("Já existe um livro cadastrado com este ISBN.");
+
+                // 🔹 3. Verificar se o autor já existe (por e-mail, chave natural)
+                var autorExistente = await _autorRepo.ObterPorEmailAsync(request.Autor.Email);
+
+                Autor autor;
+                if (autorExistente != null)
+                {
+                    autor = autorExistente;
+                }
+                else
+                {
+                    autor = new Autor(
+                        new NomeCompleto(
+                            request.Autor.NomeCompleto.Split(' ')[0],
+                            request.Autor.NomeCompleto.Split(' ').Skip(1).DefaultIfEmpty("").FirstOrDefault()
+                        ),
+                        new Email(request.Autor.Email),
+                        request.Autor.DataNascimento
+                    );
+                }
+
+                // 🔹 4. Mapear categorias
                 var categorias = request.Categorias
                     .Select(c => new Categoria(c.Nome, (Domain.Enums.ETipoCategoria)c.Tipo))
                     .ToList();
 
                 var isbn = new ISBN(request.ISBN);
-                //CRIANDO LIVRO VIA SERVICE DE DOMINIO
+
+                // 🔹 5. Criar livro via domínio
                 var livro = _bibliotecarioService.CadastrarLivro(
                     request.Titulo,
                     autor,
@@ -63,8 +81,10 @@ namespace Biblioteca.Application.UseCases.Livros
                     request.NumeroPaginas,
                     categorias
                 );
+
                 _livroRepo.Salvar(livro);
 
+                // 🔹 6. Montar resposta
                 var response = new LivroResponse(
                     livro.Id,
                     livro.Titulo,
@@ -77,7 +97,8 @@ namespace Biblioteca.Application.UseCases.Livros
             }
             catch (Exception ex)
             {
-                return ResultResponse<LivroResponse>.Fail($"Erro ao cadastrar livro: {ex.Message}");
+                // 🔹 Só cai aqui erros inesperados (ex: banco offline)
+                return ResultResponse<LivroResponse>.Fail($"Erro interno ao cadastrar livro: {ex.Message}");
             }
         }
     }

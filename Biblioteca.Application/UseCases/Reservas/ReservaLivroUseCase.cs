@@ -18,10 +18,10 @@ namespace Biblioteca.Application.UseCases.Reservas
             _reservaRepo = reservaRepo;
         }
 
-        public ReservaResponse Execute(ReservarLivroRequest request)
+        public async Task<ReservaResponse> ExecuteAsync(ReservarLivroRequest request)
         {
             var leitor = _leitorRepo.ObterPorId(request.LeitorId) ?? throw new ArgumentException("Leitor não encontrado.");
-            var livro = _livroRepo.ObterPorId(request.LivroId) ?? throw new ArgumentException("Livro não encontrado.");
+            var livro = await _livroRepo.ObterPorIdAsync(request.LivroId) ?? throw new ArgumentException("Livro não encontrado.");
 
             if (livro.Disponivel)
                 throw new InvalidOperationException("Livro disponível não pode ser reservado.");

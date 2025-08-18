@@ -12,9 +12,9 @@ namespace Biblioteca.Application.UseCases.Livros
             _livroRepo = livroRepo;
         }
 
-        public IEnumerable<LivroResponse> Execute()
+        public async Task<IEnumerable<LivroResponse>> ExecuteAsync()
         {
-            var livros = _livroRepo.ListarDisponiveis();
+            var livros = await _livroRepo.ListarDisponiveisAsync();
             return livros.Select(l => new LivroResponse(l.Id, l.Titulo, l.Autor.NomeCompleto.ToString(), l.AnoPublicacao, l.Disponivel));
         }
     }

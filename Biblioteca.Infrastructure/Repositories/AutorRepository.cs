@@ -25,10 +25,11 @@ namespace Biblioteca.Infrastructure.Repositories
             return await _context.Autores.FindAsync(id);
         }
 
-        public void Salvar(Autor autor)
+        public async Task<Autor> SalvarAsync(Autor autor)
         {
-            _context.Autores.Add(autor);
-            _context.SaveChanges();
+            await _context.Autores.AddAsync(autor);
+            await _context.SaveChangesAsync();
+            return autor;
         }
     }
 }

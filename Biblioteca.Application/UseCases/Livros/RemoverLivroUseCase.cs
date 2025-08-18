@@ -14,11 +14,11 @@ namespace Biblioteca.Application.UseCases.Livros
             _bibliotecarioService = bibliotecarioService;
         }
 
-        public void Execute(Guid livroId)
+        public async Task ExecuteAsync(Guid livroId)
         {
-            var livro = _livroRepo.ObterPorId(livroId) ?? throw new ArgumentException("Livro não encontrado.");
+            var livro = await _livroRepo.ObterPorIdAsync(livroId) ?? throw new ArgumentException("Livro não encontrado.");
             _bibliotecarioService.RemoverLivro(livro);
-            _livroRepo.Remover(livro);
+            await _livroRepo.RemoverAsync(livro);
         }
     }
 }

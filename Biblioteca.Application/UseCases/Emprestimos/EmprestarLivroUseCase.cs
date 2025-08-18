@@ -20,10 +20,10 @@ namespace Biblioteca.Application.UseCases.Emprestimos
             _emprestimoService = emprestimoService;
         }
 
-        public EmprestimoResponse Execute(EmprestarLivroRequest request)
+        public async Task<EmprestimoResponse> ExecuteAsync(EmprestarLivroRequest request)
         {
             var leitor = _leitorRepo.ObterPorId(request.LeitorId) ?? throw new ArgumentException("Leitor não encontrado.");
-            var livro = _livroRepo.ObterPorId(request.LivroId) ?? throw new ArgumentException("Livro não encontrado.");
+            var livro = await _livroRepo.ObterPorIdAsync(request.LivroId) ?? throw new ArgumentException("Livro não encontrado.");
 
             var emprestimo = _emprestimoService.RealizarEmprestimo(leitor, livro);
             _emprestimoRepo.Salvar(emprestimo);

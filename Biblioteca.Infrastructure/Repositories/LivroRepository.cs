@@ -1,5 +1,6 @@
 using Biblioteca.Domain.Entities;
 using Biblioteca.Domain.Interfaces;
+using Biblioteca.Domain.ValueObjects;
 using Biblioteca.Infrastructure.Persistence;
 using Microsoft.EntityFrameworkCore;
 
@@ -61,11 +62,12 @@ namespace Biblioteca.Infrastructure.Repositories
     );
         }
 
-        public async Task<Livro?> ObterPorISBNAsync(string isbn)
+        public async Task<Livro> ObterPorISBNAsync(string isbn)
         {
+            var isbnVO = new ISBN(isbn);
+            // Comparando diretamente com o ValueObject ISBN, que o EF já converte para string via HasConversion
             return await _context.Livros
-                .FirstOrDefaultAsync(l => l.ISBN.Codigo == isbn)
-                ;
+                .FirstOrDefaultAsync(l => l.ISBN == isbnVO);
         }
     }
 }

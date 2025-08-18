@@ -16,9 +16,18 @@ namespace Biblioteca.Application.DTOs.Requests
     public class AutorRequest
     {
         public Guid Id { get; set; }
-        public string NomeCompleto { get; set; }
-        public string Email { get; set; }
+        public NomeCompletoRequest NomeCompleto { get; set; }
+        public EmailRequest Email { get; set; }
         public DateTime DataNascimento { get; set; }
+    }
+    public class NomeCompletoRequest
+    {
+        public string PrimeiroNome { get; set; }
+        public string UltimoNome { get; set; }
+    }
+    public class EmailRequest
+    {
+        public string EnderecoEmail { get; set; }
     }
 
     public class CategoriaRequest

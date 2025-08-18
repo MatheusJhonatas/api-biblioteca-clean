@@ -4,6 +4,8 @@ using Biblioteca.Domain.Entities;
 using Biblioteca.Domain.Interfaces;
 using Biblioteca.Domain.Services;
 using Biblioteca.Domain.ValueObjects;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace Biblioteca.Application.UseCases.Livros;
 
@@ -30,6 +32,10 @@ public class CadastrarLivroUseCase
             // 🔹 1. Validações de entrada
             if (string.IsNullOrWhiteSpace(request.Titulo))
                 return ResultResponse<LivroResponse>.Fail("O título do livro é obrigatório.");
+            if (request.Autor.DataNascimento > DateTime.Today)
+                return ResultResponse<LivroResponse>.Fail("A data de nascimento não pode ser futura.");
+            if (request.Autor.DataNascimento == default)
+                return ResultResponse<LivroResponse>.Fail("A data de nascimento do autor é obrigatória e deve ser válida.");
 
             if (request.NumeroPaginas <= 0)
                 return ResultResponse<LivroResponse>.Fail("O número de páginas deve ser maior que zero.");
@@ -46,8 +52,8 @@ public class CadastrarLivroUseCase
                 return ResultResponse<LivroResponse>.Fail("Já existe um livro cadastrado com este ISBN.");
 
             // 🔹 3. Verificar se o autor já existe
-            var autorExistente = await _autorRepo.ObterPorEmailAsync(request.Autor.Email);
-            Autor autor = autorExistente ?? CriarNovoAutor(request);
+            var autorExistente = await _autorRepo.ObterPorEmailAsync(request.Autor.Email.EnderecoEmail);
+            Autor autor = autorExistente ?? CriarNovoAutor(request.Autor);
 
             // 🔹 4. Salvar autor apenas se for novo
             if (autorExistente == null)
@@ -62,7 +68,7 @@ public class CadastrarLivroUseCase
             var livro = _bibliotecarioService.CadastrarLivro(
                 request.Titulo,
                 autor,
-                new ISBN(request.ISBN),
+                new ISBN(request.ISBN), // cria ValueObject
                 request.AnoPublicacao,
                 request.NumeroPaginas,
                 categorias
@@ -87,17 +93,16 @@ public class CadastrarLivroUseCase
         }
     }
 
-    // 🔹 Método auxiliar para criar novo autor
-    private static Autor CriarNovoAutor(CadastrarLivroRequest request)
+    // 🔹 Método auxiliar para criar novo autor a partir do DTO
+    private static Autor CriarNovoAutor(AutorRequest autorRequest)
     {
-        var nomes = request.Autor.NomeCompleto.Split(' ', 2);
-        var primeiroNome = nomes[0];
-        var sobrenome = nomes.Length > 1 ? nomes[1] : string.Empty;
-
-        return new Autor(
-            new NomeCompleto(primeiroNome, sobrenome),
-            new Email(request.Autor.Email),
-            request.Autor.DataNascimento
+        var nomeCompleto = new NomeCompleto(
+            autorRequest.NomeCompleto.PrimeiroNome,
+            autorRequest.NomeCompleto.UltimoNome
         );
+
+        var email = new Email(autorRequest.Email.EnderecoEmail);
+
+        return new Autor(nomeCompleto, email, autorRequest.DataNascimento);
     }
 }

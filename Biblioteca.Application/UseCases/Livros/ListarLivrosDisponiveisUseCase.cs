@@ -6,7 +6,6 @@ namespace Biblioteca.Application.UseCases.Livros
     public class ListarLivrosDisponiveisUseCase
     {
         private readonly ILivroRepository _livroRepo;
-
         public ListarLivrosDisponiveisUseCase(ILivroRepository livroRepo)
         {
             _livroRepo = livroRepo;

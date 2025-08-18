@@ -1,13 +1,16 @@
 using Biblioteca.Domain.Entities;
 
-namespace Biblioteca.Domain.Interfaces;
-
-public interface ILivroRepository
+namespace Biblioteca.Domain.Interfaces
 {
-    Livro ObterPorId(Guid id);
-    void Atualizar(Livro livro);
-    void Salvar(Livro livro);
-    void Remover(Livro livro);
-    IEnumerable<Livro> ListarDisponiveis();
-    Task<Livro?> ObterPorTituloEAutorAsync(string titulo, string nomeCompletoAutor);
+    public interface ILivroRepository
+    {
+        Task<Livro?> ObterPorIdAsync(Guid id);
+        Task<Livro> SalvarAsync(Livro livro);
+        Task<Livro> AtualizarAsync(Livro livro);
+        Task<Livro> RemoverAsync(Livro livro);
+        Task<IEnumerable<Livro>> ListarDisponiveisAsync();
+
+        Task<Livro?> ObterPorTituloEAutorAsync(string titulo, string nomeCompletoAutor);
+        Task<Livro?> ObterPorISBNAsync(string isbn); // ✅ novo método
+    }
 }

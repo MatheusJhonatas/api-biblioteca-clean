@@ -18,7 +18,7 @@ public class BibliotecarioServiceTest
 
         var categorias = new List<Categoria> { new Categoria("Romance", ETipoCategoria.Romance) };
 
-        var livro = service.CadastrarLivro("Samsung Essentials", autor, new ISBN("1234567800"), 2020, categorias);
+        var livro = service.CadastrarLivro("Samsung Essentials", autor, new ISBN("1234567800"), 2020, 350, categorias);
         livro.Should().NotBeNull();
         livro.Titulo.Should().Be("Samsung Essentials");
         livro.Autor.Should().Be(autor);

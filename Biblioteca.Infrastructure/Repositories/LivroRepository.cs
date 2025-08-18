@@ -3,62 +3,69 @@ using Biblioteca.Domain.Interfaces;
 using Biblioteca.Infrastructure.Persistence;
 using Microsoft.EntityFrameworkCore;
 
-namespace Biblioteca.Infrastructure.Repositories;
-
-//Essa class representa o repositório de livros. Repository é uma camada de abstração que encapsula a lógica de acesso a dados.
-public class LivroRepository : ILivroRepository
+namespace Biblioteca.Infrastructure.Repositories
 {
-    // Contexto do banco de dados, injetado via construtor
-    private readonly BibliotecaDbContext _context;
-    //Construtor que recebe o contexto do banco de dados
-    public LivroRepository(BibliotecaDbContext context)
+    public class LivroRepository : ILivroRepository
     {
-        _context = context;
-    }
-    //método para obter um livro pelo ID, incluindo autor e categorias 
-    public Livro ObterPorId(Guid id)
-    {
-        return _context.Livros
-            .Include(l => l.Autor)
-            .Include(l => l.Categorias)
-            .FirstOrDefault(l => l.Id == id);
-    }
-    //metodo para salvar um livro, incluindo autor e categorias
-    public void Salvar(Livro livro)
-    {
-        _context.Livros.Add(livro);
-        _context.SaveChanges();
-    }
-    //método para atualizar um livro, incluindo autor e categorias
-    public void Atualizar(Livro livro)
-    {
-        _context.Livros.Update(livro);
-        _context.SaveChanges();
-    }
-    /// Método para remover um livro do banco de dados.
-    public void Remover(Livro livro)
-    {
-        _context.Livros.Remove(livro);
-        _context.SaveChanges();
-    }
-    //método para listar todos os livros disponíveis, utilizando IEnumerable para retorno 
-    public IEnumerable<Livro> ListarDisponiveis()
-    {
-        return _context.Livros
-            .Include(l => l.Autor)
-            .Where(l => l.Disponivel)
-            .ToList();
-    }
+        private readonly BibliotecaDbContext _context;
 
-    public async Task<Livro?> ObterPorTituloEAutorAsync(string titulo, string nomeCompletoAutor)
-    {
-        return await _context.Livros
-            .Include(l => l.Autor)
-            .FirstOrDefaultAsync(l =>
-                l.Titulo.ToLower() == titulo.ToLower() &&
-                l.Autor.NomeCompleto.ToString().ToLower() == nomeCompletoAutor.ToLower()
-            );
+        public LivroRepository(BibliotecaDbContext context)
+        {
+            _context = context;
+        }
 
+        public async Task<Livro?> ObterPorIdAsync(Guid id)
+        {
+            return await _context.Livros
+                .Include(l => l.Autor)
+                .Include(l => l.Categorias)
+                .FirstOrDefaultAsync(l => l.Id == id);
+        }
+
+        public async Task<Livro> SalvarAsync(Livro livro)
+        {
+            await _context.Livros.AddAsync(livro);
+            await _context.SaveChangesAsync();
+            return livro;
+        }
+
+        public async Task<Livro> AtualizarAsync(Livro livro)
+        {
+            _context.Livros.Update(livro);
+            await _context.SaveChangesAsync();
+            return livro;
+        }
+
+        public async Task<Livro> RemoverAsync(Livro livro)
+        {
+            _context.Livros.Remove(livro);
+            await _context.SaveChangesAsync();
+            return livro;
+        }
+
+        public async Task<IEnumerable<Livro>> ListarDisponiveisAsync()
+        {
+            return _context.Livros
+                .Include(l => l.Autor)
+                .Where(l => l.Disponivel)
+                .ToList();
+        }
+
+        public async Task<Livro?> ObterPorTituloEAutorAsync(string titulo, string nomeCompletoAutor)
+        {
+            return await _context.Livros
+    .Include(l => l.Autor)
+    .FirstOrDefaultAsync(l =>
+        l.Titulo.ToLower() == titulo.ToLower() &&
+        (l.Autor.NomeCompleto.PrimeiroNome + " " + l.Autor.NomeCompleto.UltimoNome).ToLower() == nomeCompletoAutor.ToLower()
+    );
+        }
+
+        public async Task<Livro?> ObterPorISBNAsync(string isbn)
+        {
+            return await _context.Livros
+                .FirstOrDefaultAsync(l => l.ISBN.Codigo == isbn)
+                ;
+        }
     }
 }
-

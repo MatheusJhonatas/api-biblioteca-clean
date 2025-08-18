@@ -16,6 +16,7 @@ builder.Services.AddDbContext<BibliotecaDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
 // Repositórios
+builder.Services.AddScoped<IAutorRepository, AutorRepository>();
 builder.Services.AddScoped<ILivroRepository, LivroRepository>();
 builder.Services.AddScoped<ILeitorRepository, LeitorRepository>();
 builder.Services.AddScoped<IEmprestimoRepository, EmprestimoRepository>();

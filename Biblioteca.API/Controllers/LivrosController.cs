@@ -12,10 +12,11 @@ public class LivrosController : ControllerBase
     private readonly ListarLivrosDisponiveisUseCase _listarLivros;
     private readonly ObterLivroPorIdUseCase _obterLivroPorId;
 
-    public LivrosController(CadastrarLivroUseCase cadastrarLivro, ListarLivrosDisponiveisUseCase listarLivros)
+    public LivrosController(CadastrarLivroUseCase cadastrarLivro, ListarLivrosDisponiveisUseCase listarLivros, ObterLivroPorIdUseCase obterLivroPorId)
     {
         _cadastrarLivro = cadastrarLivro;
         _listarLivros = listarLivros;
+        _obterLivroPorId = obterLivroPorId;
     }
 
     [HttpPost("v1/livros")]

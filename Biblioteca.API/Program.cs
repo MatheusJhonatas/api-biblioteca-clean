@@ -32,6 +32,7 @@ builder.Services.AddScoped<CadastrarLivroUseCase>();
 builder.Services.AddScoped<EditarLivroUseCase>();
 builder.Services.AddScoped<RemoverLivroUseCase>();
 builder.Services.AddScoped<ListarLivrosDisponiveisUseCase>();
+builder.Services.AddScoped<ObterLivroPorIdUseCase>();
 builder.Services.AddScoped<EmprestarLivroUseCase>();
 builder.Services.AddScoped<DevolverLivroUseCase>();
 builder.Services.AddScoped<ReservarLivroUseCase>();

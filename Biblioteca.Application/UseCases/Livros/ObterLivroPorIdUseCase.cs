@@ -19,7 +19,7 @@ namespace Biblioteca.Application.UseCases.Livros
                 var livro = await _livroRepo.ObterPorIdAsync(id);
 
                 if (livro == null)
-                    return ResultResponse<LivroResponse>.Fail("Livro não encontrado.");
+                    return ResultResponse<LivroResponse>.Fail("Livro não encontrado, verifique o id digitado..");
 
                 // Cria o DTO de forma segura, tratando nulls nos ValueObjects
                 var response = new LivroResponse(

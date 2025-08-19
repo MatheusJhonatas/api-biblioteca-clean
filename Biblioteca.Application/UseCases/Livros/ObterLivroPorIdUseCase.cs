@@ -24,7 +24,7 @@ namespace Biblioteca.Application.UseCases.Livros
                 // Cria o DTO de forma segura, tratando nulls nos ValueObjects
                 var response = new LivroResponse(
                     livro.Id,
-                    livro.Titulo,
+                    livro.Titulo ?? "Titulo Desconhecido",
                     livro.Autor?.NomeCompleto?.ToString() ?? "Autor desconhecido",
                     livro.AnoPublicacao,
                     livro.Disponivel

@@ -19,7 +19,7 @@ namespace Biblioteca.Infrastructure.Repositories
         {
             return await _context.Livros
                 .Include(l => l.Autor)
-                .Include(l => l.Categorias)
+                // .Include(l => l.Categorias)
                 .FirstOrDefaultAsync(l => l.Id == id);
         }
 

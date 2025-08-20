@@ -9,7 +9,6 @@ namespace Biblioteca.Domain.Interfaces
         Task<Livro> AtualizarAsync(Livro livro);
         Task<Livro> RemoverAsync(Livro livro);
         Task<IEnumerable<Livro>> ListarDisponiveisAsync();
-
         Task<Livro?> ObterPorTituloEAutorAsync(string titulo, string nomeCompletoAutor);
         Task<Livro?> ObterPorISBNAsync(string isbn);
     }

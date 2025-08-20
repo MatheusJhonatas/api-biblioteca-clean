@@ -1,3 +1,4 @@
+using Biblioteca.Application.DTOs.Responses;
 using Biblioteca.Domain.Interfaces;
 using Biblioteca.Domain.Services;
 
@@ -13,12 +14,25 @@ namespace Biblioteca.Application.UseCases.Livros
             _livroRepo = livroRepo;
             _bibliotecarioService = bibliotecarioService;
         }
-
-        public async Task ExecuteAsync(Guid livroId)
+        public async Task<ResultResponse<string>> ExecuteAsync(Guid livroId)
         {
-            var livro = await _livroRepo.ObterPorIdAsync(livroId) ?? throw new ArgumentException("Livro não encontrado.");
-            _bibliotecarioService.RemoverLivro(livro);
-            await _livroRepo.RemoverAsync(livro);
+            try
+            {
+                var livro = await _livroRepo.ObterPorIdAsync(livroId);
+
+                if (livro == null)
+                    return ResultResponse<string>.Fail("Livro não encontrado.");
+
+                _bibliotecarioService.RemoverLivro(livro);
+
+                await _livroRepo.RemoverAsync(livro);
+
+                return ResultResponse<string>.Ok("Livro removido com sucesso!");
+            }
+            catch (Exception ex)
+            {
+                return ResultResponse<string>.Fail($"Erro ao remover livro: {ex.Message}");
+            }
         }
     }
 }

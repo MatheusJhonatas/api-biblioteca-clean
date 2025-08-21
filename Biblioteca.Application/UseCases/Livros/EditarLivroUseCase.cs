@@ -7,18 +7,25 @@ namespace Biblioteca.Application.UseCases.Livros
     public class EditarLivroUseCase
     {
         private readonly ILivroRepository _livroRepo;
-        private readonly BibliotecarioService _bibliotecarioService;
+        //Por hora vou somente editar o livro via swagger, mas como melhoria vamos implementar a edição via serviço com o bibliotecario.
+        // private readonly BibliotecarioService _bibliotecarioService;
 
-        public EditarLivroUseCase(ILivroRepository livroRepo, BibliotecarioService bibliotecarioService)
+        public EditarLivroUseCase(ILivroRepository livroRepo)
         {
             _livroRepo = livroRepo;
-            _bibliotecarioService = bibliotecarioService;
         }
 
         public async Task ExecuteAsync(EditarLivroRequest request)
         {
-            var livro = await _livroRepo.ObterPorIdAsync(request.LivroId) ?? throw new ArgumentException("Livro não encontrado.");
-            _bibliotecarioService.EditarLivro(livro, request.NovoTitulo, request.NovoAnoPublicacao);
+            var livro = await _livroRepo.ObterPorIdAsync(request.LivroId);
+            if (livro == null)
+                throw new ArgumentException("Livro não encontrado.");
+            // Atualiza só se veio valor novo
+            if (!string.IsNullOrWhiteSpace(request.NovoTitulo))
+                livro.AtualizarTitulo(request.NovoTitulo);
+            // Atualiza só se veio valor novo 
+            if (request.NovoAnoPublicacao.HasValue)
+                livro.AtualizarAnoPublicacao(request.NovoAnoPublicacao.Value);
             await _livroRepo.AtualizarAsync(livro);
         }
     }

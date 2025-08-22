@@ -28,7 +28,8 @@ namespace Biblioteca.Application.UseCases.Livros
                     livro.Autor?.NomeCompleto?.ToString() ?? "Autor desconhecido",
                     livro.AnoPublicacao,
                     livro.Disponivel,
-                    livro.NumeroPaginas
+                    livro.NumeroPaginas,
+                    livro.Descricao
                 );
 
                 return ResultResponse<LivroResponse>.Ok(response);

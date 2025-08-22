@@ -14,6 +14,7 @@ namespace Biblioteca.Domain.Entities
         public int AnoPublicacao { get; private set; }
         public int NumeroPaginas { get; private set; }
         public bool Disponivel { get; private set; }
+        public string? Descricao { get; private set; }
 
         // Encapsulamento correto para coleção de navegação
         private readonly List<Categoria> _categorias;
@@ -22,7 +23,7 @@ namespace Biblioteca.Domain.Entities
 
         #region Contrutores
         public Livro() : base(Guid.NewGuid()) { }
-        public Livro(string titulo, Autor autor, ISBN isbn, int numeroPaginas, int anoPublicacao, List<Categoria> categorias) : base(Guid.NewGuid())
+        public Livro(string titulo, Autor autor, ISBN isbn, int numeroPaginas, int anoPublicacao, List<Categoria> categorias, string? descricao = null) : base(Guid.NewGuid())
         {
             Titulo = titulo;
             Autor = autor;
@@ -31,6 +32,7 @@ namespace Biblioteca.Domain.Entities
             NumeroPaginas = numeroPaginas;
             _categorias = categorias ?? new List<Categoria>();
             Disponivel = true;
+            Descricao = descricao;
         }
         #endregion
 

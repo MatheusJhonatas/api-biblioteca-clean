@@ -1,4 +1,5 @@
 using Biblioteca.Application.DTOs.Requests;
+using Biblioteca.Application.DTOs.Responses;
 using Biblioteca.Domain.Interfaces;
 using Biblioteca.Domain.Services;
 
@@ -15,18 +16,30 @@ namespace Biblioteca.Application.UseCases.Livros
             _livroRepo = livroRepo;
         }
 
-        public async Task ExecuteAsync(EditarLivroRequest request)
+        public async Task<ResultResponse<LivroResponse>> ExecuteAsync(Guid livroId, EditarLivroRequest request)
         {
-            var livro = await _livroRepo.ObterPorIdAsync(request.LivroId);
+            var livro = await _livroRepo.ObterPorIdAsync(livroId);
             if (livro == null)
                 throw new ArgumentException("Livro não encontrado.");
             // Atualiza só se veio valor novo
             if (!string.IsNullOrWhiteSpace(request.NovoTitulo))
-                livro.AtualizarTitulo(request.NovoTitulo);
+                livro.AlterarTitulo(request.NovoTitulo);
             // Atualiza só se veio valor novo 
             if (request.NovoAnoPublicacao.HasValue)
-                livro.AtualizarAnoPublicacao(request.NovoAnoPublicacao.Value);
+                livro.AlterarAnoPublicacao(request.NovoAnoPublicacao.Value);
+            // Atualiza só se veio valor novo
+            if (request.NovoNumeroPaginas.HasValue)
+                livro.AlterarNumeroPaginas(request.NovoNumeroPaginas.Value);
             await _livroRepo.AtualizarAsync(livro);
+            // Retorna o livro atualizado
+            return ResultResponse<LivroResponse>.Ok(new LivroResponse(
+                livro.Id,
+                livro.Titulo,
+                livro.Autor.NomeCompleto.ToString(),
+                livro.AnoPublicacao,
+                livro.Disponivel,
+                livro.NumeroPaginas
+            ), "Livro atualizado com sucesso!");
         }
     }
 }

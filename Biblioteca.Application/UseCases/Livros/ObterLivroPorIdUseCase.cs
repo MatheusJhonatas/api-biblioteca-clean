@@ -21,13 +21,14 @@ namespace Biblioteca.Application.UseCases.Livros
                 if (livro == null)
                     return ResultResponse<LivroResponse>.Fail("Livro não encontrado, verifique o id digitado..");
 
-                // Cria o DTO de forma segura, tratando nulls nos ValueObjects
+                // // Cria o DTO de forma segura, tratando nulls nos ValueObjects
                 var response = new LivroResponse(
                     livro.Id,
                     livro.Titulo ?? "Titulo Desconhecido",
                     livro.Autor?.NomeCompleto?.ToString() ?? "Autor desconhecido",
                     livro.AnoPublicacao,
-                    livro.Disponivel
+                    livro.Disponivel,
+                    livro.NumeroPaginas
                 );
 
                 return ResultResponse<LivroResponse>.Ok(response);

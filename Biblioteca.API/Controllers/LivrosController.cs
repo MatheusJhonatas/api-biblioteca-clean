@@ -12,13 +12,15 @@ public class LivrosController : ControllerBase
     private readonly ListarLivrosDisponiveisUseCase _listarLivros;
     private readonly ObterLivroPorIdUseCase _obterLivroPorId;
     private readonly RemoverLivroUseCase _removerLivro;
+    private readonly EditarLivroUseCase _editarLivro;
 
-    public LivrosController(CadastrarLivroUseCase cadastrarLivro, ListarLivrosDisponiveisUseCase listarLivros, ObterLivroPorIdUseCase obterLivroPorId, RemoverLivroUseCase removerLivro)
+    public LivrosController(CadastrarLivroUseCase cadastrarLivro, ListarLivrosDisponiveisUseCase listarLivros, ObterLivroPorIdUseCase obterLivroPorId, RemoverLivroUseCase removerLivro, EditarLivroUseCase editarLivro)
     {
         _cadastrarLivro = cadastrarLivro;
         _listarLivros = listarLivros;
         _obterLivroPorId = obterLivroPorId;
         _removerLivro = removerLivro;
+        _editarLivro = editarLivro;
     }
     /// <summary>
     /// Cadastra um novo livro na biblioteca.
@@ -98,4 +100,33 @@ public class LivrosController : ControllerBase
             return StatusCode(500, ResultResponse<string>.Fail("Erro interno ao remover livro."));
         }
     }
+    /// <summary>
+    /// Atualiza parcialmente um livro (título, ano de publicação ou número de páginas).
+    /// </summary>
+    [HttpPatch("v1/livros/{id}")]
+    public async Task<IActionResult> AtualizarLivro(Guid id, [FromBody] EditarLivroRequest request)
+    {
+        try
+        {
+            if (request == null)
+                return BadRequest(ResultResponse<string>.Fail("Dados do livro não podem ser nulos."));
+
+            if (string.IsNullOrWhiteSpace(request.NovoTitulo) && !request.NovoAnoPublicacao.HasValue && !request.NovoNumeroPaginas.HasValue)
+                return BadRequest(ResultResponse<string>.Fail("Pelo menos um campo deve ser atualizado."));
+
+            var resultado = await _editarLivro.ExecuteAsync(id, request);
+
+            if (!resultado.Success)
+                return BadRequest(resultado);
+
+            return Ok(resultado);
+
+        }
+        catch (Exception ex)
+        {
+            return StatusCode(500, ResultResponse<string>.Fail($"Erro interno ao atualizar livro: {ex.Message}"));
+        }
+
+    }
+
 }

@@ -14,7 +14,7 @@ namespace Biblioteca.Application.UseCases.Livros
         public async Task<IEnumerable<LivroResponse>> ExecuteAsync()
         {
             var livros = await _livroRepo.ListarDisponiveisAsync();
-            return livros.Select(l => new LivroResponse(l.Id, l.Titulo, l.Autor.NomeCompleto.ToString(), l.AnoPublicacao, l.Disponivel));
+            return livros.Select(l => new LivroResponse(l.Id, l.Titulo, l.Autor.NomeCompleto.ToString(), l.AnoPublicacao, l.Disponivel, l.NumeroPaginas));
         }
     }
 }

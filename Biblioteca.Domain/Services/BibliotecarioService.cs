@@ -13,6 +13,7 @@ namespace Biblioteca.Domain.Services
             ISBN isbn,
             int anoPublicacao,
             int numeroPaginas,
+            string descricao,
             List<Categoria> categorias)
         {
             if (string.IsNullOrWhiteSpace(titulo)) throw new ArgumentException("Título inválido.");

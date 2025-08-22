@@ -10,7 +10,7 @@ namespace Biblioteca.Application.DTOs.Requests
         public string ISBN { get; set; }
         public int AnoPublicacao { get; set; }
         public int NumeroPaginas { get; set; }
-        public string Descricao { get; set; }
+        public string? Descricao { get; set; }
         public List<CategoriaRequest> Categorias { get; set; }
     }
 

@@ -75,6 +75,12 @@ namespace Biblioteca.Domain.Entities
                 throw new ArgumentException("Ano inválido.");
             AnoPublicacao = novoAno;
         }
+        public void AlterarNumeroPaginas(int novoNumeroPaginas)
+        {
+            if (novoNumeroPaginas <= 0)
+                throw new ArgumentException("Número de páginas inválido.");
+            NumeroPaginas = novoNumeroPaginas;
+        }
         #endregion
     }
 }

@@ -12,14 +12,21 @@ public class LivrosController : ControllerBase
     private readonly ListarLivrosDisponiveisUseCase _listarLivros;
     private readonly ObterLivroPorIdUseCase _obterLivroPorId;
     private readonly RemoverLivroUseCase _removerLivro;
+    private readonly EditarLivroUseCase _editarLivro;
 
-    public LivrosController(CadastrarLivroUseCase cadastrarLivro, ListarLivrosDisponiveisUseCase listarLivros, ObterLivroPorIdUseCase obterLivroPorId, RemoverLivroUseCase removerLivro)
+    public LivrosController(CadastrarLivroUseCase cadastrarLivro, ListarLivrosDisponiveisUseCase listarLivros, ObterLivroPorIdUseCase obterLivroPorId, RemoverLivroUseCase removerLivro, EditarLivroUseCase editarLivro)
     {
         _cadastrarLivro = cadastrarLivro;
         _listarLivros = listarLivros;
         _obterLivroPorId = obterLivroPorId;
         _removerLivro = removerLivro;
+        _editarLivro = editarLivro;
     }
+    /// <summary>
+    /// Cadastra um novo livro na biblioteca.
+    /// </summary>
+    /// <param name="request">Dados necessários para cadastrar o livro.</param>
+    /// <returns>Livro cadastrado com sucesso ou mensagem de erro.</returns>
 
     [HttpPost("v1/livros")]
     public async Task<IActionResult> CadastrarLivro([FromBody] CadastrarLivroRequest request)
@@ -41,6 +48,9 @@ public class LivrosController : ControllerBase
             return StatusCode(500, ResultResponse<string>.Fail($"Erro interno ao cadastrar livro: {ex.Message}"));
         }
     }
+    /// <summary>
+    /// Lista todos os livros disponíveis na biblioteca.
+    /// </summary>
     [HttpGet("v1/livros")]
     public async Task<IActionResult> ListarLivrosAsync()
     {
@@ -54,6 +64,10 @@ public class LivrosController : ControllerBase
             return StatusCode(500, ResultResponse<string>.Fail($"Erro interno ao listar livros: {ex.Message}"));
         }
     }
+    /// <summary>
+    /// Obtém os detalhes de um livro a partir do seu ID.
+    /// </summary>
+    /// <param name="id">Identificador único do livro.</param>
     [HttpGet("v1/livros/{id:guid}")]
     public async Task<IActionResult> ObterLivroPorIdAsync(Guid id)
     {
@@ -67,6 +81,10 @@ public class LivrosController : ControllerBase
             return StatusCode(500, ResultResponse<string>.Fail($"Erro interno ao obter livro: {ex.Message}"));
         }
     }
+    /// <summary>
+    /// Remove um livro do sistema com base no seu ID.
+    /// </summary>
+    /// <param name="id">Identificador único do livro.</param>
     [HttpDelete("v1/livros/{id:guid}")]
     public async Task<IActionResult> DeletarLivroPorIdAsync(Guid id)
     {
@@ -82,4 +100,33 @@ public class LivrosController : ControllerBase
             return StatusCode(500, ResultResponse<string>.Fail("Erro interno ao remover livro."));
         }
     }
+    /// <summary>
+    /// Atualiza parcialmente um livro (título, ano de publicação ou número de páginas).
+    /// </summary>
+    [HttpPatch("v1/livros/{id}")]
+    public async Task<IActionResult> AtualizarLivro(Guid id, [FromBody] EditarLivroRequest request)
+    {
+        try
+        {
+            if (request == null)
+                return BadRequest(ResultResponse<string>.Fail("Dados do livro não podem ser nulos."));
+
+            if (string.IsNullOrWhiteSpace(request.NovoTitulo) && !request.NovoAnoPublicacao.HasValue && !request.NovoNumeroPaginas.HasValue)
+                return BadRequest(ResultResponse<string>.Fail("Pelo menos um campo deve ser atualizado."));
+
+            var resultado = await _editarLivro.ExecuteAsync(id, request);
+
+            if (!resultado.Success)
+                return BadRequest(resultado);
+
+            return Ok(resultado);
+
+        }
+        catch (Exception ex)
+        {
+            return StatusCode(500, ResultResponse<string>.Fail($"Erro interno ao atualizar livro: {ex.Message}"));
+        }
+
+    }
+
 }

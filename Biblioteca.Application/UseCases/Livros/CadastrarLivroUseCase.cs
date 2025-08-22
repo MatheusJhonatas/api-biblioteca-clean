@@ -76,13 +76,14 @@ public class CadastrarLivroUseCase
 
             await _livroRepo.SalvarAsync(livro);
 
-            // 🔹 7. Montar resposta
+            // // 🔹 7. Montar resposta
             var response = new LivroResponse(
-                livro.Id,
-                livro.Titulo,
-                livro.Autor.NomeCompleto.ToString(),
+               livro.Id,
+                livro.Titulo ?? "Titulo Desconhecido",
+                livro.Autor?.NomeCompleto?.ToString() ?? "Autor desconhecido",
                 livro.AnoPublicacao,
-                livro.Disponivel
+                livro.Disponivel,
+                livro.NumeroPaginas
             );
 
             return ResultResponse<LivroResponse>.Ok(response, "Livro cadastrado com sucesso!");

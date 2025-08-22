@@ -27,7 +27,7 @@ namespace Biblioteca.Application.UseCases.Livros
 
                 await _livroRepo.RemoverAsync(livro);
 
-                return ResultResponse<string>.Ok("Livro removido com sucesso!");
+                return ResultResponse<string>.Ok($"Livro {livro.Titulo} removido com sucesso!");
             }
             catch (Exception ex)
             {

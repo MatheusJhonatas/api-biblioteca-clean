@@ -32,6 +32,10 @@ public class LivroMap : IEntityTypeConfiguration<Livro>
             .IsUnique()
             .HasDatabaseName("IX_Livro_ISBN");
 
+        builder.Property(l => l.Descricao)
+            .HasMaxLength(1000)
+            .IsRequired(false);
+
         builder.HasOne(l => l.Autor)
             .WithMany()
             .HasForeignKey("AutorId")

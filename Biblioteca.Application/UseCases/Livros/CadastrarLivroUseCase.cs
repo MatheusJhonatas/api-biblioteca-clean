@@ -71,6 +71,7 @@ public class CadastrarLivroUseCase
                 new ISBN(request.ISBN), // cria ValueObject
                 request.AnoPublicacao,
                 request.NumeroPaginas,
+                request.Descricao,
                 categorias
             );
 

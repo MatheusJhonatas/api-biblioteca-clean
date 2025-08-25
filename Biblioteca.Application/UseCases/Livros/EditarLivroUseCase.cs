@@ -38,7 +38,8 @@ namespace Biblioteca.Application.UseCases.Livros
                 livro.Autor.NomeCompleto.ToString(),
                 livro.AnoPublicacao,
                 livro.Disponivel,
-                livro.NumeroPaginas
+                livro.NumeroPaginas,
+                livro.Descricao
             ), "Livro atualizado com sucesso!");
         }
     }

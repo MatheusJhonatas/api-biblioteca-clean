@@ -20,7 +20,7 @@ namespace Biblioteca.Application.UseCases.Reservas
 
         public async Task<ReservaResponse> ExecuteAsync(ReservarLivroRequest request)
         {
-            var leitor = _leitorRepo.ObterPorId(request.LeitorId) ?? throw new ArgumentException("Leitor não encontrado.");
+            var leitor = await _leitorRepo.ObterPorIdAsync(request.LeitorId) ?? throw new ArgumentException("Leitor não encontrado.");
             var livro = await _livroRepo.ObterPorIdAsync(request.LivroId) ?? throw new ArgumentException("Livro não encontrado.");
 
             if (livro.Disponivel)

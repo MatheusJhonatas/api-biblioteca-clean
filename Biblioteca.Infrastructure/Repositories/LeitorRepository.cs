@@ -1,6 +1,7 @@
 using Biblioteca.Domain.Entities;
 using Biblioteca.Domain.Interfaces;
 using Biblioteca.Infrastructure.Persistence;
+using Microsoft.EntityFrameworkCore;
 namespace Biblioteca.Infrastructure.Repositories;
 
 public class LeitorRepository : ILeitorRepository
@@ -12,20 +13,51 @@ public class LeitorRepository : ILeitorRepository
         _context = context;
     }
 
-    public void Atualizar(Leitor leitor)
+    public async Task AtualizarAsync(Leitor leitor)
     {
         _context.Usuarios.Update(leitor);
-        _context.SaveChanges();
+        await _context.SaveChangesAsync();
     }
 
-    public Leitor ObterPorId(Guid id)
+    public async Task DeletarAsync(Guid id)
     {
-        return _context.Usuarios.Find(id);
+        var leitor = await ObterPorIdAsync(id);
+        if (leitor != null)
+        {
+            _context.Usuarios.Remove(leitor);
+            await _context.SaveChangesAsync();
+        }
     }
 
-    public void Salvar(Leitor leitor)
+    public async Task<Leitor> ObterPorEmailAsync(string email)
     {
-        _context.Usuarios.Add(leitor);
-        _context.SaveChanges();
+        return await _context.Usuarios
+            .FirstOrDefaultAsync(l => l.Email.EnderecoEmail == email);
+    }
+
+    public async Task<Leitor> ObterPorIdAsync(Guid id)
+    {
+        return await _context.Usuarios
+            .Include(l => l.Emprestimos)
+            .Include(l => l.Reservas)
+            .FirstOrDefaultAsync(l => l.Id == id);
+    }
+
+    public async Task<IEnumerable<Leitor>> ObterTodosAsync()
+    {
+        return await _context.Usuarios.ToListAsync();
+    }
+
+    public async Task SalvarAsync(Leitor leitor)
+    {
+        if (leitor.Id == Guid.Empty)
+        {
+            await _context.Usuarios.AddAsync(leitor);
+        }
+        else
+        {
+            _context.Usuarios.Update(leitor);
+        }
+        await _context.SaveChangesAsync();
     }
 }

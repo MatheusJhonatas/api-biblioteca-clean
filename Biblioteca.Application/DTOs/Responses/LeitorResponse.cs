@@ -1,0 +1,1 @@
+namespace Biblioteca.Application.DTOs.Responses;

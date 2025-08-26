@@ -3,7 +3,10 @@ namespace Biblioteca.Domain.Interfaces;
 
 public interface ILeitorRepository
 {
-    Leitor ObterPorId(Guid id);
-    void Atualizar(Leitor leitor);
-    void Salvar(Leitor leitor);
+    Task<Leitor> ObterPorIdAsync(Guid id);
+    Task<IEnumerable<Leitor>> ObterTodosAsync();
+    Task<Leitor> ObterPorEmailAsync(string email);
+    Task AtualizarAsync(Leitor leitor);
+    Task SalvarAsync(Leitor leitor);
+    Task DeletarAsync(Guid id);
 }

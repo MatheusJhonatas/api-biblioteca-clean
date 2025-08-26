@@ -1,5 +1,3 @@
-namespace Biblioteca.Application.DTOs.Requests
-{
+namespace Biblioteca.Application.DTOs.Requests;
 
-    public record DevolverLivroRequest(Guid LeitorId, Guid EmprestimoId);
-}
+public record DevolverLivroRequest(Guid LeitorId, Guid EmprestimoId);

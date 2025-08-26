@@ -1,5 +1,4 @@
-namespace Biblioteca.Application.DTOs.Requests
-{
+namespace Biblioteca.Application.DTOs.Requests;
 
-    public record EmprestarLivroRequest(Guid LeitorId, Guid LivroId);
-}
+public record EmprestarLivroRequest(Guid LeitorId, Guid LivroId);
+

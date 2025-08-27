@@ -1,6 +1,8 @@
-using Biblioteca.Application.DTOs.Requests;
+using Biblioteca.Application.DTOs.Requests.Leitor;
+using Biblioteca.Application.DTOs.Requests.Livro;
 using Biblioteca.Application.DTOs.Responses;
 using Biblioteca.Application.UseCases.Livros;
+
 using Microsoft.AspNetCore.Mvc;
 
 namespace Biblioteca.API.Controllers;

@@ -1,4 +1,5 @@
 using Biblioteca.Application.DTOs.Requests;
+using Biblioteca.Application.DTOs.Requests.Livro;
 using Biblioteca.Application.DTOs.Responses;
 using Biblioteca.Application.UseCases.Emprestimos;
 using Microsoft.AspNetCore.Mvc;

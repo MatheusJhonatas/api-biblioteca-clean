@@ -35,7 +35,7 @@ public class EmprestimoServiceTest
         var autor = new Autor(nomeCompleto, email, dataNascimento);
         var isbn = new ISBN("1234567890");
         var categorias = new List<Categoria> { new Categoria("Romance", Biblioteca.Domain.Enums.ETipoCategoria.Romance) };
-        return new Livro("Sapiens.", autor, isbn, 2008, 23, categorias);
+        return new Livro("Sapiens.", autor, isbn, 2008, 23, categorias, descricao: "Um livro sobre a história da humanidade.");
     }
     #endregion
     #region Testes Unitários
@@ -74,7 +74,7 @@ public class EmprestimoServiceTest
         livro.Emprestar(); // importante: marca o livro como emprestado
         emprestimoAtrasado.FinalizarEmprestimo(DateTime.Now); // devolução atrasada
 
-        leitor.AdicionarEmprestimo(emprestimoAtrasado); // leitor agora está inadimplente
+        leitor.RealizarEmprestimo(emprestimoAtrasado); // leitor agora está inadimplente
 
         // Act
         Action act = () => emprestimoService.RealizarEmprestimo(leitor, livro);

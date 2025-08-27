@@ -1,4 +1,6 @@
 using Biblioteca.Application.DTOs.Requests;
+using Biblioteca.Application.DTOs.Requests.Autor;
+using Biblioteca.Application.DTOs.Requests.Livro;
 using Biblioteca.Application.DTOs.Responses;
 using Biblioteca.Domain.Entities;
 using Biblioteca.Domain.Interfaces;
@@ -79,7 +81,7 @@ public class CadastrarLivroUseCase
 
             // // 🔹 7. Montar resposta
             var response = new LivroResponse(
-               livro.Id,
+                livro.Id,
                 livro.Titulo ?? "Titulo Desconhecido",
                 livro.Autor?.NomeCompleto?.ToString() ?? "Autor desconhecido",
                 livro.AnoPublicacao,

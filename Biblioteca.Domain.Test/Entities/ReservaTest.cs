@@ -31,7 +31,7 @@ public class ReservaTest
     private Livro CriarLivroEmprestado()
     {
         var autor = new Autor(new NomeCompleto("Autor", "T"), new Email("t@a.com"), new DateTime(1980, 1, 1));
-        var livro = new Livro("Titulo", autor, new ISBN("1234567890"), 2000, 1, new List<Categoria> { new Categoria("Terror", ETipoCategoria.Terror) });
+        var livro = new Livro("Titulo", autor, new ISBN("1234567890"), 2000, 1, new List<Categoria> { new Categoria("Terror", ETipoCategoria.Terror) }, descricao: "Descrição do livro");
         livro.Emprestar();
         return livro;
     }

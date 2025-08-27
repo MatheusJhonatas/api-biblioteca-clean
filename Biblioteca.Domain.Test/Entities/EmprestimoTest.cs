@@ -35,7 +35,7 @@ public class EmprestimoTest
         var autor = new Autor(nomeCompleto, email, dataNascimento);
         var isbn = new ISBN("1234567890");
         var categorias = new List<Categoria> { new Categoria("Liderança", Biblioteca.Domain.Enums.ETipoCategoria.Lideranca) };
-        return new Livro("A sorte segue a coragem.", autor, isbn, 2008, 23, categorias);
+        return new Livro("A sorte segue a coragem.", autor, isbn, 2008, 23, categorias, descricao: "Um livro sobre coragem e determinação.");
     }
 
     #endregion

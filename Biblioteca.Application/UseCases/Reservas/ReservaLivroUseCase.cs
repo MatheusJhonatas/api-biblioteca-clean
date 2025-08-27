@@ -1,4 +1,5 @@
 using Biblioteca.Application.DTOs.Requests;
+using Biblioteca.Application.DTOs.Requests.Reserva;
 using Biblioteca.Application.DTOs.Responses;
 using Biblioteca.Domain.Entities;
 using Biblioteca.Domain.Interfaces;

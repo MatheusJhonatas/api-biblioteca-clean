@@ -25,7 +25,7 @@ namespace Biblioteca.Domain.Services
             var dataPrevista = dataEmprestimo.AddDays(7); // Regra: 7 dias para devolução
 
             var emprestimo = new Emprestimo(leitor, livro, dataEmprestimo, dataPrevista);
-            leitor.AdicionarEmprestimo(emprestimo);
+            leitor.RealizarEmprestimo(emprestimo);
 
             livro.Emprestar(); // Marca como indisponível
 

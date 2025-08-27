@@ -32,6 +32,7 @@ public class Emprestimo : Entity
     }
     #endregion
     #region Metodos
+
     public void FinalizarEmprestimo(DateTime dataDevolucao)
     {
         if (Status != EStatusEmprestimo.Ativo)

@@ -1,4 +1,5 @@
 using Biblioteca.Application.DTOs.Requests;
+using Biblioteca.Application.DTOs.Requests.Livro;
 using Biblioteca.Application.DTOs.Responses;
 using Biblioteca.Domain.Interfaces;
 using Biblioteca.Domain.Services;
@@ -22,7 +23,7 @@ namespace Biblioteca.Application.UseCases.Emprestimos
 
         public async Task<EmprestimoResponse> ExecuteAsync(EmprestarLivroRequest request)
         {
-            var leitor = _leitorRepo.ObterPorIdAsync(request.LeitorId) ?? throw new ArgumentException("Leitor não encontrado.");
+            var leitor = await _leitorRepo.ObterPorIdAsync(request.LeitorId) ?? throw new ArgumentException("Leitor não encontrado.");
             var livro = await _livroRepo.ObterPorIdAsync(request.LivroId) ?? throw new ArgumentException("Livro não encontrado.");
 
             var emprestimo = _emprestimoService.RealizarEmprestimo(leitor, livro);

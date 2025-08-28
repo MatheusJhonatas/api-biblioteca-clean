@@ -62,7 +62,7 @@ public class EmprestimoTest
     [Fact]
     public void Nao_Deve_Criar_Emprestimo_Com_Leitor_Nulo()
     {
-        // Arrange é quando preparamos os dados necessários para o teste.
+        //Arrange é quando preparamos os dados necessários para o teste.
         var livro = CriarLivroValido();
         var dataEmprestimo = DateTime.Today;
         var dataPrevista = dataEmprestimo.AddDays(7);

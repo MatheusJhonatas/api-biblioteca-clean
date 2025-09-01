@@ -12,10 +12,12 @@ namespace Biblioteca.API.Controllers;
 public class LeitoresController : ControllerBase
 {
     private readonly CadastrarLeitorUseCase _cadastrarLeitor;
+    private readonly ListarLeitoresUseCase _listarLeitores;
 
-    public LeitoresController(CadastrarLeitorUseCase cadastrarLeitor)
+    public LeitoresController(CadastrarLeitorUseCase cadastrarLeitor, ListarLeitoresUseCase listarLeitores)
     {
         _cadastrarLeitor = cadastrarLeitor;
+        _listarLeitores = listarLeitores;
     }
 
     // Métodos da API
@@ -37,6 +39,23 @@ public class LeitoresController : ControllerBase
         catch (Exception ex)
         {
             return StatusCode(500, $"Erro interno ao criar leitor: {ex.Message}");
+        }
+    }
+    [HttpGet("v1/leitores")]
+    public async Task<IActionResult> ObterLeitores()
+    {
+        try
+        {
+            var resultado = await _listarLeitores.Execute();
+
+            if (!resultado.Success)
+                return BadRequest(resultado);
+
+            return Ok(resultado);
+        }
+        catch (Exception ex)
+        {
+            return StatusCode(500, $"Erro interno ao obter leitores: {ex.Message}");
         }
     }
 }

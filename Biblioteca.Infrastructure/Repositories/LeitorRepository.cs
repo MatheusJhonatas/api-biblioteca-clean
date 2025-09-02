@@ -50,14 +50,7 @@ public class LeitorRepository : ILeitorRepository
 
     public async Task SalvarAsync(Leitor leitor)
     {
-        if (leitor.Id == Guid.Empty)
-        {
-            await _context.Usuarios.AddAsync(leitor);
-        }
-        else
-        {
-            _context.Usuarios.Update(leitor);
-        }
+        await _context.Usuarios.AddAsync(leitor);
         await _context.SaveChangesAsync();
     }
 }

@@ -7,6 +7,7 @@ using Biblioteca.Domain.Services;
 using Microsoft.EntityFrameworkCore;
 using Biblioteca.Infrastructure.Persistence;
 using Biblioteca.Infrastructure.Repositories;
+using Biblioteca.Application.UseCases.Leitores;
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -37,6 +38,11 @@ builder.Services.AddScoped<ObterLivroPorIdUseCase>();
 builder.Services.AddScoped<EmprestarLivroUseCase>();
 builder.Services.AddScoped<DevolverLivroUseCase>();
 builder.Services.AddScoped<ReservarLivroUseCase>();
+builder.Services.AddScoped<CadastrarLeitorUseCase>();
+// builder.Services.AddScoped<EditarLeitorUseCase>();
+// builder.Services.AddScoped<RemoverLeitorUseCase>();
+builder.Services.AddScoped<ListarLeitoresUseCase>();
+// builder.Services.AddScoped<ObterLeitorPorIdUseCase>();
 
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();

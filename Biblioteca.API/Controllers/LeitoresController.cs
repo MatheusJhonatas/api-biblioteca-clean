@@ -21,6 +21,10 @@ public class LeitoresController : ControllerBase
     }
 
     // Métodos da API
+    /// <summary>
+    /// Cadastra um novo leitor.
+    /// </summary>
+    /// <param name="id">Identificador único do livro.</param>
     [HttpPost("v1/leitores")]
     public async Task<IActionResult> CriarLeitor([FromBody] CadastrarLeitorRequest _cadastrarLeitorRequest)
     {
@@ -42,6 +46,10 @@ public class LeitoresController : ControllerBase
             return StatusCode(500, $"Erro interno ao criar leitor: {ex.Message}");
         }
     }
+    /// <summary>
+    /// Lista todos leitores disponiveis na biblioteca.
+    /// </summary>
+    /// <param name="id">Identificador único do livro.</param>
     [HttpGet("v1/leitores")]
     public async Task<IActionResult> ObterLeitores()
     {

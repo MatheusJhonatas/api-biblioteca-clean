@@ -29,6 +29,7 @@ public class LeitoresController : ControllerBase
             if (_cadastrarLeitorRequest == null)
                 return BadRequest(ResultResponse<string>.Fail("Dados do leitor não podem ser nulos."));
 
+
             var resultado = await _cadastrarLeitor.Execute(_cadastrarLeitorRequest);
 
             if (!resultado.Success)

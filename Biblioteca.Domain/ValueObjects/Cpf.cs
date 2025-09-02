@@ -18,16 +18,20 @@ namespace Biblioteca.Domain.ValueObjects
 
         public CPF(string numero)
         {
+            if (numero == null)
+                throw new ArgumentException("CPF não pode ser nulo.", nameof(numero));
             if (string.IsNullOrWhiteSpace(numero))
-                throw new ArgumentException("CPF não pode ser nulo ou vazio.", nameof(numero));
+                throw new ArgumentException("CPF não pode ser vazio.", nameof(numero));
 
-            // Remove caracteres não numéricos
-            numero = new string(numero.Where(char.IsDigit).ToArray());
+            var cpf = numero.Replace(".", "").Replace("-", "").Trim();
 
-            if (!IsValid(numero))
+            if (cpf.Length != 11 || !cpf.All(char.IsDigit))
+                throw new ArgumentException("CPF deve conter 11 dígitos numéricos.", nameof(numero));
+
+            if (!IsValid(cpf))
                 throw new ArgumentException("CPF inválido.", nameof(numero));
 
-            Numero = numero;
+            Numero = cpf;
         }
 
         #endregion
@@ -41,6 +45,8 @@ namespace Biblioteca.Domain.ValueObjects
         /// <returns>True se o CPF for válido, false caso contrário.</returns>
         private bool IsValid(string cpf)
         {
+            // remove sequências inválidas (tipo 11111111111)
+            if (new string(cpf[0], 11) == cpf) return false;
             // Verifica se tem 11 dígitos e não são todos iguais
             if (cpf.Length != 11 || cpf.Distinct().Count() == 1)
                 return false;

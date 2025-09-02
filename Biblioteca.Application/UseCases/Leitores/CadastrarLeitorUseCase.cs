@@ -47,7 +47,8 @@ public class CadastrarLeitorUseCase
         }
         catch (Exception ex)
         {
-            return ResultResponse<LeitorResponse>.Fail($"Erro ao cadastrar leitor: {ex.Message}");
+            var inner = ex.InnerException?.Message ?? "Nenhuma inner exception";
+            return ResultResponse<LeitorResponse>.Fail($"Erro ao cadastrar leitor: {ex.Message} | Inner: {inner}");
         }
     }
 }

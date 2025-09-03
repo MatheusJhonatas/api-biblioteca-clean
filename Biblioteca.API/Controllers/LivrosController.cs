@@ -70,7 +70,7 @@ public class LivrosController : ControllerBase
     /// Obtém os detalhes de um livro a partir do seu ID.
     /// </summary>
     /// <param name="id">Identificador único do livro.</param>
-    [HttpGet("v1/livros/{id:guid}")]
+    [HttpGet("v1/livro/{id:guid}")]
     public async Task<IActionResult> ObterLivroPorIdAsync(Guid id)
     {
         try

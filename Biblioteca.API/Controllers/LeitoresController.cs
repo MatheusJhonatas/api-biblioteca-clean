@@ -13,6 +13,7 @@ public class LeitoresController : ControllerBase
 {
     private readonly CadastrarLeitorUseCase _cadastrarLeitor;
     private readonly ListarLeitoresUseCase _listarLeitores;
+    private readonly ObterLeitorPorIdUseCase _obterLeitorPorId;
 
     public LeitoresController(CadastrarLeitorUseCase cadastrarLeitor, ListarLeitoresUseCase listarLeitores)
     {
@@ -65,6 +66,27 @@ public class LeitoresController : ControllerBase
         catch (Exception ex)
         {
             return StatusCode(500, $"Erro interno ao obter leitores: {ex.Message}");
+        }
+    }
+    /// <summary>
+    ///Obtém os detalhes de um leitor a partir do seu ID.
+    /// </summary>
+    /// <param name="id">Identificador único do leitor.</param>
+    [HttpGet("v1/leitores/{id:guid}")]
+    public async Task<IActionResult> ObterLeitorPorId(Guid id)
+    {
+        try
+        {
+            var resultado = await _obterLeitorPorId.Execute(id);
+
+            if (!resultado.Success)
+                return BadRequest(resultado);
+
+            return Ok(resultado);
+        }
+        catch (Exception ex)
+        {
+            return StatusCode(500, ResultResponse<string>.Fail($"Erro interno ao obter leitor: {ex.Message}"));
         }
     }
 }

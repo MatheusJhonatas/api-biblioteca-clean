@@ -67,4 +67,8 @@ public class LeitoresController : ControllerBase
             return StatusCode(500, $"Erro interno ao obter leitores: {ex.Message}");
         }
     }
+        /// <summary>
+    ///Obtém os detalhes de um leitor a partir do seu ID.
+    /// </summary>
+    /// <param name="id">Identificador único do leitor.</param>
 }

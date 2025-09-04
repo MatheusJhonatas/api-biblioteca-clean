@@ -42,7 +42,7 @@ builder.Services.AddScoped<CadastrarLeitorUseCase>();
 // builder.Services.AddScoped<EditarLeitorUseCase>();
 // builder.Services.AddScoped<RemoverLeitorUseCase>();
 builder.Services.AddScoped<ListarLeitoresUseCase>();
-// builder.Services.AddScoped<ObterLeitorPorIdUseCase>();
+builder.Services.AddScoped<ObterLeitorPorIdUseCase>();
 
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();

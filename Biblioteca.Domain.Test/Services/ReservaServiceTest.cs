@@ -20,7 +20,8 @@ public class ReservaServiceTest
             bairro: "Centro",
             cidade: "São Paulo",
             estado: "SP",
-            cep: "06514104"
+            cep: "06514104",
+            complemento: "Casa"
         );
         var dataCadastro = DateTime.Today;
 

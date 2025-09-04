@@ -22,7 +22,8 @@ public class LeitorTest
             bairro: "Centro",
             cidade: "São Paulo",
             estado: "SP",
-            cep: "06515004"
+            cep: "06515004",
+            complemento: "Apto 101"
         );
         var dataCadastro = DateTime.Today;
 

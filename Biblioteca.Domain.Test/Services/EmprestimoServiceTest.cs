@@ -20,7 +20,8 @@ public class EmprestimoServiceTest
             bairro: "Centro",
             cidade: "São Paulo",
             estado: "SP",
-            cep: "06515104"
+            cep: "06515104",
+            complemento: "Apto 202"
         );
         var dataCadastro = DateTime.Today;
 

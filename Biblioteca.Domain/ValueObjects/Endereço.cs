@@ -20,7 +20,7 @@ public record class Endereco : ValueObject
 
     #region Construtores
     public Endereco() { }
-    public Endereco(string rua, string numero, string bairro, string cidade, string estado, string cep)
+    public Endereco(string rua, string numero, string bairro, string cidade, string estado, string cep, string complemento)
     {
         if (string.IsNullOrWhiteSpace(rua)) throw new ArgumentException("Rua é obrigatória.");
         if (string.IsNullOrWhiteSpace(numero)) throw new ArgumentException("Número é obrigatório.");
@@ -35,6 +35,7 @@ public record class Endereco : ValueObject
         Cidade = cidade;
         Estado = estado;
         CEP = cep;
+        Complemento = complemento;
     }
     #endregion
 

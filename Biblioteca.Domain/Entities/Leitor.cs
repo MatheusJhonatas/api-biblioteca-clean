@@ -18,7 +18,11 @@ public class Leitor : Entity
     public int LimiteEmprestimosAtivos { get; private set; } = 5;
     #endregion
     #region Construtores
-    public Leitor() : base(Guid.NewGuid()) { }
+    public Leitor() : base(Guid.NewGuid())
+    {
+        _emprestimos = new List<Emprestimo>();
+        _reservas = new List<Reserva>();
+    }
     public Leitor(NomeCompleto nomeCompleto, Email email, CPF cPF, Endereco endereco, DateTime dataCadastro) : base(Guid.NewGuid())
     {
         NomeCompleto = nomeCompleto;
@@ -26,7 +30,8 @@ public class Leitor : Entity
         CPF = cPF;
         Endereco = endereco;
         DataCadastro = dataCadastro;
-        //_emprestimos = new List<Emprestimo>();
+        _emprestimos = new List<Emprestimo>();
+        _reservas = new List<Reserva>();
     }
     #endregion
     #region Metodos

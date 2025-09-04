@@ -33,8 +33,6 @@ public class LeitoresController : ControllerBase
         {
             if (_cadastrarLeitorRequest == null)
                 return BadRequest(ResultResponse<string>.Fail("Dados do leitor não podem ser nulos."));
-
-
             var resultado = await _cadastrarLeitor.Execute(_cadastrarLeitorRequest);
 
             if (!resultado.Success)
@@ -73,20 +71,18 @@ public class LeitoresController : ControllerBase
     /// </summary>
     /// <param name="id">Identificador único do leitor.</param>
     [HttpGet("v1/leitores/{id:guid}")]
-    public async Task<IActionResult> ObterLeitorPorId(Guid id)
+    public async Task<IActionResult> ObterLeitorPorIdAsync(Guid id)
     {
         try
         {
-            var resultado = await _obterLeitorPorId.Execute(id);
-
-            if (!resultado.Success)
-                return BadRequest(resultado);
+            var resultado = await _obterLeitorPorId.ExecuteAsync(id);
 
             return Ok(resultado);
         }
         catch (Exception ex)
         {
-            return StatusCode(500, ResultResponse<string>.Fail($"Erro interno ao obter leitor: {ex.Message}"));
+            var INNEREX = ex.InnerException != null ? $" Inner Exception: {ex.InnerException.Message}" : string.Empty;
+            return StatusCode(500, ResultResponse<string>.Fail($"Erro interno ao obter leitor: {ex.Message}{INNEREX}"));
         }
     }
 }

@@ -15,7 +15,7 @@ public class LeitorRepository : ILeitorRepository
 
     public async Task AtualizarAsync(Leitor leitor)
     {
-        _context.Usuarios.Update(leitor);
+        _context.Leitores.Update(leitor);
         await _context.SaveChangesAsync();
     }
 
@@ -24,20 +24,20 @@ public class LeitorRepository : ILeitorRepository
         var leitor = await ObterPorIdAsync(id);
         if (leitor != null)
         {
-            _context.Usuarios.Remove(leitor);
+            _context.Leitores.Remove(leitor);
             await _context.SaveChangesAsync();
         }
     }
 
     public async Task<Leitor> ObterPorEmailAsync(string email)
     {
-        return await _context.Usuarios
+        return await _context.Leitores
             .FirstOrDefaultAsync(l => l.Email.EnderecoEmail == email);
     }
 
     public async Task<Leitor> ObterPorIdAsync(Guid id)
     {
-        return await _context.Usuarios
+        return await _context.Leitores
             .Include(l => l.Emprestimos)
             .Include(l => l.Reservas)
             .FirstOrDefaultAsync(l => l.Id == id);
@@ -45,12 +45,12 @@ public class LeitorRepository : ILeitorRepository
 
     public async Task<IEnumerable<Leitor>> ObterTodosAsync()
     {
-        return await _context.Usuarios.ToListAsync();
+        return await _context.Leitores.ToListAsync();
     }
 
     public async Task SalvarAsync(Leitor leitor)
     {
-        await _context.Usuarios.AddAsync(leitor);
+        await _context.Leitores.AddAsync(leitor);
         await _context.SaveChangesAsync();
     }
 }

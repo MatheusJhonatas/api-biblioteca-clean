@@ -25,7 +25,7 @@ public class CadastrarLeitorUseCase
             var nome = new NomeCompleto(request.NomeCompleto.PrimeiroNome, request.NomeCompleto.UltimoNome);
             var email = new Email(request.Email.EnderecoEmail);
             var cpf = new CPF(request.Cpf.NumeroCpf);
-            var endereco = new Endereco(request.Endereco.Rua, request.Endereco.Numero, request.Endereco.Bairro, request.Endereco.Cidade, request.Endereco.Estado, request.Endereco.Cep);
+            var endereco = new Endereco(request.Endereco.Rua, request.Endereco.Numero, request.Endereco.Bairro, request.Endereco.Cidade, request.Endereco.Estado, request.Endereco.Cep, request.Endereco.Complemento);
 
             // Criando entidade leitor
             var leitor = new Leitor(nome, email, cpf, endereco, request.DataCadastro);

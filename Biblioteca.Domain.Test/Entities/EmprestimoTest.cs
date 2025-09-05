@@ -52,7 +52,7 @@ public class EmprestimoTest
         //Act é quando executamos a ação que queremos testar. aqui no caso é a criação do empréstimo.
         var emprestimo = new Emprestimo(leitor, livro, dataEmprestimo, dataPrevista);
         // Assert é quando verificamos se o resultado é o esperado.
-        emprestimo.Usuario.Should().Be(leitor);
+        emprestimo.Leitor.Should().Be(leitor);
         emprestimo.Livro.Should().Be(livro);
         emprestimo.DataEmprestimo.Should().Be(dataEmprestimo);
         emprestimo.DataPrevistaDevolucao.Should().Be(dataPrevista);
@@ -71,8 +71,8 @@ public class EmprestimoTest
         // Estamos passando um leitor nulo, o que deve gerar uma exceção.
         Action act = () => new Emprestimo(null, livro, dataEmprestimo, dataPrevista);
         //Assert é quando verificamos se o resultado é o esperado.
-        // Esperamos que uma exceção do tipo ArgumentNullException seja lançada, indicando que o parâmetro "usuario" é nulo.
-        act.Should().Throw<ArgumentNullException>().Where(e => e.ParamName == "usuario");
+        // Esperamos que uma exceção do tipo ArgumentNullException seja lançada, indicando que o parâmetro "leitor" é nulo.
+        act.Should().Throw<ArgumentNullException>().Where(e => e.ParamName == "leitor");
     }
 
     [Fact]

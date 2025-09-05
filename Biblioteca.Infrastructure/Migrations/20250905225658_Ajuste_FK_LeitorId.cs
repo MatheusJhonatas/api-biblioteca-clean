@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace Biblioteca.Infrastructure.Migrations
 {
     /// <inheritdoc />
-    public partial class FirstMigrationCleanCodeApi : Migration
+    public partial class Ajuste_FK_LeitorId : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -89,7 +89,8 @@ namespace Biblioteca.Infrastructure.Migrations
                     ISBN = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: false),
                     AnoPublicacao = table.Column<int>(type: "int", nullable: false),
                     NumeroPaginas = table.Column<int>(type: "int", nullable: false),
-                    Disponivel = table.Column<bool>(type: "bit", nullable: false)
+                    Disponivel = table.Column<bool>(type: "bit", nullable: false),
+                    Descricao = table.Column<string>(type: "nvarchar(1000)", maxLength: 1000, nullable: true)
                 },
                 constraints: table =>
                 {
@@ -107,13 +108,13 @@ namespace Biblioteca.Infrastructure.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    UsuarioId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    LeitorId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     LivroId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     DataEmprestimo = table.Column<DateTime>(type: "datetime2", nullable: false),
                     DataPrevistaDevolucao = table.Column<DateTime>(type: "datetime2", nullable: false),
                     DataRealDevolucao = table.Column<DateTime>(type: "datetime2", nullable: true),
                     Status = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    LeitorId = table.Column<Guid>(type: "uniqueidentifier", nullable: true)
+                    LeitorId1 = table.Column<Guid>(type: "uniqueidentifier", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -122,13 +123,13 @@ namespace Biblioteca.Infrastructure.Migrations
                         name: "FK_Emprestimos_Leitores_LeitorId",
                         column: x => x.LeitorId,
                         principalTable: "Leitores",
-                        principalColumn: "Id");
-                    table.ForeignKey(
-                        name: "FK_Emprestimos_Leitores_UsuarioId",
-                        column: x => x.UsuarioId,
-                        principalTable: "Leitores",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Emprestimos_Leitores_LeitorId1",
+                        column: x => x.LeitorId1,
+                        principalTable: "Leitores",
+                        principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_Emprestimos_Livros_LivroId",
                         column: x => x.LivroId,
@@ -166,7 +167,7 @@ namespace Biblioteca.Infrastructure.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    UsuarioId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    LeitorId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
                     LivroId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     DataReserva = table.Column<DateTime>(type: "datetime2", nullable: false),
                     Status = table.Column<string>(type: "nvarchar(max)", nullable: false)
@@ -175,8 +176,8 @@ namespace Biblioteca.Infrastructure.Migrations
                 {
                     table.PrimaryKey("PK_Reservas", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Reservas_Leitores_UsuarioId",
-                        column: x => x.UsuarioId,
+                        name: "FK_Reservas_Leitores_LeitorId",
+                        column: x => x.LeitorId,
                         principalTable: "Leitores",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
@@ -194,14 +195,14 @@ namespace Biblioteca.Infrastructure.Migrations
                 column: "LeitorId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Emprestimos_LeitorId1",
+                table: "Emprestimos",
+                column: "LeitorId1");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Emprestimos_LivroId",
                 table: "Emprestimos",
                 column: "LivroId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Emprestimos_UsuarioId",
-                table: "Emprestimos",
-                column: "UsuarioId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_LivroCategoria_CategoriaId",
@@ -209,19 +210,25 @@ namespace Biblioteca.Infrastructure.Migrations
                 column: "CategoriaId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Livro_ISBN",
+                table: "Livros",
+                column: "ISBN",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Livros_AutorId",
                 table: "Livros",
                 column: "AutorId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Reservas_LeitorId",
+                table: "Reservas",
+                column: "LeitorId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Reservas_LivroId",
                 table: "Reservas",
                 column: "LivroId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Reservas_UsuarioId",
-                table: "Reservas",
-                column: "UsuarioId");
         }
 
         /// <inheritdoc />

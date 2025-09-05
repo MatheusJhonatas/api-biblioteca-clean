@@ -15,7 +15,7 @@ public class ReservaRepository : IReservaRepository
 
     public Reserva ObterPorId(Guid id)
     {
-        return _context.Reservas.Include(r => r.Livro).Include(r => r.Usuario).FirstOrDefault(r => r.Id == id);
+        return _context.Reservas.Include(r => r.Livro).Include(r => r.Leitor).FirstOrDefault(r => r.Id == id);
     }
 
     public void Salvar(Reserva reserva)
@@ -32,6 +32,6 @@ public class ReservaRepository : IReservaRepository
 
     public IEnumerable<Reserva> ObterPorLivro(Guid livroId)
     {
-        return _context.Reservas.Include(r => r.Livro).Include(r => r.Usuario).Where(r => r.LivroId == livroId).ToList();
+        return _context.Reservas.Include(r => r.Livro).Include(r => r.Leitor).Where(r => r.LivroId == livroId).ToList();
     }
 }

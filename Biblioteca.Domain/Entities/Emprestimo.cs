@@ -6,8 +6,8 @@ using Biblioteca.Domain.Extensions;
 public class Emprestimo : Entity
 {
     #region Propriedades
-    public Leitor Usuario { get; private set; }
-    public Guid UsuarioId { get; private set; }
+    public Leitor Leitor { get; private set; }
+    public Guid LeitorId { get; private set; }
     public Guid LivroId { get; private set; }
 
     public Livro Livro { get; private set; }
@@ -19,15 +19,15 @@ public class Emprestimo : Entity
     #region Construtor
     public Emprestimo() : base(Guid.NewGuid()) { }
 
-    public Emprestimo(Leitor usuario, Livro livro, DateTime dataEmprestimo, DateTime dataPrevistaDevolucao)
+    public Emprestimo(Leitor leitor, Livro livro, DateTime dataEmprestimo, DateTime dataPrevistaDevolucao)
         : base(Guid.NewGuid())
     {
-        Usuario = usuario ?? throw new ArgumentNullException(nameof(usuario));
+        Leitor = leitor ?? throw new ArgumentNullException(nameof(leitor));
         Livro = livro ?? throw new ArgumentNullException(nameof(livro));
         DataEmprestimo = dataEmprestimo;
         DataPrevistaDevolucao = dataPrevistaDevolucao;
         Status = EStatusEmprestimo.Ativo;
-        UsuarioId = usuario.Id;
+        LeitorId = leitor.Id;
         LivroId = livro.Id;
     }
     #endregion

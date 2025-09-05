@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Biblioteca.Infrastructure.Migrations
 {
     [DbContext(typeof(BibliotecaDbContext))]
-    [Migration("20250825185036_CampoDescricao")]
-    partial class CampoDescricao
+    [Migration("20250905225658_Ajuste_FK_LeitorId")]
+    partial class Ajuste_FK_LeitorId
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -147,6 +147,9 @@ namespace Biblioteca.Infrastructure.Migrations
                     b.Property<DateTime>("DataReserva")
                         .HasColumnType("datetime2");
 
+                    b.Property<Guid?>("LeitorId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<Guid>("LivroId")
                         .HasColumnType("uniqueidentifier");
 
@@ -154,14 +157,11 @@ namespace Biblioteca.Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<Guid?>("UsuarioId")
-                        .HasColumnType("uniqueidentifier");
-
                     b.HasKey("Id");
 
-                    b.HasIndex("LivroId");
+                    b.HasIndex("LeitorId");
 
-                    b.HasIndex("UsuarioId");
+                    b.HasIndex("LivroId");
 
                     b.ToTable("Reservas", (string)null);
                 });
@@ -181,7 +181,10 @@ namespace Biblioteca.Infrastructure.Migrations
                     b.Property<DateTime?>("DataRealDevolucao")
                         .HasColumnType("datetime2");
 
-                    b.Property<Guid?>("LeitorId")
+                    b.Property<Guid>("LeitorId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid?>("LeitorId1")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<Guid>("LivroId")
@@ -191,16 +194,13 @@ namespace Biblioteca.Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<Guid>("UsuarioId")
-                        .HasColumnType("uniqueidentifier");
-
                     b.HasKey("Id");
 
                     b.HasIndex("LeitorId");
 
-                    b.HasIndex("LivroId");
+                    b.HasIndex("LeitorId1");
 
-                    b.HasIndex("UsuarioId");
+                    b.HasIndex("LivroId");
 
                     b.ToTable("Emprestimos", (string)null);
                 });
@@ -456,27 +456,33 @@ namespace Biblioteca.Infrastructure.Migrations
 
             modelBuilder.Entity("Biblioteca.Domain.Entities.Reserva", b =>
                 {
+                    b.HasOne("Biblioteca.Domain.Entities.Leitor", "Leitor")
+                        .WithMany("Reservas")
+                        .HasForeignKey("LeitorId")
+                        .OnDelete(DeleteBehavior.Restrict);
+
                     b.HasOne("Biblioteca.Domain.Entities.Livro", "Livro")
                         .WithMany()
                         .HasForeignKey("LivroId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.HasOne("Biblioteca.Domain.Entities.Leitor", "Usuario")
-                        .WithMany("Reservas")
-                        .HasForeignKey("UsuarioId")
-                        .OnDelete(DeleteBehavior.Restrict);
+                    b.Navigation("Leitor");
 
                     b.Navigation("Livro");
-
-                    b.Navigation("Usuario");
                 });
 
             modelBuilder.Entity("Emprestimo", b =>
                 {
+                    b.HasOne("Biblioteca.Domain.Entities.Leitor", "Leitor")
+                        .WithMany()
+                        .HasForeignKey("LeitorId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
                     b.HasOne("Biblioteca.Domain.Entities.Leitor", null)
                         .WithMany("Emprestimos")
-                        .HasForeignKey("LeitorId");
+                        .HasForeignKey("LeitorId1");
 
                     b.HasOne("Biblioteca.Domain.Entities.Livro", "Livro")
                         .WithMany()
@@ -484,15 +490,9 @@ namespace Biblioteca.Infrastructure.Migrations
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.HasOne("Biblioteca.Domain.Entities.Leitor", "Usuario")
-                        .WithMany()
-                        .HasForeignKey("UsuarioId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
+                    b.Navigation("Leitor");
 
                     b.Navigation("Livro");
-
-                    b.Navigation("Usuario");
                 });
 
             modelBuilder.Entity("LivroCategoria", b =>

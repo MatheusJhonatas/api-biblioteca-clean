@@ -18,10 +18,10 @@ public class EmprestimoRepository : IEmprestimoRepository
         _context.SaveChanges();
     }
 
-    public IEnumerable<Emprestimo> ObterAtivosPorLeitor(Guid usuarioId)
+    public IEnumerable<Emprestimo> ObterAtivosPorLeitor(Guid leitorId)
     {
         return _context.Emprestimos
-            .Where(e => e.UsuarioId == usuarioId && e.DataRealDevolucao == null)
+            .Where(e => e.LeitorId == leitorId && e.DataRealDevolucao == null)
             .ToList();
     }
 

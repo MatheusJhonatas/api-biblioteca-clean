@@ -15,10 +15,10 @@ public class EmprestimoMap : IEntityTypeConfiguration<Emprestimo>
         builder.Property(e => e.DataRealDevolucao).IsRequired(false);
         builder.Property(e => e.Status).IsRequired().HasConversion<string>();
 
-        // Relacionamento com Leitor (Usuario)
-        builder.HasOne(e => e.Usuario)
-            .WithMany() // <--- Remova o l => l.Emprestimos
-            .HasForeignKey("UsuarioId")
+        // Relacionamento com Leitor (Leitor)
+        builder.HasOne(e => e.Leitor)
+            .WithMany()
+            .HasForeignKey("LeitorId")
             .OnDelete(DeleteBehavior.Restrict);
 
         // Relacionamento com Livro

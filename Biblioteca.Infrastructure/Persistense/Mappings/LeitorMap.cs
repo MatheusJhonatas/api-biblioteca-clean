@@ -84,13 +84,13 @@ public class LeitorMap : IEntityTypeConfiguration<Leitor>
         // Relacionamento 1:N com Emprestimos (campo privado _emprestimos)
         builder.HasMany<Emprestimo>("_emprestimos")
             .WithOne()
-            .HasForeignKey("UsuarioId")
+            .HasForeignKey("LeitorId")
             .OnDelete(DeleteBehavior.Cascade);
 
         // Relacionamento 1:N com Reservas (campo privado _reservas)
         builder.HasMany<Reserva>("_reservas")
             .WithOne()
-            .HasForeignKey("UsuarioId")
+            .HasForeignKey("LeitorId")
             .OnDelete(DeleteBehavior.Cascade);
 
         // Ignora propriedades calculadas

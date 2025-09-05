@@ -11,7 +11,7 @@ namespace Biblioteca.Domain.Entities;
 public class Reserva : Entity
 {
     #region Propriedades
-    public Leitor Usuario { get; private set; }
+    public Leitor Leitor { get; private set; }
     public Livro Livro { get; private set; }
     public Guid LivroId { get; private set; }
     public DateTime DataReserva { get; private set; }
@@ -19,10 +19,10 @@ public class Reserva : Entity
     #endregion
     #region Construtor
     public Reserva() : base(Guid.NewGuid()) { }
-    public Reserva(Leitor usuario, Livro livro)
+    public Reserva(Leitor leitor, Livro livro)
         : base(Guid.NewGuid())
     {
-        Usuario = usuario ?? throw new ArgumentNullException(nameof(usuario));
+        Leitor = leitor ?? throw new ArgumentNullException(nameof(leitor));
         Livro = livro ?? throw new ArgumentNullException(nameof(livro));
         DataReserva = DateTime.Now.ToBrasiliaTime();
         Status = EStatusReserva.Ativa;

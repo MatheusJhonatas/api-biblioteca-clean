@@ -1,3 +1,4 @@
+using System.ComponentModel.DataAnnotations.Schema;
 using Biblioteca.Domain.ValueObjects;
 
 namespace Biblioteca.Domain.Entities;
@@ -14,11 +15,17 @@ public class Leitor : Entity
     public DateTime DataCadastro { get; private set; }
     public IReadOnlyCollection<Emprestimo> Emprestimos { get { return _emprestimos.AsReadOnly(); } }
     public IReadOnlyCollection<Reserva> Reservas { get { return _reservas.AsReadOnly(); } }
+    // [NotMapped]
+    // public IReadOnlyCollection<Emprestimo> Emprestimos => _emprestimos.AsReadOnly();
+
+    // [NotMapped]
+    // public IReadOnlyCollection<Reserva> Reservas => _reservas.AsReadOnly();
+
     public bool EstaInadimplente => _emprestimos.Any(e => e.EstaAtrasado());
     public int LimiteEmprestimosAtivos { get; private set; } = 5;
     #endregion
     #region Construtores
-    public Leitor() : base(Guid.NewGuid())
+    protected Leitor() : base(Guid.NewGuid())
     {
         _emprestimos = new List<Emprestimo>();
         _reservas = new List<Reserva>();

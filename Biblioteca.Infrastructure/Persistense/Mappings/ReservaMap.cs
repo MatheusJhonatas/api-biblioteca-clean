@@ -18,9 +18,9 @@ public class ReservaMap : IEntityTypeConfiguration<Reserva>
             .IsRequired()
             .HasConversion<string>(); // Salvar enum como texto, opcional
 
-        builder.HasOne(r => r.Usuario)
+        builder.HasOne(r => r.Leitor)
             .WithMany(l => l.Reservas)
-            .HasForeignKey("UsuarioId")
+            .HasForeignKey("LeitorId")
             .OnDelete(DeleteBehavior.Restrict);
 
         // Relacionamento com Livro

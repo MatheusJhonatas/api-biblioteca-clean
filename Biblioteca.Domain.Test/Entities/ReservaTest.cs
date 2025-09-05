@@ -49,7 +49,7 @@ public class ReservaTest
         var reserva = new Reserva(leitor, livro);
 
         // Assert: verificar o resultado esperado
-        reserva.Usuario.Should().Be(leitor);
+        reserva.Leitor.Should().Be(leitor);
         reserva.Livro.Should().Be(livro);
         reserva.Status.Should().Be(EStatusReserva.Ativa);
         reserva.DataReserva.Date.Should().Be(DateTime.Now.Date);
@@ -65,7 +65,7 @@ public class ReservaTest
         Action act = () => new Reserva(null, livro);
 
         // Assert
-        act.Should().Throw<ArgumentNullException>().Where(e => e.ParamName == "usuario");
+        act.Should().Throw<ArgumentNullException>().Where(e => e.ParamName == "leitor");
     }
 
     [Fact]

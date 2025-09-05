@@ -50,7 +50,7 @@ public class ReservaServiceTest
         //Assert Verifique se o resultado está correto (use métodos como Assert.Equal, Assert.True etc).
         reserva.Should().NotBeNull();
         reserva.Livro.Should().Be(livro);
-        reserva.Usuario.Should().Be(leitor);
+        reserva.Leitor.Should().Be(leitor);
 
     }
     [Fact]

@@ -21,13 +21,6 @@ public class ObterLeitorPorIdUseCase
             if (leitor == null)
                 return ResultResponse<LeitorResponse>.Fail("Leitor não encontrado.");
 
-            // DEBUG: logar antes de acessar propriedades
-            Console.WriteLine($"[DEBUG] Leitor encontrado: {leitor.Id}");
-            Console.WriteLine($"[DEBUG] NomeCompleto: {(leitor.NomeCompleto == null ? "NULL" : leitor.NomeCompleto.ToString())}");
-            Console.WriteLine($"[DEBUG] Email: {(leitor.Email == null ? "NULL" : leitor.Email.ToString())}");
-            Console.WriteLine($"[DEBUG] CPF: {(leitor.CPF == null ? "NULL" : leitor.CPF.ToString())}");
-            Console.WriteLine($"[DEBUG] Endereco: {(leitor.Endereco == null ? "NULL" : leitor.Endereco.ToString())}");
-
             var response = new LeitorResponse(
                 leitor.Id,
                 leitor.NomeCompleto?.ToString() ?? string.Empty,
@@ -41,7 +34,6 @@ public class ObterLeitorPorIdUseCase
         }
         catch (Exception ex)
         {
-            Console.WriteLine("[DEBUG] StackTrace: " + ex.StackTrace);
             return ResultResponse<LeitorResponse>.Fail($"Erro ao obter leitor: {ex.Message}");
         }
     }

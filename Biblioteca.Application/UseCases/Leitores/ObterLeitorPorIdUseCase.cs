@@ -16,6 +16,8 @@ public class ObterLeitorPorIdUseCase
     {
         try
         {
+            //DEBUG: logar o id recebido
+            Console.WriteLine($"[DEBUG] ObterLeitorPorIdUseCase.ExecuteAsync chamado com id: {id}");
             var leitor = await _leitorRepo.ObterPorIdAsync(id);
 
             if (leitor == null)
@@ -41,7 +43,9 @@ public class ObterLeitorPorIdUseCase
         }
         catch (Exception ex)
         {
+            // DEBUG: mostrar stack trace completo
             Console.WriteLine("[DEBUG] StackTrace: " + ex.StackTrace);
+            Console.WriteLine("[DEBUG] Mensagem: " + ex.Message);
             return ResultResponse<LeitorResponse>.Fail($"Erro ao obter leitor: {ex.Message}");
         }
     }

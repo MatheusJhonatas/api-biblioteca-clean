@@ -53,7 +53,7 @@ public class EmprestimoServiceTest
         //Assert Verifique se o resultado está correto (use métodos como Assert.Equal, Assert.True etc);
         emprestimo.Should().NotBeNull();
         emprestimo.Livro.Should().Be(livro);
-        emprestimo.Usuario.Should().Be(leitor);
+        emprestimo.Leitor.Should().Be(leitor);
         livro.Disponivel.Should().BeFalse();
     }
     [Fact]

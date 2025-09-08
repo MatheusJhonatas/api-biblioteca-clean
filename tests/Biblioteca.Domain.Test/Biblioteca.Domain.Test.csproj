@@ -22,6 +22,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Biblioteca.Domain\Biblioteca.Domain.csproj" />
+    <ProjectReference Include="..\..\src\Biblioteca.Domain\Biblioteca.Domain.csproj" />
   </ItemGroup>
 
 </Project>

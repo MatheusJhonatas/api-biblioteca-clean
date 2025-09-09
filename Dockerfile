@@ -13,8 +13,8 @@ COPY ["src/Biblioteca.Infrastructure/Biblioteca.Infrastructure.csproj", "src/Bib
 RUN dotnet restore "src/Biblioteca.API/Biblioteca.API.csproj" --disable-parallel
 
 COPY . .
-WORKDIR "/src/Biblioteca.API"
-RUN dotnet publish -c Release -o /app/publish --no-restore
+WORKDIR "/src/src/Biblioteca.API"
+RUN dotnet publish -c Release -o /app/publish  
 
 FROM base AS final
 WORKDIR /app

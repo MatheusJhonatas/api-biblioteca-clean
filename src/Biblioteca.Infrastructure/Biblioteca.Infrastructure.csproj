@@ -6,6 +6,7 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.EntityFrameWorkCore" Version="9.0.8" />
+    <PackageReference Include="Microsoft.EntityFrameworkcore.Analyzers" Version="9.0.8" />
     <PackageReference Include="Microsoft.EntityFrameWorkCore.design" Version="9.0.8">
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       <PrivateAssets>all</PrivateAssets>

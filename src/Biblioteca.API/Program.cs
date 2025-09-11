@@ -62,6 +62,12 @@ if (app.Environment.IsDevelopment() || app.Environment.IsProduction())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+//Executa as migrations autmaticamente
+using (var scope = app.Services.CreateScope())
+{
+    var db = scope.ServiceProvider.GetRequiredService<BibliotecaDbContext>();
+    db.Database.Migrate();
+}
 
 // app.UseHttpsRedirection();
 app.UseAuthorization();

@@ -78,5 +78,20 @@ namespace Biblioteca.API.Controllers
                 ));
             }
         }
+
+        [HttpDelete("v1/leitores/{id:guid}")]
+        public async Task<IActionResult> DeletarLeitorAsync()
+        {
+            try
+            {
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ResultResponse<string>.Fail(
+                    $"Erro ao deletar leitores: {ex.Message}"
+                ));
+            }
+        }
     }
 }

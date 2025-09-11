@@ -1,0 +1,35 @@
+services:
+  biblioteca-api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: biblioteca-api
+    ports:
+      - "5001:80"
+    depends_on:
+      - sqlserver
+    environment:
+      - ASPNETCORE_URLS=http://+:80
+      - ConnectionStrings__DefaultConnection=Server=sqlserver;Database=BibliotecaDB;User Id=sa;Password=1q2w3e4r@#$;Trusted_Connection=False;TrustServerCertificate=True;
+    networks:
+      - backend
+
+  sqlserver:
+    image: mcr.microsoft.com/mssql/server:2019-latest
+    container_name: sqlserver-biblioteca
+    environment:
+      - ACCEPT_EULA=Y
+      - SA_PASSWORD=1q2w3e4r@#$
+    ports:
+      - "1433:1433"
+    volumes:
+      - sql_data:/var/opt/mssql
+    networks:
+      - backend
+
+volumes:
+  sql_data:
+
+
+networks:
+  backend:

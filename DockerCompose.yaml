@@ -1,0 +1,52 @@
+# services:
+# biblioteca-api:
+#   build:
+#     context: .
+#     dockerfile: Dockerfile
+#     container_name: biblioteca-api
+#   ports:
+#     - "5001:80"
+#   depends_on:
+#     - sqlserver
+#   environment:
+#     - NODE_ENV=development
+#     - PORT=3000
+#     - DB_HOST=biblioteca-db
+#     - DB_PORT=5432
+#     - DB_USER=postgres
+#     - DB_PASSWORD=yourpassword
+#     - DB_NAME=biblioteca
+
+# environment:
+#   - ASPNETCORE_ENVIRONMENT=Development
+#   - ASPNETCORE_URLS=http://+:80
+#   - ConnectionStrings__DefaultConnection=Server=sqlserver;Database=BibliotecaDB;User Id=sa;Password=1q2w3e4r@#$;Trusted_Connection=False;TrustServerCertificate=True;
+# networks:
+#   backend:
+#     networks:
+#       - backend
+
+#   sqlserver:
+#   image: mcr.microsoft.com/mssql/server:2019-latest
+#   container_name: sqlserver-biblioteca
+#   environment:
+#     - SA_PASSWORD=Your_password123
+#     - ACCEPT_EULA=Y
+#   ports:
+#     - "1433:1433"
+#   networks:
+#     - backend
+# volumes: sqlserver-data:/var/opt/mssql
+
+services:
+  biblioteca-api:
+  build:
+    context: .
+    dockerfile: Dockerfile
+
+  sqlserver:
+
+
+volumes:
+
+networks:

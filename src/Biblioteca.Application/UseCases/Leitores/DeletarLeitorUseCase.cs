@@ -23,7 +23,7 @@ public class DeletarLeitorUseCase
 
             await _leitorRepository.DeletarAsync(id);
 
-            return ResultResponse<string>.Ok("Leitor deletado com sucesso.");
+            return ResultResponse<string>.Ok($"Leitor {leitor.NomeCompleto.PrimeiroNome}deletado com sucesso.");
         }
         catch (Exception ex)
         {

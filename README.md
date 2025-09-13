@@ -9,6 +9,7 @@
 ✅ API criada e endpoints principais implementados  
 ✅ Documentação automática via Swagger  
 ✅ Banco de dados gerado via migrations  
+✅ Docker Compose Criado  
 🔜 Integração completa entre API e Application  
 🔜 Testes de integração dos endpoints  
 🔜 Deploy e publicação  

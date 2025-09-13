@@ -1,35 +1,33 @@
 using Biblioteca.Application.DTOs.Responses;
+using Biblioteca.Domain.Entities;
 using Biblioteca.Domain.Interfaces;
+
+namespace Biblioteca.Application.UseCases.Leitores;
 
 public class DeletarLeitorUseCase
 {
-    // Aqui é onde você consome o repositório para deletar um leitor, isso é injetado via construtor
-    private readonly ILeitorRepository _leitorRepo;
-    public DeletarLeitorUseCase(ILeitorRepository leitorRepo)
+    private readonly ILeitorRepository _leitorRepository;
+
+    public DeletarLeitorUseCase(ILeitorRepository leitorRepository)
     {
-        _leitorRepo = leitorRepo;
+        _leitorRepository = leitorRepository;
     }
-    public async Task<ResultResponse<LeitorResponse>> DeletarAsync(Guid id)
+
+    public async Task<ResultResponse<string>> ExecuteAsync(Guid id)
     {
         try
         {
-            var leitor = await _leitorRepo.ObterPorIdAsync(id);
+            var leitor = await _leitorRepository.ObterPorIdAsync(id);
             if (leitor == null)
-                return ResultResponse<LeitorResponse>.Fail("Leitor não encontrado.");
-            await _leitorRepo.DeletarAsync(id);
-            var response = new LeitorResponse(
-                leitor.Id,
-                leitor.NomeCompleto?.ToString() ?? string.Empty,
-                leitor.Email?.ToString() ?? string.Empty,
-                leitor.CPF?.ToString() ?? string.Empty,
-                leitor.Endereco?.ToString() ?? string.Empty,
-                leitor.DataCadastro
-            );
-            return ResultResponse<LeitorResponse>.Ok(response);
+                return ResultResponse<string>.Fail("Leitor não encontrado.");
+
+            await _leitorRepository.DeletarAsync(id);
+
+            return ResultResponse<string>.Ok($"Leitor {leitor.NomeCompleto.PrimeiroNome}deletado com sucesso.");
         }
         catch (Exception ex)
         {
-            return ResultResponse<LeitorResponse>.Fail($"Erro ao deletar leitor: {ex.Message}");
+            return ResultResponse<string>.Fail($"Erro ao deletar leitor: {ex.Message}");
         }
     }
 }

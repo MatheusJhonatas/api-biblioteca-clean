@@ -1,18 +1,28 @@
+using Moq;
+using Biblioteca.Application.DTOs.Requests;
+using Biblioteca.Application.DTOs.Requests.Autor;
+using Biblioteca.Application.DTOs.Requests.Livro;
+using Biblioteca.Application.UseCases.Livros;
+using Biblioteca.Domain.Enums;
+using Biblioteca.Domain.Interfaces;
+using Biblioteca.Domain.Services;
+
 
 namespace Biblioteca.Application.Tests.UseCases.Livros;
 
 public class CadastrarLivroUseCaseTests
 {
+    #region Arrange
     private readonly Mock<ILivroRepository> _livroRepositoryMock;
     private readonly Mock<IAutorRepository> _autorRepositoryMock;
     private readonly BibliotecarioService _bibliotecarioService;
     private readonly CadastrarLivroUseCase _useCase;
     public CadastrarLivroUseCaseTests()
     {
-        _livroRepoMock = new Mock<ILivroRepository>();
-        _autorRepoMock = new Mock<IAutorRepository>();
+        _livroRepositoryMock = new Mock<ILivroRepository>();
+        _autorRepositoryMock = new Mock<IAutorRepository>();
         _bibliotecarioService = new BibliotecarioService();
-        _useCase = new CadastrarLivroUseCase(_livroRepoMock.Object, _autorRepoMock.Object, _bibliotecarioService);
+        _useCase = new CadastrarLivroUseCase(_livroRepositoryMock.Object, _autorRepositoryMock.Object, _bibliotecarioService);
     }
     private CadastrarLivroRequest CriarRequestValido()
     {
@@ -35,16 +45,23 @@ public class CadastrarLivroUseCaseTests
                 }
         };
     }
-    //metodo tem que ser async e retornar Task quando for testar metodos async
+    #endregion
+    #region Tests
     [Fact]
-    public async Task DeveRetornarErro_QuandoTituloForVazio()
+    public async Task Deve_Falhar_Se_Titulo_For_Vazio()
     {
-        // Arrange é quando você configura o cenário do teste
-        var useCase = new CadastrarLivroUseCase(null, null, null);
+        // Arrange É quando você configura o cenário do teste
+        var request = CriarRequestValido();
+        request.Titulo = "";
+
         // Act é quando você executa a ação que está sendo testada
-        var result = await useCase.Execute(new CadastrarLivroCommand { Titulo = "" });
+        var result = await _useCase.Execute(request);
+
         // Assert é quando você verifica se o resultado está correto
-        Assert.False(result.IsSuccess);
-        Assert.Equal("Título é obrigatório", result.Errors.First());
+        Assert.False(result.Success);
+        Assert.Equal("O título do livro é obrigatório.", result.Message);
     }
+    //metodo tem que ser async e retornar Task quando for testar metodos async
+
+    #endregion
 }

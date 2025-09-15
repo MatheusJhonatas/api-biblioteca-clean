@@ -74,6 +74,17 @@ public class CadastrarLivroUseCaseTests
         Assert.False(result.Success);
         Assert.Equal("A data de nascimento não pode ser futura.", result.Message);
     }
-
+    [Fact]
+    public async Task Se_Data_Nascimento_Do_Autor_For_Default_Deve_Falhar()
+    {
+        // Arrange é quando você configura o cenário do teste.
+        var request = CriarRequestValido();
+        request.Autor.DataNascimento = default; // Data inválida
+        // Act é quando você executa a ação que está sendo testada.
+        var result = await _useCase.Execute(request);
+        // Assert é quando você verifica se o resultado está correto.
+        Assert.False(result.Success);
+        Assert.Equal("A data de nascimento do autor é obrigatória e deve ser válida.", result.Message);
+    }
     #endregion
 }

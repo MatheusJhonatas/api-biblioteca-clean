@@ -47,6 +47,7 @@ public class CadastrarLivroUseCaseTests
     }
     #endregion
     #region Tests
+    //metodo tem que ser async e retornar Task quando for testar metodos async
     [Fact]
     public async Task Deve_Falhar_Se_Titulo_For_Vazio()
     {
@@ -61,7 +62,18 @@ public class CadastrarLivroUseCaseTests
         Assert.False(result.Success);
         Assert.Equal("O título do livro é obrigatório.", result.Message);
     }
-    //metodo tem que ser async e retornar Task quando for testar metodos async
+    [Fact]
+    public async Task Se_Data_Nascimento_Do_Autor_For_Futura_Deve_Falhar()
+    {
+        // Arrange é quando você configura o cenário do teste.
+        var request = CriarRequestValido();
+        request.Autor.DataNascimento = DateTime.Today.AddDays(1); // Data futura
+        // Act é quando você executa a ação que está sendo testada.
+        var result = await _useCase.Execute(request);
+        // Assert é quando você verifica se o resultado está correto.
+        Assert.False(result.Success);
+        Assert.Equal("A data de nascimento não pode ser futura.", result.Message);
+    }
 
     #endregion
 }

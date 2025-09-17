@@ -88,12 +88,14 @@ namespace Biblioteca.API.Controllers
             try
             {
                 var resultado = await _deletarLeitor.ExecuteAsync(id);
+                if (!resultado.Success)
+                    return NotFound(resultado);
                 return Ok(resultado);
             }
             catch (Exception ex)
             {
                 return StatusCode(500, ResultResponse<string>.Fail(
-                    $"Erro ao deletar leitores: {ex.Message}"
+                    $"Erro interno no servidor: {ex.Message}"
                 ));
             }
         }

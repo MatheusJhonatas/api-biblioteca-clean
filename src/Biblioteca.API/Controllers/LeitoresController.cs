@@ -12,15 +12,18 @@ namespace Biblioteca.API.Controllers
         private readonly ObterLeitorPorIdUseCase _obterLeitorPorId;
         private readonly ListarLeitoresUseCase _listarLeitores;
         private readonly CadastrarLeitorUseCase _cadastrarLeitor;
+        private readonly DeletarLeitorUseCase _deletarLeitor;
 
         public LeitoresController(
             ObterLeitorPorIdUseCase obterLeitorPorId,
             ListarLeitoresUseCase listarLeitores,
-            CadastrarLeitorUseCase cadastrarLeitor)
+            CadastrarLeitorUseCase cadastrarLeitor,
+            DeletarLeitorUseCase deletarLeitor)
         {
             _obterLeitorPorId = obterLeitorPorId;
             _listarLeitores = listarLeitores;
             _cadastrarLeitor = cadastrarLeitor;
+            _deletarLeitor = deletarLeitor;
         }
         // POST api/Leitores/v1/leitores
         [HttpPost("v1/leitores")]
@@ -80,16 +83,19 @@ namespace Biblioteca.API.Controllers
         }
 
         [HttpDelete("v1/leitores/{id:guid}")]
-        public async Task<IActionResult> DeletarLeitorAsync()
+        public async Task<IActionResult> DeletarLeitorAsync(Guid id)
         {
             try
             {
-                return Ok();
+                var resultado = await _deletarLeitor.ExecuteAsync(id);
+                if (!resultado.Success)
+                    return NotFound(resultado);
+                return Ok(resultado);
             }
             catch (Exception ex)
             {
                 return StatusCode(500, ResultResponse<string>.Fail(
-                    $"Erro ao deletar leitores: {ex.Message}"
+                    $"Erro interno no servidor ao tentar excluir um leitor: {ex.Message}"
                 ));
             }
         }

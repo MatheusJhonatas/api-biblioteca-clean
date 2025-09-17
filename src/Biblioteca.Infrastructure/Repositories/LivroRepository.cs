@@ -46,10 +46,10 @@ namespace Biblioteca.Infrastructure.Repositories
 
         public async Task<IEnumerable<Livro>> ListarDisponiveisAsync()
         {
-            return _context.Livros
+            return await _context.Livros
                 .Include(l => l.Autor)
-                .Where(l => l.Disponivel)
-                .ToList();
+                .Where(l => l.Disponivel == true)
+                .ToListAsync();
         }
 
         public async Task<Livro?> ObterPorTituloEAutorAsync(string titulo, string nomeCompletoAutor)

@@ -40,7 +40,7 @@ builder.Services.AddScoped<DevolverLivroUseCase>();
 builder.Services.AddScoped<ReservarLivroUseCase>();
 builder.Services.AddScoped<CadastrarLeitorUseCase>();
 // builder.Services.AddScoped<EditarLeitorUseCase>();
-// builder.Services.AddScoped<RemoverLeitorUseCase>();
+builder.Services.AddScoped<DeletarLeitorUseCase>();
 builder.Services.AddScoped<ListarLeitoresUseCase>();
 builder.Services.AddScoped<ObterLeitorPorIdUseCase>();
 

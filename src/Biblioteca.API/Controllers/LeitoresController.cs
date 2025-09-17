@@ -95,7 +95,7 @@ namespace Biblioteca.API.Controllers
             catch (Exception ex)
             {
                 return StatusCode(500, ResultResponse<string>.Fail(
-                    $"Erro interno no servidor: {ex.Message}"
+                    $"Erro interno no servidor ao tentar excluir um leitor: {ex.Message}"
                 ));
             }
         }

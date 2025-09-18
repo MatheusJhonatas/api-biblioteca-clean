@@ -98,5 +98,16 @@ public class CadastrarLivroUseCaseTests
         Assert.False(result.Success);
         Assert.Equal("O número de páginas deve ser maior que zero.", result.Message);
     }
+    public async Task Se_Autor_For_Nulo_Deve_Falhar()
+    {
+        //Arrange é quando você configura o cenário do teste.
+        var request = CriarRequestValido();
+        request.Autor = null; // Autor nulo
+        //Act é quando você executa a ação que está sendo testada.
+        var result = await _useCase.Execute(request);
+        //Assert é quando você verifica se o resultado está correto.
+        Assert.False(result.Success);
+        Assert.Equal("As informações do autor são obrigatórias.", result.Message);
+    }
     #endregion
 }

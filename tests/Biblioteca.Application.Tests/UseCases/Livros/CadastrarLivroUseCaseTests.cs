@@ -109,5 +109,17 @@ public class CadastrarLivroUseCaseTests
         Assert.False(result.Success);
         Assert.Equal("As informações do autor são obrigatórias.", result.Message);
     }
+    [Fact]
+    public async Task Se_ISBN_For_Vazio_Deve_Falhar()
+    {
+        //Arrange é quando você configura o cenário do teste.
+        var request = CriarRequestValido();
+        request.ISBN = ""; // ISBN vazio
+        //Act é quando você executa a ação que está sendo testada.
+        var result = await _useCase.Execute(request);
+        //Assert é quando você verifica se o resultado está correto.
+        Assert.False(result.Success);
+        Assert.Equal("O ISBN é obrigatório.", result.Message);
+    }
     #endregion
 }

@@ -1,3 +1,4 @@
+using Biblioteca.Application.DTOs.Requests.Livro;
 using Biblioteca.Application.UseCases.Livros;
 using Biblioteca.Domain.Interfaces;
 using Moq;
@@ -13,5 +14,13 @@ public class EditarLivroUseCaseTests
     {
         _livroRepositoryMock = new Mock<ILivroRepository>();
         _editarLivroUseCase = new EditarLivroUseCase(_livroRepositoryMock.Object);
+    }
+    private EditarLivroRequest CriarRequestValido()
+    {
+        return new EditarLivroRequest(
+            "Novo Título",
+            2022,
+            350
+        );
     }
 }

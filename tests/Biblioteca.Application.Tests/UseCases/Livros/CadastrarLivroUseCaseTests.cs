@@ -121,5 +121,6 @@ public class CadastrarLivroUseCaseTests
         Assert.False(result.Success);
         Assert.Equal("O ISBN é obrigatório.", result.Message);
     }
+
     #endregion
 }

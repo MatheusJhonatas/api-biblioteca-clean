@@ -30,11 +30,11 @@ public class EditarLivroUseCaseTests
         // Arrange
         var livroId = Guid.NewGuid();
         var request = CriarRequestValido();
-        var email = new Biblioteca.Domain.ValueObjects.Email("autor@email.com");
-        var nomeCompleto = new Biblioteca.Domain.ValueObjects.NomeCompleto("Nome", "do Autor");
-        var autor = new Biblioteca.Domain.Entities.Autor(nomeCompleto, email, DateTime.Now); // ajuste conforme o construtor de Autor
-        var isbn = new Biblioteca.Domain.ValueObjects.ISBN("1234567890123"); // Crie o objeto ISBN corretamente
-        var categorias = new List<Biblioteca.Domain.Entities.Categoria>(); // ou adicione categorias conforme necessário
+        var email = new Biblioteca.Domain.ValueObjects.Email("autor@email.com"); // criando um email válido
+        var nomeCompleto = new Biblioteca.Domain.ValueObjects.NomeCompleto("Nome", "do Autor"); // criando um nome válido dado que é um value object
+        var autor = new Biblioteca.Domain.Entities.Autor(nomeCompleto, email, DateTime.Now); // ajustando a data de nascimento
+        var isbn = new Biblioteca.Domain.ValueObjects.ISBN("1234567890123"); // criando um ISBN válido
+        var categorias = new List<Biblioteca.Domain.Entities.Categoria>(); // adicionando lista vazia de categorias
         var livroExistente = new Biblioteca.Domain.Entities.Livro(
             "Título Antigo",
             autor,
@@ -42,7 +42,7 @@ public class EditarLivroUseCaseTests
             2020,
             300,
             categorias,
-            null // ou forneça uma sinopse se necessário
+            null // assumindo que a capa é opcional
         );
 
         _livroRepositoryMock.Setup(repo => repo.ObterPorIdAsync(livroId))

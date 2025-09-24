@@ -99,5 +99,7 @@ namespace Biblioteca.API.Controllers
                 ));
             }
         }
+        // [HttpPatch("v1/leitores/{id:guid}")]
+
     }
 }

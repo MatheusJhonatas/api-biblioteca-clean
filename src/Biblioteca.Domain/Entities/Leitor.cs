@@ -49,6 +49,18 @@ public class Leitor : Entity
 
         Endereco = novoEndereco;
     }
+    public void AtualizarDados(NomeCompleto nome, Email email, CPF cpf, Endereco endereco)
+    {
+        if (nome == null) throw new ArgumentNullException(nameof(nome));
+        if (email == null) throw new ArgumentNullException(nameof(email));
+        if (cpf == null) throw new ArgumentNullException(nameof(cpf));
+        if (endereco == null) throw new ArgumentNullException(nameof(endereco));
+
+        NomeCompleto = nome;
+        Email = email;
+        CPF = cpf;
+        Endereco = endereco;
+    }
     public void RealizarEmprestimo(Emprestimo emprestimo)
     {
         if (emprestimo is null) throw new ArgumentNullException(nameof(emprestimo));
@@ -77,5 +89,6 @@ public class Leitor : Entity
     {
         return _emprestimos.FirstOrDefault(e => e.Id == id);
     }
+
     #endregion
 }

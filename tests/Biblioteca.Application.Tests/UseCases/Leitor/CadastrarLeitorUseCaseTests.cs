@@ -56,4 +56,18 @@ public class CadastrarLeitorUseCaseTests
         repoMock.Verify(r => r.SalvarAsync(It.IsAny<Biblioteca.Domain.Entities.Leitor>()), Times.Once);
 
     }
+    [Fact]
+    public async Task Deve_Retornar_Falha_Quando_Request_For_Nulo()
+    {
+        // Arrange
+        CadastrarLeitorRequest request = null;
+
+        // Act
+        var result = await _cadastrarLeitorUseCase.Execute(request);
+
+        // Assert
+        Assert.False(result.Success);
+        Assert.Equal("Os dados do leitor são obrigatórios.", result.Message);
+        _leitorRepositoryMock.Verify(r => r.SalvarAsync(It.IsAny<Biblioteca.Domain.Entities.Leitor>()), Times.Never);
+    }
 }

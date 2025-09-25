@@ -1,4 +1,5 @@
 using Biblioteca.Application.DTOs.Requests;
+using Biblioteca.Application.DTOs.Requests.Leitor;
 using Biblioteca.Application.DTOs.Responses;
 using Biblioteca.Application.UseCases.Leitores;
 using Microsoft.AspNetCore.Mvc;
@@ -99,7 +100,28 @@ namespace Biblioteca.API.Controllers
                 ));
             }
         }
-        // [HttpPatch("v1/leitores/{id:guid}")]
+        [HttpPatch("v1/leitores/{id:guid}")]
+        public async Task<IActionResult> EditarLeitorAsync(Guid id, [FromBody] EditarLeitorDto dto, [FromServices] EditarLeitorUseCase useCase)
+        {
+            try
+            {
+                if (dto == null || id == Guid.Empty || id != dto.Id)
+                    return BadRequest(ResultResponse<string>.Fail("Dados do leitor inválidos."));
+
+                await useCase.Execute(dto);
+                return Ok(ResultResponse<string>.Ok("Leitor atualizado com sucesso."));
+            }
+            catch (InvalidOperationException ex)
+            {
+                return NotFound(ResultResponse<string>.Fail(ex.Message));
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ResultResponse<string>.Fail(
+                    $"Erro interno ao editar leitor: {ex.Message}"
+                ));
+            }
+        }
 
     }
 }

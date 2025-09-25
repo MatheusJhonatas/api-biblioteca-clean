@@ -1,4 +1,5 @@
 using Biblioteca.Application.DTOs.Requests;
+using Biblioteca.Application.DTOs.Requests.Leitor;
 using Biblioteca.Application.DTOs.Responses;
 using Biblioteca.Application.UseCases.Leitores;
 using Microsoft.AspNetCore.Mvc;

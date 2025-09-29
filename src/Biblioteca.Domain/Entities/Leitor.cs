@@ -49,18 +49,28 @@ public class Leitor : Entity
 
         Endereco = novoEndereco;
     }
-    public void AtualizarDados(NomeCompleto nome, Email email, CPF cpf, Endereco endereco)
+    public void AlterarEmail(Email novoEmail)
     {
-        if (nome == null) throw new ArgumentNullException(nameof(nome));
-        if (email == null) throw new ArgumentNullException(nameof(email));
-        if (cpf == null) throw new ArgumentNullException(nameof(cpf));
-        if (endereco == null) throw new ArgumentNullException(nameof(endereco));
+        if (novoEmail == null)
+            throw new ArgumentNullException(nameof(novoEmail));
 
-        NomeCompleto = nome;
-        Email = email;
-        CPF = cpf;
-        Endereco = endereco;
+        Email = novoEmail;
     }
+    public void AlterarCPF(CPF novoCPF)
+    {
+        if (novoCPF == null)
+            throw new ArgumentNullException(nameof(novoCPF));
+
+        CPF = novoCPF;
+    }
+    public void AlterarNomeCompleto(NomeCompleto novoNome)
+    {
+        if (novoNome == null)
+            throw new ArgumentNullException(nameof(novoNome));
+
+        NomeCompleto = novoNome;
+    }
+
     public void RealizarEmprestimo(Emprestimo emprestimo)
     {
         if (emprestimo is null) throw new ArgumentNullException(nameof(emprestimo));

@@ -14,20 +14,42 @@ public class EditarLeitorUseCase
         _leitorRepository = leitorRepository;
     }
 
-    public async Task Execute(EditarLeitorDto dto)
+    public async Task<ResultResponse<LeitorResponse>> ExecuteAsync(Guid leitorId, EditarLeitorRequest request)
     {
-        var leitor = await _leitorRepository.ObterPorIdAsync(dto.Id);
+        var leitor = await _leitorRepository.ObterPorIdAsync(leitorId);
         if (leitor == null)
-            throw new InvalidOperationException("Leitor não encontrado.");
+            throw new ArgumentException("Leitor não encontrado.");
 
-        // delega ao domínio
-        leitor.AtualizarDados(
-            new NomeCompleto(dto.PrimeiroNome, dto.Sobrenome),
-            new Email(dto.Email),
-            new CPF(dto.CPF),
-            new Endereco()
-        );
+        if (!string.IsNullOrWhiteSpace(request.NovoPrimeiroNome) || !string.IsNullOrWhiteSpace(request.NovoSegundoNome))
+            leitor.AlterarNomeCompleto(new NomeCompleto(request.NovoPrimeiroNome ?? "", request.NovoSegundoNome ?? ""));
 
-        await _leitorRepository.AtualizarAsync(leitor);
+        if (!string.IsNullOrWhiteSpace(request.NovoEmail))
+            leitor.AlterarEmail(new Email(request.NovoEmail));
+
+        if (!string.IsNullOrWhiteSpace(request.NovoCPF))
+            leitor.AlterarCPF(new CPF(request.NovoCPF));
+
+        if (request.NovoEndereco != null)
+            leitor.AtualizarEndereco(new Endereco(
+                request.NovoEndereco.Rua,
+
+                request.NovoEndereco.Numero,
+                request.NovoEndereco.Bairro,
+                request.NovoEndereco.Cidade,
+                request.NovoEndereco.Estado,
+                request.NovoEndereco.Cep,
+                request.NovoEndereco.Complemento
+            ));
+
+
+        // Retorna o leitor atualizado
+        return ResultResponse<LeitorResponse>.Ok(new LeitorResponse(
+            leitor.Id,
+            leitor.NomeCompleto.ToString(),
+            leitor.Email.ToString(),
+            leitor.CPF.ToString(),
+            leitor.Endereco.ToString(),
+            leitor.DataCadastro
+        ), "Leitor atualizado com sucesso!");
     }
 }

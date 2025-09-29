@@ -101,14 +101,14 @@ namespace Biblioteca.API.Controllers
             }
         }
         [HttpPatch("v1/leitores/{id:guid}")]
-        public async Task<IActionResult> EditarLeitorAsync(Guid id, [FromBody] EditarLeitorDto dto, [FromServices] EditarLeitorUseCase useCase)
+        public async Task<IActionResult> EditarLeitorAsync(Guid id, [FromBody] EditarLeitorRequest dto, [FromServices] EditarLeitorUseCase useCase)
         {
             try
             {
-                if (dto == null || id == Guid.Empty || id != dto.Id)
+                if (dto == null || id == Guid.Empty)
                     return BadRequest(ResultResponse<string>.Fail("Dados do leitor inválidos."));
 
-                await useCase.Execute(dto);
+                await useCase.ExecuteAsync(id, dto);
                 return Ok(ResultResponse<string>.Ok("Leitor atualizado com sucesso."));
             }
             catch (InvalidOperationException ex)

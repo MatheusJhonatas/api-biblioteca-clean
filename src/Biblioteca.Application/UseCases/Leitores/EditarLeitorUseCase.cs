@@ -40,8 +40,6 @@ public class EditarLeitorUseCase
                 request.NovoEndereco.Cep,
                 request.NovoEndereco.Complemento
             ));
-
-
         // Retorna o leitor atualizado
         return ResultResponse<LeitorResponse>.Ok(new LeitorResponse(
             leitor.Id,

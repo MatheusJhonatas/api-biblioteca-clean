@@ -40,6 +40,7 @@ public class EditarLeitorUseCase
                 request.NovoEndereco.Cep,
                 request.NovoEndereco.Complemento
             ));
+        await _leitorRepository.AtualizarAsync(leitor);
         // Retorna o leitor atualizado
         return ResultResponse<LeitorResponse>.Ok(new LeitorResponse(
             leitor.Id,
@@ -48,6 +49,6 @@ public class EditarLeitorUseCase
             leitor.CPF.ToString(),
             leitor.Endereco.ToString(),
             leitor.DataCadastro
-        ), "Leitor atualizado com sucesso!");
+        ), $"Leitor {leitor.NomeCompleto.PrimeiroNome} {leitor.NomeCompleto.UltimoNome} atualizado com sucesso!");
     }
 }

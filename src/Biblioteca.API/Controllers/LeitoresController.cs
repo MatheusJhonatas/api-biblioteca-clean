@@ -26,7 +26,11 @@ namespace Biblioteca.API.Controllers
             _cadastrarLeitor = cadastrarLeitor;
             _deletarLeitor = deletarLeitor;
         }
-        // POST api/Leitores/v1/leitores
+        /// <summary>
+        /// Cria um novo leitor.
+        /// </summary>
+        /// <param name="cadastrarLeitorRequest">Dados do leitor a ser criado.</param>
+        /// <returns>Resultado da operação.</returns>
         [HttpPost("v1/leitores")]
         public async Task<IActionResult> CriarLeitor([FromBody] CadastrarLeitorRequest cadastrarLeitorRequest)
         {
@@ -47,7 +51,11 @@ namespace Biblioteca.API.Controllers
                 return StatusCode(500, $"Erro interno ao criar leitor: {ex.Message}");
             }
         }
-        // GET api/Leitores/v1/leitores/{id}
+        /// <summary>
+        /// Obtém um leitor pelo ID.    
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [HttpGet("v1/leitores/{id:guid}")]
         public async Task<IActionResult> ObterLeitorPorIdAsync([FromRoute] Guid id)
         {
@@ -65,8 +73,10 @@ namespace Biblioteca.API.Controllers
                 ));
             }
         }
-
-        // GET api/Leitores/v1/leitores
+        /// <summary>
+        /// Lista todos os leitores.
+        /// </summary>
+        /// <returns></returns>s
         [HttpGet("v1/leitores")]
         public async Task<IActionResult> ListarLeitoresAsync()
         {
@@ -82,7 +92,11 @@ namespace Biblioteca.API.Controllers
                 ));
             }
         }
-
+        /// <summary>
+        /// Deleta um leitor pelo ID.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [HttpDelete("v1/leitores/{id:guid}")]
         public async Task<IActionResult> DeletarLeitorAsync(Guid id)
         {
@@ -100,6 +114,11 @@ namespace Biblioteca.API.Controllers
                 ));
             }
         }
+        /// <summary>
+        /// Edita os dados de um leitor existente.
+        /// </summary>
+        /// <param name="id">Identificador único do leitor a ser editado.</param>
+        /// <param name="dto">Dados atualizados do leitor.</param>
         [HttpPatch("v1/leitores/{id:guid}")]
         public async Task<IActionResult> EditarLeitorAsync(Guid id, [FromBody] EditarLeitorRequest dto, [FromServices] EditarLeitorUseCase useCase)
         {
@@ -108,8 +127,8 @@ namespace Biblioteca.API.Controllers
                 if (dto == null || id == Guid.Empty)
                     return BadRequest(ResultResponse<string>.Fail("Dados do leitor inválidos."));
 
-                await useCase.ExecuteAsync(id, dto);
-                return Ok(ResultResponse<string>.Ok("Leitor atualizado com sucesso."));
+                var resultado = await useCase.ExecuteAsync(id, dto);
+                return Ok(resultado);
             }
             catch (InvalidOperationException ex)
             {

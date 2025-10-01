@@ -108,8 +108,8 @@ namespace Biblioteca.API.Controllers
                 if (dto == null || id == Guid.Empty)
                     return BadRequest(ResultResponse<string>.Fail("Dados do leitor inválidos."));
 
-                await useCase.ExecuteAsync(id, dto);
-                return Ok(ResultResponse<string>.Ok("Leitor atualizado com sucesso."));
+                var resultado = await useCase.ExecuteAsync(id, dto);
+                return Ok(resultado);
             }
             catch (InvalidOperationException ex)
             {

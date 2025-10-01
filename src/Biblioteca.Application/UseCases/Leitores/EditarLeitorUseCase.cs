@@ -49,6 +49,6 @@ public class EditarLeitorUseCase
             leitor.CPF.ToString(),
             leitor.Endereco.ToString(),
             leitor.DataCadastro
-        ), $"Leitor {leitor.NomeCompleto} atualizado com sucesso!");
+        ), $"Leitor {leitor.NomeCompleto.PrimeiroNome} {leitor.NomeCompleto.UltimoNome} atualizado com sucesso!");
     }
 }

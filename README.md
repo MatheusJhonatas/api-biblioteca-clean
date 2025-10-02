@@ -10,7 +10,7 @@
 ✅ Documentação automática via Swagger  
 ✅ Banco de dados gerado via migrations  
 ✅ Docker Compose Criado  
-✅ Cluster criado biblioteca-api-cluster  
+✅ Cluster criado **biblioteca-api-cluster**  
 🔜 Integração completa entre API e Application  
 🔜 Testes de integração dos endpoints  
 🔜 Deploy e publicação  

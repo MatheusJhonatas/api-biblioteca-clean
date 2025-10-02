@@ -15,7 +15,9 @@ public class EmprestimosController : ControllerBase
     {
         _emprestimoLivro = emprestimoLivro;
     }
-
+    /// <summary>
+    /// Realiza o empréstimo de um livro para um leitor.
+    /// </summary>
     [HttpPost("v1/emprestimos")]
     public async Task<IActionResult> RealizarEmprestimo([FromBody] EmprestarLivroRequest request)
     {

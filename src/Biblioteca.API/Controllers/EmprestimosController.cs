@@ -38,6 +38,9 @@ public class EmprestimosController : ControllerBase
             return StatusCode(500, ResultResponse<string>.Fail($"Erro interno ao emprestar um livro: {ex.Message}"));
         }
     }
+    /// <summary>
+    /// Lista todos os empréstimos.
+    /// </summary>
     [HttpGet("v1/emprestimos")]
     public async Task<IActionResult> ObterEmprestimos()
     {

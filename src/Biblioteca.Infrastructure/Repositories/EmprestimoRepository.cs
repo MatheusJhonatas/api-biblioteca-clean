@@ -1,5 +1,6 @@
 using Biblioteca.Domain.Interfaces;
 using Biblioteca.Infrastructure.Persistence;
+using Microsoft.EntityFrameworkCore;
 
 namespace Biblioteca.Infrastructure.Repositories;
 
@@ -34,5 +35,9 @@ public class EmprestimoRepository : IEmprestimoRepository
     {
         _context.Emprestimos.Add(emprestimo);
         _context.SaveChanges();
+    }
+    public async Task<IEnumerable<Emprestimo>> ListarTodosAsync()
+    {
+        return await _context.Emprestimos.ToListAsync();
     }
 }

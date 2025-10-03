@@ -6,4 +6,5 @@ public interface IEmprestimoRepository
     void Salvar(Emprestimo emprestimo);
     void Atualizar(Emprestimo emprestimo);
     IEnumerable<Emprestimo> ObterAtivosPorLeitor(Guid leitorId);
+    Task<IEnumerable<Emprestimo>> ListarTodosAsync();
 }

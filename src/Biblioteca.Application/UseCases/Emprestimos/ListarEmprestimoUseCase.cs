@@ -17,7 +17,7 @@ public class ListarEmprestimoUseCase
         try
         {
             var emprestimos = await _emprestimoRepo.ListarTodosAsync();
-            var response = emprestimos.Select(e => new EmprestimoResponse(
+            var response = emprestimos.Select(e => new Biblioteca.Application.DTOs.Responses.EmprestimoResponse(
                 e.Id,
                 e.Leitor.NomeCompleto.ToString(),
                 e.Livro.Titulo,

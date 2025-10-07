@@ -17,7 +17,7 @@ public class EmprestimoMap : IEntityTypeConfiguration<Emprestimo>
 
         // Relacionamento com Leitor (Leitor)
         builder.HasOne(e => e.Leitor)
-            .WithMany()
+            .WithMany(l => l.Emprestimos)
             .HasForeignKey("LeitorId")
             .OnDelete(DeleteBehavior.Restrict);
 
@@ -26,5 +26,6 @@ public class EmprestimoMap : IEntityTypeConfiguration<Emprestimo>
             .WithMany()
             .HasForeignKey("LivroId")
             .OnDelete(DeleteBehavior.Restrict);
+
     }
 }

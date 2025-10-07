@@ -12,9 +12,25 @@ public class ListarEmprestimoUseCase
         _emprestimoRepo = emprestimoRepo;
     }
 
-    public async Task<IEnumerable<EmprestimoResponse>> ExecuteAsync()
+    public async Task<ResultResponse<List<EmprestimoResponse>>> ExecuteAsync()
     {
-        var emprestimos = await _emprestimoRepo.ListarTodosAsync();
-        return emprestimos.Select(e => new EmprestimoResponse(e.Id, e.DataEmprestimo, e.DataPrevistaDevolucao));
+        try
+        {
+            var emprestimos = await _emprestimoRepo.ListarTodosAsync();
+            var response = emprestimos.Select(e => new Biblioteca.Application.DTOs.Responses.EmprestimoResponse(
+                e.Id,
+                e.Leitor.NomeCompleto.ToString(),
+                e.Livro.Titulo,
+                e.DataEmprestimo,
+                e.DataPrevistaDevolucao,
+                e.Status.ToString()
+            )).ToList();
+
+            return ResultResponse<List<EmprestimoResponse>>.Ok(response);
+        }
+        catch (Exception ex)
+        {
+            return ResultResponse<List<EmprestimoResponse>>.Fail($"Erro ao listar empréstimos: {ex.Message}");
+        }
     }
 }

@@ -1,3 +1,4 @@
+using System.Linq.Expressions;
 using Biblioteca.Application.DTOs.Requests.Livro;
 using Biblioteca.Application.DTOs.Responses;
 using Biblioteca.Domain.Interfaces;
@@ -20,15 +21,30 @@ namespace Biblioteca.Application.UseCases.Emprestimos
             _emprestimoService = emprestimoService;
         }
 
-        public async Task<EmprestimoResponse> ExecuteAsync(EmprestarLivroRequest request)
+        public async Task<ResultResponse<EmprestimoResponse>> ExecuteAsync(EmprestarLivroRequest request)
         {
-            var leitor = await _leitorRepo.ObterPorIdAsync(request.LeitorId) ?? throw new ArgumentException("Leitor não encontrado.");
-            var livro = await _livroRepo.ObterPorIdAsync(request.LivroId) ?? throw new ArgumentException("Livro não encontrado.");
+            try
+            {
+                var leitor = await _leitorRepo.ObterPorIdAsync(request.LeitorId) ?? throw new ArgumentException("Leitor não encontrado.");
+                var livro = await _livroRepo.ObterPorIdAsync(request.LivroId) ?? throw new ArgumentException("Livro não encontrado.");
 
-            var emprestimo = _emprestimoService.RealizarEmprestimo(leitor, livro);
-            _emprestimoRepo.Salvar(emprestimo);
+                var emprestimo = _emprestimoService.RealizarEmprestimo(leitor, livro);
+                await _emprestimoRepo.SalvarAsync(emprestimo);
 
-            return new EmprestimoResponse(emprestimo.Id, emprestimo.DataEmprestimo, emprestimo.DataPrevistaDevolucao);
+                var response = new EmprestimoResponse(
+                        emprestimo.Id,
+                        emprestimo.Leitor.NomeCompleto.ToString(),
+                        emprestimo.Livro.Titulo,
+                        emprestimo.DataEmprestimo,
+                        emprestimo.DataPrevistaDevolucao,
+                        emprestimo.Status.ToString()
+                    );
+                return ResultResponse<EmprestimoResponse>.Ok(response, "Empréstimo realizado com sucesso.");
+            }
+            catch (Exception ex)
+            {
+                return ResultResponse<EmprestimoResponse>.Fail($"Erro ao realizar empréstimo: {ex.Message}");
+            }
         }
     }
 }

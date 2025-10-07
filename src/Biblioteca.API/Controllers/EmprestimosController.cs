@@ -27,10 +27,12 @@ public class EmprestimosController : ControllerBase
     {
         try
         {
-            if (request == null)
-                return BadRequest("Dados do empréstimo não podem ser nulos.");
+            if (!@ModelState.IsValid)
+                return BadRequest(ResultResponse<string>.Fail("Dados do empréstimo inválidos."));
 
             var resultado = await _emprestimoLivro.ExecuteAsync(request);
+            if (!resultado.Success)
+                return BadRequest(resultado);
             return Ok(resultado);
         }
         catch (Exception ex)
@@ -47,6 +49,7 @@ public class EmprestimosController : ControllerBase
         try
         {
             var resultado = await _listarEmprestimo.ExecuteAsync();
+
             return Ok(resultado);
         }
         catch (Exception ex)

@@ -13,31 +13,33 @@ public class EmprestimoRepository : IEmprestimoRepository
         _context = context;
     }
 
-    public void Atualizar(Emprestimo emprestimo)
+    public async Task AtualizarAsync(Emprestimo emprestimo)
     {
         _context.Emprestimos.Update(emprestimo);
-        _context.SaveChanges();
+        await _context.SaveChangesAsync();
     }
 
-    public IEnumerable<Emprestimo> ObterAtivosPorLeitor(Guid leitorId)
+    public async Task<IEnumerable<Emprestimo>> ObterAtivosPorLeitorAsync(Guid leitorId)
     {
-        return _context.Emprestimos
+        return await _context.Emprestimos
             .Where(e => e.LeitorId == leitorId && e.DataRealDevolucao == null)
-            .ToList();
+            .ToListAsync();
     }
 
-    public Emprestimo ObterPorId(Guid id)
+    public async Task<Emprestimo> ObterPorIdAsync(Guid id)
     {
-        return _context.Emprestimos.Find(id);
+        return await _context.Emprestimos.FindAsync(id);
     }
 
-    public void Salvar(Emprestimo emprestimo)
-    {
-        _context.Emprestimos.Add(emprestimo);
-        _context.SaveChanges();
-    }
+
     public async Task<IEnumerable<Emprestimo>> ListarTodosAsync()
     {
         return await _context.Emprestimos.ToListAsync();
+    }
+
+    public async Task SalvarAsync(Emprestimo emprestimo)
+    {
+        _context.Emprestimos.Add(emprestimo);
+        await _context.SaveChangesAsync();
     }
 }

@@ -22,17 +22,17 @@ namespace Biblioteca.Application.UseCases.Emprestimos
             _emprestimoService = emprestimoService;
         }
 
-        public async Task Execute(DevolverLivroRequest request)
+        public async Task ExecuteAsync(DevolverLivroRequest request)
         {
             var leitor = await _leitorRepo.ObterPorIdAsync(request.LeitorId)
                 ?? throw new ArgumentException("Leitor não encontrado.");
 
-            var emprestimo = _emprestimoRepo.ObterPorId(request.EmprestimoId)
+            var emprestimo = await _emprestimoRepo.ObterPorIdAsync(request.EmprestimoId)
                 ?? throw new ArgumentException("Empréstimo não encontrado.");
 
             _emprestimoService.DevolverLivro(leitor, emprestimo.Id);
 
-            _emprestimoRepo.Atualizar(emprestimo);
+            await _emprestimoRepo.AtualizarAsync(emprestimo);
         }
     }
 }

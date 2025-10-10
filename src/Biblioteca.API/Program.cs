@@ -25,6 +25,7 @@ builder.Services.AddScoped<IEmprestimoRepository, EmprestimoRepository>();
 builder.Services.AddScoped<IReservaRepository, ReservaRepository>();
 builder.Services.AddScoped<IBibliotecarioRepository, BibliotecarioRepository>();
 
+
 // // Serviços de domínio
 builder.Services.AddScoped<BibliotecarioService>();
 builder.Services.AddScoped<EmprestimoService>();
@@ -43,6 +44,7 @@ builder.Services.AddScoped<EditarLeitorUseCase>();
 builder.Services.AddScoped<DeletarLeitorUseCase>();
 builder.Services.AddScoped<ListarLeitoresUseCase>();
 builder.Services.AddScoped<ObterLeitorPorIdUseCase>();
+builder.Services.AddScoped<ListarEmprestimoUseCase>();
 
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();

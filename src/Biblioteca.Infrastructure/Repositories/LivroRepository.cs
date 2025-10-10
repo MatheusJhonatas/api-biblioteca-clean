@@ -51,6 +51,13 @@ namespace Biblioteca.Infrastructure.Repositories
                 .Where(l => l.Disponivel == true)
                 .ToListAsync();
         }
+        public async Task<IEnumerable<Livro>> ListarEmprestadosAsync()
+        {
+            return await _context.Livros
+                .Include(l => l.Autor)
+                .Where(l => l.Disponivel == false)
+                .ToListAsync();
+        }
 
         public async Task<Livro?> ObterPorTituloEAutorAsync(string titulo, string nomeCompletoAutor)
         {

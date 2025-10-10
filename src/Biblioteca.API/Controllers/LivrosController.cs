@@ -11,18 +11,20 @@ namespace Biblioteca.API.Controllers;
 public class LivrosController : ControllerBase
 {
     private readonly CadastrarLivroUseCase _cadastrarLivro;
-    private readonly ListarLivrosDisponiveisUseCase _listarLivros;
+    private readonly ListarLivrosDisponiveisUseCase _listarLivrosDisponiveis;
     private readonly ObterLivroPorIdUseCase _obterLivroPorId;
     private readonly RemoverLivroUseCase _removerLivro;
     private readonly EditarLivroUseCase _editarLivro;
+    private readonly ListarLivrosEmprestadosUseCase _listarLivrosEmprestados;
 
-    public LivrosController(CadastrarLivroUseCase cadastrarLivro, ListarLivrosDisponiveisUseCase listarLivros, ObterLivroPorIdUseCase obterLivroPorId, RemoverLivroUseCase removerLivro, EditarLivroUseCase editarLivro)
+    public LivrosController(CadastrarLivroUseCase cadastrarLivro, ListarLivrosDisponiveisUseCase listarLivrosDisponiveis, ObterLivroPorIdUseCase obterLivroPorId, RemoverLivroUseCase removerLivro, EditarLivroUseCase editarLivro, ListarLivrosEmprestadosUseCase listarLivrosEmprestados)
     {
         _cadastrarLivro = cadastrarLivro;
-        _listarLivros = listarLivros;
+        _listarLivrosDisponiveis = listarLivrosDisponiveis;
         _obterLivroPorId = obterLivroPorId;
         _removerLivro = removerLivro;
         _editarLivro = editarLivro;
+        _listarLivrosEmprestados = listarLivrosEmprestados;
     }
     /// <summary>
     /// Cadastra um novo livro na biblioteca.
@@ -51,14 +53,30 @@ public class LivrosController : ControllerBase
         }
     }
     /// <summary>
-    /// Lista todos os livros disponíveis na biblioteca.
+    /// Lista todos os livros **disponíveis** na biblioteca.
     /// </summary>
     [HttpGet("v1/livros")]
     public async Task<IActionResult> ListarLivrosAsync()
     {
         try
         {
-            var resultado = await _listarLivros.ExecuteAsync();
+            var resultado = await _listarLivrosDisponiveis.ExecuteAsync();
+            return Ok(resultado);
+        }
+        catch (Exception ex)
+        {
+            return StatusCode(500, ResultResponse<string>.Fail($"Erro interno ao listar livros: {ex.Message}"));
+        }
+    }
+    ///<summary>
+    /// Lista todos os livros empréstados na biblioteca.
+    /// <</summary>
+    [HttpGet("v1/livros/emprestados")]
+    public async Task<IActionResult> ListarLivrosEmprestadosAsync()
+    {
+        try
+        {
+            var resultado = await _listarLivrosEmprestados.ExecuteAsync();
             return Ok(resultado);
         }
         catch (Exception ex)

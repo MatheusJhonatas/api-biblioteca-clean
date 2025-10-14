@@ -45,6 +45,7 @@ builder.Services.AddScoped<DeletarLeitorUseCase>();
 builder.Services.AddScoped<ListarLeitoresUseCase>();
 builder.Services.AddScoped<ObterLeitorPorIdUseCase>();
 builder.Services.AddScoped<ListarEmprestimoUseCase>();
+builder.Services.AddScoped<ListarLivrosEmprestadosUseCase>();
 
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();

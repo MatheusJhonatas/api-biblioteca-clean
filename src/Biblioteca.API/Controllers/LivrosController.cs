@@ -2,9 +2,7 @@ using Biblioteca.Application.DTOs.Requests.Leitor;
 using Biblioteca.Application.DTOs.Requests.Livro;
 using Biblioteca.Application.DTOs.Responses;
 using Biblioteca.Application.UseCases.Livros;
-
 using Microsoft.AspNetCore.Mvc;
-
 namespace Biblioteca.API.Controllers;
 
 [ApiController]
@@ -31,7 +29,6 @@ public class LivrosController : ControllerBase
     /// </summary>
     /// <param name="request">Dados necessários para cadastrar o livro.</param>
     /// <returns>Livro cadastrado com sucesso ou mensagem de erro.</returns>
-
     [HttpPost("v1/livros")]
     public async Task<IActionResult> CadastrarLivro([FromBody] CadastrarLivroRequest request)
     {
@@ -44,7 +41,6 @@ public class LivrosController : ControllerBase
 
             if (!resultado.Success)
                 return BadRequest(resultado);
-
             return Ok(resultado);
         }
         catch (Exception ex)
@@ -140,15 +136,12 @@ public class LivrosController : ControllerBase
                 return BadRequest(resultado);
 
             return Ok(resultado);
-
         }
         catch (Exception ex)
         {
             return StatusCode(500, ResultResponse<string>.Fail($"Erro interno ao atualizar livro: {ex.Message}"));
         }
-
     }
-
 }
 
 

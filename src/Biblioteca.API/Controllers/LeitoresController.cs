@@ -3,144 +3,141 @@ using Biblioteca.Application.DTOs.Requests.Leitor;
 using Biblioteca.Application.DTOs.Responses;
 using Biblioteca.Application.UseCases.Leitores;
 using Microsoft.AspNetCore.Mvc;
+namespace Biblioteca.API.Controllers;
 
-namespace Biblioteca.API.Controllers
+[ApiController]
+[Route("api/[controller]")] // Prefixo base da rota: api/Leitores
+public class LeitoresController : ControllerBase
 {
-    [ApiController]
-    [Route("api/[controller]")] // Prefixo base da rota: api/Leitores
-    public class LeitoresController : ControllerBase
+    private readonly ObterLeitorPorIdUseCase _obterLeitorPorId;
+    private readonly ListarLeitoresUseCase _listarLeitores;
+    private readonly CadastrarLeitorUseCase _cadastrarLeitor;
+    private readonly DeletarLeitorUseCase _deletarLeitor;
+
+    public LeitoresController(
+        ObterLeitorPorIdUseCase obterLeitorPorId,
+        ListarLeitoresUseCase listarLeitores,
+        CadastrarLeitorUseCase cadastrarLeitor,
+        DeletarLeitorUseCase deletarLeitor)
     {
-        private readonly ObterLeitorPorIdUseCase _obterLeitorPorId;
-        private readonly ListarLeitoresUseCase _listarLeitores;
-        private readonly CadastrarLeitorUseCase _cadastrarLeitor;
-        private readonly DeletarLeitorUseCase _deletarLeitor;
-
-        public LeitoresController(
-            ObterLeitorPorIdUseCase obterLeitorPorId,
-            ListarLeitoresUseCase listarLeitores,
-            CadastrarLeitorUseCase cadastrarLeitor,
-            DeletarLeitorUseCase deletarLeitor)
+        _obterLeitorPorId = obterLeitorPorId;
+        _listarLeitores = listarLeitores;
+        _cadastrarLeitor = cadastrarLeitor;
+        _deletarLeitor = deletarLeitor;
+    }
+    /// <summary>
+    /// Cria um novo leitor.
+    /// </summary>
+    /// <param name="cadastrarLeitorRequest">Dados do leitor a ser criado.</param>
+    /// <returns>Resultado da operação.</returns>
+    [HttpPost("v1/leitores")]
+    public async Task<IActionResult> CriarLeitor([FromBody] CadastrarLeitorRequest cadastrarLeitorRequest)
+    {
+        try
         {
-            _obterLeitorPorId = obterLeitorPorId;
-            _listarLeitores = listarLeitores;
-            _cadastrarLeitor = cadastrarLeitor;
-            _deletarLeitor = deletarLeitor;
+            if (cadastrarLeitorRequest == null)
+                return BadRequest(ResultResponse<string>.Fail("Dados do leitor não podem ser nulos."));
+
+            var resultado = await _cadastrarLeitor.Execute(cadastrarLeitorRequest);
+
+            if (!resultado.Success)
+                return BadRequest(resultado);
+
+            return Ok(resultado);
         }
-        /// <summary>
-        /// Cria um novo leitor.
-        /// </summary>
-        /// <param name="cadastrarLeitorRequest">Dados do leitor a ser criado.</param>
-        /// <returns>Resultado da operação.</returns>
-        [HttpPost("v1/leitores")]
-        public async Task<IActionResult> CriarLeitor([FromBody] CadastrarLeitorRequest cadastrarLeitorRequest)
+        catch (Exception ex)
         {
-            try
-            {
-                if (cadastrarLeitorRequest == null)
-                    return BadRequest(ResultResponse<string>.Fail("Dados do leitor não podem ser nulos."));
-
-                var resultado = await _cadastrarLeitor.Execute(cadastrarLeitorRequest);
-
-                if (!resultado.Success)
-                    return BadRequest(resultado);
-
-                return Ok(resultado);
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(500, $"Erro interno ao criar leitor: {ex.Message}");
-            }
+            return StatusCode(500, $"Erro interno ao criar leitor: {ex.Message}");
         }
-        /// <summary>
-        /// Obtém um leitor pelo ID.    
-        /// </summary>
-        /// <param name="id"></param>
-        /// <returns></returns>
-        [HttpGet("v1/leitores/{id:guid}")]
-        public async Task<IActionResult> ObterLeitorPorIdAsync([FromRoute] Guid id)
+    }
+    /// <summary>
+    /// Obtém um leitor pelo ID.    
+    /// </summary>
+    /// <param name="id"></param>
+    /// <returns></returns>
+    [HttpGet("v1/leitores/{id:guid}")]
+    public async Task<IActionResult> ObterLeitorPorIdAsync([FromRoute] Guid id)
+    {
+        try
         {
-            try
-            {
-                var resultado = await _obterLeitorPorId.ExecuteAsync(id);
+            var resultado = await _obterLeitorPorId.ExecuteAsync(id);
 
-                return Ok(resultado);
-            }
-            catch (Exception ex)
-            {
-                var innerEx = ex.InnerException != null ? $" Inner Exception: {ex.InnerException.Message}" : string.Empty;
-                return StatusCode(500, ResultResponse<string>.Fail(
-                    $"Erro interno ao obter leitor: {ex.Message}{innerEx}"
-                ));
-            }
+            return Ok(resultado);
         }
-        /// <summary>
-        /// Lista todos os leitores.
-        /// </summary>
-        /// <returns></returns>s
-        [HttpGet("v1/leitores")]
-        public async Task<IActionResult> ListarLeitoresAsync()
+        catch (Exception ex)
         {
-            try
-            {
-                var resultado = await _listarLeitores.Execute();
-                return Ok(resultado);
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(500, ResultResponse<string>.Fail(
-                    $"Erro ao listar leitores: {ex.Message}"
-                ));
-            }
+            var innerEx = ex.InnerException != null ? $" Inner Exception: {ex.InnerException.Message}" : string.Empty;
+            return StatusCode(500, ResultResponse<string>.Fail(
+                $"Erro interno ao obter leitor: {ex.Message}{innerEx}"
+            ));
         }
-        /// <summary>
-        /// Deleta um leitor pelo ID.
-        /// </summary>
-        /// <param name="id"></param>
-        /// <returns></returns>
-        [HttpDelete("v1/leitores/{id:guid}")]
-        public async Task<IActionResult> DeletarLeitorAsync(Guid id)
+    }
+    /// <summary>
+    /// Lista todos os leitores.
+    /// </summary>
+    /// <returns></returns>s
+    [HttpGet("v1/leitores")]
+    public async Task<IActionResult> ListarLeitoresAsync()
+    {
+        try
         {
-            try
-            {
-                var resultado = await _deletarLeitor.ExecuteAsync(id);
-                if (!resultado.Success)
-                    return NotFound(resultado);
-                return Ok(resultado);
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(500, ResultResponse<string>.Fail(
-                    $"Erro interno no servidor ao tentar excluir um leitor: {ex.Message}"
-                ));
-            }
+            var resultado = await _listarLeitores.Execute();
+            return Ok(resultado);
         }
-        /// <summary>
-        /// Edita os dados de um leitor existente.
-        /// </summary>
-        /// <param name="id">Identificador único do leitor a ser editado.</param>
-        /// <param name="dto">Dados atualizados do leitor.</param>
-        [HttpPatch("v1/leitores/{id:guid}")]
-        public async Task<IActionResult> EditarLeitorAsync(Guid id, [FromBody] EditarLeitorRequest dto, [FromServices] EditarLeitorUseCase useCase)
+        catch (Exception ex)
         {
-            try
-            {
-                if (dto == null || id == Guid.Empty)
-                    return BadRequest(ResultResponse<string>.Fail("Dados do leitor inválidos."));
+            return StatusCode(500, ResultResponse<string>.Fail(
+                $"Erro ao listar leitores: {ex.Message}"
+            ));
+        }
+    }
+    /// <summary>
+    /// Deleta um leitor pelo ID.
+    /// </summary>
+    /// <param name="id"></param>
+    /// <returns></returns>
+    [HttpDelete("v1/leitores/{id:guid}")]
+    public async Task<IActionResult> DeletarLeitorAsync(Guid id)
+    {
+        try
+        {
+            var resultado = await _deletarLeitor.ExecuteAsync(id);
+            if (!resultado.Success)
+                return NotFound(resultado);
+            return Ok(resultado);
+        }
+        catch (Exception ex)
+        {
+            return StatusCode(500, ResultResponse<string>.Fail(
+                $"Erro interno no servidor ao tentar excluir um leitor: {ex.Message}"
+            ));
+        }
+    }
+    /// <summary>
+    /// Edita os dados de um leitor existente.
+    /// </summary>
+    /// <param name="id">Identificador único do leitor a ser editado.</param>
+    /// <param name="dto">Dados atualizados do leitor.</param>
+    [HttpPatch("v1/leitores/{id:guid}")]
+    public async Task<IActionResult> EditarLeitorAsync(Guid id, [FromBody] EditarLeitorRequest dto, [FromServices] EditarLeitorUseCase useCase)
+    {
+        try
+        {
+            if (dto == null || id == Guid.Empty)
+                return BadRequest(ResultResponse<string>.Fail("Dados do leitor inválidos."));
 
-                var resultado = await useCase.ExecuteAsync(id, dto);
-                return Ok(resultado);
-            }
-            catch (InvalidOperationException ex)
-            {
-                return NotFound(ResultResponse<string>.Fail(ex.Message));
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(500, ResultResponse<string>.Fail(
-                    $"Erro interno ao editar leitor: {ex.Message}"
-                ));
-            }
+            var resultado = await useCase.ExecuteAsync(id, dto);
+            return Ok(resultado);
         }
-
+        catch (InvalidOperationException ex)
+        {
+            return NotFound(ResultResponse<string>.Fail(ex.Message));
+        }
+        catch (Exception ex)
+        {
+            return StatusCode(500, ResultResponse<string>.Fail(
+                $"Erro interno ao editar leitor: {ex.Message}"
+            ));
+        }
     }
 }

@@ -64,9 +64,9 @@ public class LivrosController : ControllerBase
             return StatusCode(500, ResultResponse<string>.Fail($"Erro interno ao listar livros: {ex.Message}"));
         }
     }
-    ///<summary>
+    /// <summary>
     /// Lista todos os livros empréstados na biblioteca.
-    /// <</summary>
+    /// </summary>
     [HttpGet("v1/livros/emprestados")]
     public async Task<IActionResult> ListarLivrosEmprestadosAsync()
     {

@@ -1,10 +1,7 @@
-using Biblioteca.Application.DTOs.Requests;
 using Biblioteca.Application.DTOs.Requests.Livro;
 using Biblioteca.Application.DTOs.Responses;
 using Biblioteca.Application.UseCases.Emprestimos;
-using Biblioteca.Domain.Services;
 using Microsoft.AspNetCore.Mvc;
-
 namespace Biblioteca.API.Controllers;
 
 [ApiController]
@@ -12,7 +9,6 @@ public class EmprestimosController : ControllerBase
 {
     private readonly EmprestarLivroUseCase _emprestimoLivro;
     private readonly ListarEmprestimoUseCase _listarEmprestimo;
-
 
     public EmprestimosController(EmprestarLivroUseCase emprestimoLivro, ListarEmprestimoUseCase listarEmprestimo)
     {

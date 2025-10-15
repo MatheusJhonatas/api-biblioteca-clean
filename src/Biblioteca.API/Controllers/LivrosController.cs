@@ -1,4 +1,3 @@
-using Biblioteca.Application.DTOs.Requests.Leitor;
 using Biblioteca.Application.DTOs.Requests.Livro;
 using Biblioteca.Application.DTOs.Responses;
 using Biblioteca.Application.UseCases.Livros;

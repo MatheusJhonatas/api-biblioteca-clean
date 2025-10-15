@@ -1,5 +1,4 @@
 using Biblioteca.Application.DTOs.Requests.Autor;
-
 namespace Biblioteca.Application.DTOs.Requests.Livro;
 
 public class CadastrarLivroRequest

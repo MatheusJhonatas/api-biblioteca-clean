@@ -1,7 +1,5 @@
 using Biblioteca.Application.DTOs.Responses;
-using Biblioteca.Domain.Entities;
 using Biblioteca.Domain.Interfaces;
-
 namespace Biblioteca.Application.UseCases.Livros;
 
 public class ListarLivrosEmprestadosUseCase

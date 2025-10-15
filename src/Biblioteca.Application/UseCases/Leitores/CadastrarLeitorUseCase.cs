@@ -3,7 +3,6 @@ using Biblioteca.Application.DTOs.Responses;
 using Biblioteca.Domain.Entities;
 using Biblioteca.Domain.Interfaces;
 using Biblioteca.Domain.ValueObjects;
-
 namespace Biblioteca.Application.UseCases.Leitores;
 
 public class CadastrarLeitorUseCase

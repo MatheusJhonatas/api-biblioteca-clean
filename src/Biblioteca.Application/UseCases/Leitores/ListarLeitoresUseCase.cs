@@ -1,6 +1,5 @@
 using Biblioteca.Application.DTOs.Responses;
 using Biblioteca.Domain.Interfaces;
-
 namespace Biblioteca.Application.UseCases.Leitores;
 
 public class ListarLeitoresUseCase

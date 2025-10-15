@@ -51,7 +51,7 @@ public class LivrosController : ControllerBase
     /// <summary>
     /// Lista todos os livros **disponíveis** na biblioteca.
     /// </summary>
-    [HttpGet("v1/livros")]
+    [HttpGet("v1/livros/disponiveis")]
     public async Task<IActionResult> ListarLivrosAsync()
     {
         try

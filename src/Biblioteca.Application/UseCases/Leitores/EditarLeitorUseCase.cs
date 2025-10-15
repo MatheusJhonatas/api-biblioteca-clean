@@ -2,7 +2,6 @@ using Biblioteca.Application.DTOs.Requests.Leitor;
 using Biblioteca.Application.DTOs.Responses;
 using Biblioteca.Domain.Interfaces;
 using Biblioteca.Domain.ValueObjects;
-
 namespace Biblioteca.Application.UseCases.Leitores;
 
 public class EditarLeitorUseCase

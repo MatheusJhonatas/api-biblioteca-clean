@@ -1,5 +1,4 @@
 using Biblioteca.Application.DTOs.Requests.Leitor;
-
 namespace Biblioteca.Application.DTOs.Requests;
 
 public class CadastrarLeitorRequest

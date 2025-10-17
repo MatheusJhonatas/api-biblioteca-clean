@@ -16,16 +16,18 @@ public class ListarEmprestimoUseCase
         try
         {
             var emprestimos = await _emprestimoRepo.ListarTodosAsync();
-            var response = emprestimos.Select(e => new Biblioteca.Application.DTOs.Responses.EmprestimoResponse(
+
+            var response = emprestimos.Select(e => new EmprestimoResponse(
                 e.Id,
-                e.Leitor.NomeCompleto.ToString(),
+                e.Leitor.NomeCompleto.PrimeiroNome,
                 e.Livro.Titulo,
                 e.DataEmprestimo,
                 e.DataPrevistaDevolucao,
                 e.Status.ToString()
             )).ToList();
 
-            return ResultResponse<List<EmprestimoResponse>>.Ok(response);
+            return ResultResponse<List<EmprestimoResponse>>.Ok(response, "Empréstimos listados com sucesso.");
+
         }
         catch (Exception ex)
         {

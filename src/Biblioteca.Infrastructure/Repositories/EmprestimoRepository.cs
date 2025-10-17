@@ -34,7 +34,10 @@ public class EmprestimoRepository : IEmprestimoRepository
 
     public async Task<IEnumerable<Emprestimo>> ListarTodosAsync()
     {
-        return await _context.Emprestimos.ToListAsync();
+        return await _context.Emprestimos.Include(e => e.Leitor)
+    .ThenInclude(l => l.NomeCompleto)
+    .Include(e => e.Livro)
+    .ToListAsync();
     }
 
     public async Task SalvarAsync(Emprestimo emprestimo)

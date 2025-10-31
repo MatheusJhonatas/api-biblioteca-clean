@@ -68,7 +68,7 @@ namespace Biblioteca.tests.Application.UseCases.Emprestimos
             result.Message.Should().Be("Empréstimos listados com sucesso.");
             result.Data.Should().NotBeNull();
             result.Data.Should().HaveCount(1);
-            result.Data.First().Titulo.Should().Be("A sorte segue a coragem.");
+            result.Data.First().LivroTitulo.Should().Be("A sorte segue a coragem.");
             mockRepo.Verify(r => r.ListarTodosAsync(), Times.Once);
         }
 

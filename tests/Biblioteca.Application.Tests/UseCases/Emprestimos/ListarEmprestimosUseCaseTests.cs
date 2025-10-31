@@ -1,16 +1,10 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Biblioteca.Application.UseCases.Emprestimos;
-using Biblioteca.Application.DTOs.Responses;
 using Biblioteca.Domain.Entities;
 using Biblioteca.Domain.Enums;
 using Biblioteca.Domain.Interfaces;
 using Biblioteca.Domain.ValueObjects;
 using FluentAssertions;
 using Moq;
-using Xunit;
 
 namespace Biblioteca.tests.Application.UseCases.Emprestimos
 {
@@ -68,7 +62,7 @@ namespace Biblioteca.tests.Application.UseCases.Emprestimos
             result.Message.Should().Be("Empréstimos listados com sucesso.");
             result.Data.Should().NotBeNull();
             result.Data.Should().HaveCount(1);
-            result.Data.First().Titulo.Should().Be("A sorte segue a coragem.");
+            result.Data.First().LivroTitulo.Should().Be("A sorte segue a coragem.");
             mockRepo.Verify(r => r.ListarTodosAsync(), Times.Once);
         }
 
@@ -91,5 +85,6 @@ namespace Biblioteca.tests.Application.UseCases.Emprestimos
             result.Data.Should().BeNull();
             mockRepo.Verify(r => r.ListarTodosAsync(), Times.Once);
         }
+
     }
 }

@@ -1,16 +1,10 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Biblioteca.Application.UseCases.Emprestimos;
-using Biblioteca.Application.DTOs.Responses;
 using Biblioteca.Domain.Entities;
 using Biblioteca.Domain.Enums;
 using Biblioteca.Domain.Interfaces;
 using Biblioteca.Domain.ValueObjects;
 using FluentAssertions;
 using Moq;
-using Xunit;
 
 namespace Biblioteca.tests.Application.UseCases.Emprestimos
 {

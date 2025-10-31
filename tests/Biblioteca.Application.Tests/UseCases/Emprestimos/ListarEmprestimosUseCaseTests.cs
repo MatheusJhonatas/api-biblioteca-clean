@@ -85,5 +85,6 @@ namespace Biblioteca.tests.Application.UseCases.Emprestimos
             result.Data.Should().BeNull();
             mockRepo.Verify(r => r.ListarTodosAsync(), Times.Once);
         }
+
     }
 }

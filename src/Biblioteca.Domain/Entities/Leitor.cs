@@ -84,7 +84,7 @@ public class Leitor : Entity
         var emp = _emprestimos.FirstOrDefault(e => e.Id == emprestimoId)
                 ?? throw new InvalidOperationException("Empréstimo não encontrado para o leitor.");
 
-        emp.FinalizarEmprestimo(DateTime.Now); // garante que Emprestimo/ Livro executem suas regras (marca livro disponível, set data devolução)
+        emp.RegistrarDevolucao(); // garante que Emprestimo/ Livro executem suas regras (marca livro disponível, set data devolução)
     }
     // public void RealizarReserva(Reserva reserva)
     // {

@@ -33,12 +33,12 @@ public class Emprestimo : Entity
     #endregion
     #region Metodos
 
-    public void FinalizarEmprestimo(DateTime dataDevolucao)
+    public void RegistrarDevolucao()
     {
         if (Status != EStatusEmprestimo.Ativo)
-            throw new InvalidOperationException("Este empréstimo já foi finalizado.");
+            throw new InvalidOperationException("Somente empréstimos ativos podem ser devolvidos.");
 
-        DataRealDevolucao = dataDevolucao;
+        DataRealDevolucao = DateTime.Now.ToBrasiliaTime();
         Status = EStatusEmprestimo.Finalizado;
         if (!Livro.Disponivel) // <- adiciona essa proteção aqui
             Livro.Devolver();

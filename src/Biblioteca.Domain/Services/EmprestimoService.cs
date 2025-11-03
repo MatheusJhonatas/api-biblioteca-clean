@@ -40,7 +40,7 @@ namespace Biblioteca.Domain.Services
             if (emprestimo == null)
                 throw new InvalidOperationException("Empréstimo não encontrado.");
 
-            emprestimo.FinalizarEmprestimo(DateTime.Now);
+            emprestimo.RegistrarDevolucao();
         }
     }
 }

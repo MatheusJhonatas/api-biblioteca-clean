@@ -96,10 +96,10 @@ public class EmprestimoTest
         var emprestimo = new Emprestimo(leitor, livro, dataEmprestimo, dataPrevista);
         livro.Emprestar(); // Simulando que o livro está emprestado.
         // Act é quando executamos a ação que queremos testar. aqui no caso é a finalização do empréstimo.
-        emprestimo.FinalizarEmprestimo(DateTime.Today.AddDays(8));
+        emprestimo.RegistrarDevolucao();
         // Assert é quando verificamos se o resultado é o esperado.
         emprestimo.Status.Should().Be(EStatusEmprestimo.Finalizado);
-        emprestimo.DataRealDevolucao.Should().Be(DateTime.Today.AddDays(8));
+        emprestimo.DataRealDevolucao.Value.Date.Should().Be(DateTime.Today.AddDays(8));
         livro.Disponivel.Should().BeTrue();
     }
 
@@ -112,10 +112,10 @@ public class EmprestimoTest
         var dataPrevista = dataEmprestimo.AddDays(7);
         var emprestimo = new Emprestimo(leitor, livro, dataEmprestimo, dataPrevista);
         livro.Emprestar(); // Simulando que o livro está emprestado.
-        emprestimo.FinalizarEmprestimo(DateTime.Today.AddDays(8));
+        emprestimo.RegistrarDevolucao();
 
-        Action act = () => emprestimo.FinalizarEmprestimo(DateTime.Today.AddDays(9));
-        act.Should().Throw<InvalidOperationException>().WithMessage("Este empréstimo já foi finalizado.");
+        Action act = () => emprestimo.RegistrarDevolucao();
+        act.Should().Throw<InvalidOperationException>().WithMessage("Somente empréstimos ativos podem ser devolvidos.");
     }
 
     [Fact]
@@ -139,7 +139,7 @@ public class EmprestimoTest
         var dataPrevista = DateTime.Today.AddDays(-5);
         var emprestimo = new Emprestimo(leitor, livro, dataEmprestimo, dataPrevista);
 
-        emprestimo.FinalizarEmprestimo(DateTime.Today);
+        emprestimo.RegistrarDevolucao();
 
         emprestimo.EstaAtrasado().Should().BeTrue();
     }
@@ -153,7 +153,7 @@ public class EmprestimoTest
         var dataPrevista = DateTime.Today.AddDays(-5);
         var emprestimo = new Emprestimo(leitor, livro, dataEmprestimo, dataPrevista);
 
-        emprestimo.FinalizarEmprestimo(DateTime.Today);
+        emprestimo.RegistrarDevolucao();
         emprestimo.CalcularMulta().Should().Be(5.00m);
     }
 
@@ -166,7 +166,7 @@ public class EmprestimoTest
         var dataPrevista = DateTime.Today.AddDays(5);
         var emprestimo = new Emprestimo(leitor, livro, dataEmprestimo, dataPrevista);
 
-        emprestimo.FinalizarEmprestimo(DateTime.Today);
+        emprestimo.RegistrarDevolucao();
 
         emprestimo.CalcularMulta().Should().Be(0.00m);
     }

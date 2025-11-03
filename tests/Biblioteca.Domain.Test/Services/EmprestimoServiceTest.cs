@@ -71,10 +71,12 @@ public class EmprestimoServiceTest
             DateTime.Now.AddDays(-10),
             DateTime.Now.AddDays(-5)
         );
-
-        livro.Emprestar(); // importante: marca o livro como emprestado
-        emprestimoAtrasado.FinalizarEmprestimo(DateTime.Now); // devolução atrasada
-
+        // importante: marca o livro como emprestado
+        livro.Emprestar();
+        // devolução atrasada
+        emprestimoAtrasado.RegistrarDevolucao();
+        // Certifica que está realmente atrasado
+        emprestimoAtrasado.EstaAtrasado().Should().BeTrue();
         leitor.RealizarEmprestimo(emprestimoAtrasado); // leitor agora está inadimplente
 
         // Act

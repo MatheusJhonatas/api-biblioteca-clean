@@ -23,7 +23,8 @@ namespace Biblioteca.Domain.Entities
 
         #region Contrutores
         public Livro() : base(Guid.NewGuid()) { }
-        public Livro(string titulo, Autor autor, ISBN isbn, int numeroPaginas, int anoPublicacao, List<Categoria> categorias, string? descricao) : base(Guid.NewGuid())
+        public Livro(string titulo, Autor autor, ISBN isbn, int anoPublicacao, int numeroPaginas, List<Categoria> categorias, string? descricao)
+ : base(Guid.NewGuid())
         {
             Titulo = titulo;
             Autor = autor;

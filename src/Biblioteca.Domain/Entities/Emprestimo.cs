@@ -46,8 +46,8 @@ public class Emprestimo : Entity
 
     public bool EstaAtrasado()
     {
-        var referencia = DataRealDevolucao ?? DateTime.Now.ToBrasiliaTime();
-        return referencia > DataPrevistaDevolucao;
+        var referencia = (DataRealDevolucao ?? DateTime.Now.ToBrasiliaTime()).Date;
+        return referencia > DataPrevistaDevolucao.Date;
     }
 
     public decimal CalcularMulta()

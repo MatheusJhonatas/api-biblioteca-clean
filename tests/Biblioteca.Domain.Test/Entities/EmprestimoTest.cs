@@ -99,7 +99,7 @@ public class EmprestimoTest
         emprestimo.RegistrarDevolucao();
         // Assert é quando verificamos se o resultado é o esperado.
         emprestimo.Status.Should().Be(EStatusEmprestimo.Finalizado);
-        emprestimo.DataRealDevolucao.Value.Date.Should().Be(DateTime.Today.AddDays(8));
+        emprestimo.DataRealDevolucao.Value.Date.Should().Be(DateTime.Today);
         livro.Disponivel.Should().BeTrue();
     }
 

@@ -1,11 +1,24 @@
 using Biblioteca.Domain.Entities;
+using Biblioteca.Domain.Interfaces;
 using System;
 using System.Linq;
 
 namespace Biblioteca.Domain.Services
 {
-    public class EmprestimoService
+    public class EmprestimoService : IEmprestimoService
     {
+
+        public void DevolverLivro(Leitor leitor, Guid emprestimoId)
+        {
+            if (leitor == null) throw new ArgumentNullException(nameof(leitor));
+
+            var emprestimo = leitor.ObterEmprestimoPorId(emprestimoId);
+            if (emprestimo == null)
+                throw new InvalidOperationException("Empréstimo não encontrado.");
+
+            emprestimo.RegistrarDevolucao();
+        }
+
         public Emprestimo RealizarEmprestimo(Leitor leitor, Livro livro)
         {
             if (leitor == null) throw new ArgumentNullException(nameof(leitor));
@@ -30,17 +43,6 @@ namespace Biblioteca.Domain.Services
             livro.Emprestar(); // Marca como indisponível
 
             return emprestimo;
-        }
-
-        public void DevolverLivro(Leitor leitor, Guid emprestimoId)
-        {
-            if (leitor == null) throw new ArgumentNullException(nameof(leitor));
-
-            var emprestimo = leitor.ObterEmprestimoPorId(emprestimoId);
-            if (emprestimo == null)
-                throw new InvalidOperationException("Empréstimo não encontrado.");
-
-            emprestimo.RegistrarDevolucao();
         }
     }
 }

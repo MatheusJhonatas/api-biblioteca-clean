@@ -9,9 +9,9 @@ public class EmprestarLivroUseCase
     private readonly ILeitorRepository _leitorRepo;
     private readonly ILivroRepository _livroRepo;
     private readonly IEmprestimoRepository _emprestimoRepo;
-    private readonly EmprestimoService _emprestimoService;
+    private readonly IEmprestimoService _emprestimoService;
 
-    public EmprestarLivroUseCase(ILeitorRepository leitorRepo, ILivroRepository livroRepo, IEmprestimoRepository emprestimoRepo, EmprestimoService emprestimoService)
+    public EmprestarLivroUseCase(ILeitorRepository leitorRepo, ILivroRepository livroRepo, IEmprestimoRepository emprestimoRepo, IEmprestimoService emprestimoService)
     {
         _leitorRepo = leitorRepo;
         _livroRepo = livroRepo;

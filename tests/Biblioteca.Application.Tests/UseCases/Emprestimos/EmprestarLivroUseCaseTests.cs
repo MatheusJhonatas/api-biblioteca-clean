@@ -64,7 +64,7 @@ namespace Biblioteca.Application.Tests.UseCases.Emprestimos.Leitores
             mockLivroRepo.Setup(r => r.ObterPorIdAsync(It.IsAny<Guid>())).ReturnsAsync(livro);
 
             var mockEmprestimoRepo = new Mock<IEmprestimoRepository>();
-            mockEmprestimoRepo.Setup(r => r.AtualizarAsync(It.IsAny<Emprestimo>())).Returns(Task.CompletedTask);
+            mockEmprestimoRepo.Setup(r => r.SalvarAsync(It.IsAny<Emprestimo>())).Returns(Task.CompletedTask);
 
             var mockEmprestimoService = new Mock<EmprestimoService>();
 
@@ -90,7 +90,7 @@ namespace Biblioteca.Application.Tests.UseCases.Emprestimos.Leitores
 
             mockLeitorRepo.Verify(r => r.ObterPorIdAsync(leitorId), Times.Once);
             mockLivroRepo.Verify(r => r.ObterPorIdAsync(livroId), Times.Once);
-            mockEmprestimoRepo.Verify(r => r.AtualizarAsync(It.IsAny<Emprestimo>()), Times.Once);
+            mockEmprestimoRepo.Verify(r => r.SalvarAsync(It.IsAny<Emprestimo>()), Times.Once);
         }
     }
 }

@@ -1,3 +1,4 @@
+using Biblioteca.Application.DTOs.Requests.Emprestimos;
 using Biblioteca.Application.DTOs.Requests.Livro;
 using Biblioteca.Domain.Interfaces;
 using Biblioteca.Domain.Services;
@@ -7,12 +8,12 @@ public class DevolverLivroUseCase
 {
     private readonly ILeitorRepository _leitorRepo;
     private readonly IEmprestimoRepository _emprestimoRepo;
-    private readonly EmprestimoService _emprestimoService;
+    private readonly IEmprestimoService _emprestimoService;
 
     public DevolverLivroUseCase(
         ILeitorRepository leitorRepo,
         IEmprestimoRepository emprestimoRepo,
-        EmprestimoService emprestimoService)
+        IEmprestimoService emprestimoService)
     {
         _leitorRepo = leitorRepo;
         _emprestimoRepo = emprestimoRepo;

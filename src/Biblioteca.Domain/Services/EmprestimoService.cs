@@ -8,15 +8,14 @@ namespace Biblioteca.Domain.Services
     public class EmprestimoService : IEmprestimoService
     {
 
-        public void DevolverLivro(Leitor leitor, Guid emprestimoId)
+        public void DevolverLivro(Emprestimo emprestimo)
         {
-            if (leitor == null) throw new ArgumentNullException(nameof(leitor));
-
-            var emprestimo = leitor.ObterEmprestimoPorId(emprestimoId);
-            if (emprestimo == null)
-                throw new InvalidOperationException("Empréstimo não encontrado.");
+            if (emprestimo == null) throw new ArgumentNullException(nameof(emprestimo));
 
             emprestimo.RegistrarDevolucao();
+
+            if (!emprestimo.Livro.Disponivel)
+                emprestimo.Livro.Devolver(); // Marca como disponível
         }
 
         public Emprestimo RealizarEmprestimo(Leitor leitor, Livro livro)

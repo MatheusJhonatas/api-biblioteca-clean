@@ -25,14 +25,10 @@ public class DevolverLivroUseCase
     {
         try
         {
-            //buscar o leitor e o empréstimo
-            var leitor = await _leitorRepo.ObterPorIdAsync(request.LeitorId)
-                ?? throw new ArgumentException("Leitor não encontrado.");
-
             var emprestimo = await _emprestimoRepo.ObterPorIdAsync(request.EmprestimoId)
                 ?? throw new ArgumentException("Empréstimo não encontrado.");
             //devolver o livro
-            _emprestimoService.DevolverLivro(leitor, request.EmprestimoId);
+            _emprestimoService.DevolverLivro(emprestimo);
             //atualizar o empréstimo no repositório
             await _emprestimoRepo.AtualizarAsync(emprestimo);
             //retornar sucesso

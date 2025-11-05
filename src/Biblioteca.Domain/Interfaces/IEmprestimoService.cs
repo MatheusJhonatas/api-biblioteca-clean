@@ -5,5 +5,5 @@ namespace Biblioteca.Domain.Interfaces;
 public interface IEmprestimoService
 {
     Emprestimo RealizarEmprestimo(Leitor leitor, Livro livro);
-    void DevolverLivro(Leitor leitor, Guid emprestimoId);
+    void DevolverLivro(Emprestimo emprestimo);
 }

@@ -28,7 +28,10 @@ public class EmprestimoRepository : IEmprestimoRepository
 
     public async Task<Emprestimo> ObterPorIdAsync(Guid id)
     {
-        return await _context.Emprestimos.FindAsync(id);
+        return await _context.Emprestimos
+        .Include(x => x.Livro)
+        .Include(x => x.Leitor)
+        .FirstOrDefaultAsync(e => e.Id == id);
     }
 
 

@@ -1,3 +1,4 @@
+using Biblioteca.Application.DTOs.Requests.Emprestimos;
 using Biblioteca.Application.DTOs.Requests.Livro;
 using Biblioteca.Application.DTOs.Responses;
 using Biblioteca.Application.UseCases.Emprestimos;
@@ -9,11 +10,13 @@ public class EmprestimosController : ControllerBase
 {
     private readonly EmprestarLivroUseCase _emprestimoLivro;
     private readonly ListarEmprestimoUseCase _listarEmprestimo;
+    private readonly DevolverLivroUseCase _devolverLivroUseCase;
 
-    public EmprestimosController(EmprestarLivroUseCase emprestimoLivro, ListarEmprestimoUseCase listarEmprestimo)
+    public EmprestimosController(EmprestarLivroUseCase emprestimoLivro, ListarEmprestimoUseCase listarEmprestimo, DevolverLivroUseCase devolverLivroUseCase)
     {
         _emprestimoLivro = emprestimoLivro;
         _listarEmprestimo = listarEmprestimo;
+        _devolverLivroUseCase = devolverLivroUseCase;
     }
     /// <summary>
     /// Realiza o empréstimo de um livro para um leitor.
@@ -51,6 +54,29 @@ public class EmprestimosController : ControllerBase
         catch (Exception ex)
         {
             return StatusCode(500, ResultResponse<string>.Fail($"Erro interno ao obter empréstimos: {ex.Message}"));
+        }
+    }
+    [HttpPost("v1/emprestimos/devolver/{emprestimoId}")]
+    public async Task<IActionResult> DevolverLivro(
+        Guid emprestimoId,
+        [FromBody] DevolverLivroRequest request)
+    {
+        try
+        {
+            if (!@ModelState.IsValid)
+                return BadRequest(ResultResponse<string>.Fail("Dados da devolução inválidos."));
+
+            if (request.EmprestimoId != emprestimoId)
+                return BadRequest(ResultResponse<string>.Fail("O ID do empréstimo na URL não corresponde ao do corpo da requisição."));
+
+            var resultado = await _devolverLivroUseCase.ExecuteAsync(request);
+            if (!resultado.Success)
+                return BadRequest(resultado);
+            return Ok(resultado);
+        }
+        catch (Exception ex)
+        {
+            return StatusCode(500, ResultResponse<string>.Fail($"Erro interno ao devolver o livro: {ex.Message}"));
         }
     }
 }

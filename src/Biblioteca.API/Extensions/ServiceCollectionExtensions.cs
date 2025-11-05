@@ -26,6 +26,7 @@ namespace Biblioteca.API.Extensions
             services.AddScoped<IEmprestimoRepository, EmprestimoRepository>();
             services.AddScoped<IReservaRepository, ReservaRepository>();
             services.AddScoped<IBibliotecarioRepository, BibliotecarioRepository>();
+            services.AddScoped<IEmprestimoService, EmprestimoService>();
 
             // Serviços de domínio
             services.AddScoped<BibliotecarioService>();
@@ -53,6 +54,7 @@ namespace Biblioteca.API.Extensions
             services.AddScoped<ObterLeitorPorIdUseCase>();
             services.AddScoped<ListarEmprestimoUseCase>();
             services.AddScoped<ListarLivrosEmprestadosUseCase>();
+            services.AddScoped<DevolverLivroUseCase>();
 
             return services;
         }

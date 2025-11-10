@@ -1,0 +1,30 @@
+name: Build and Deploy API
+
+on:
+  push:
+    branches:
+      - main
+      - pre-release
+      - develop
+
+jobs:
+  build-and-push:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v3
+
+      - name: Log in to DigitalOcean Container Registry
+        uses: docker/login-action@v2
+        with:
+          registry: ${{ secrets.DOCR_NAME }}.digitaloceanspaces.com
+          username: ${{ secrets.DO_TOKEN }}
+          password: ${{ secrets.DO_TOKEN }}
+
+      - name: Build Docker image
+        run: |
+          docker build -t ${{ secrets.DOCR_NAME }}/minha-api:${{ github.sha }} .
+
+      - name: Push Docker image
+        run: |
+          docker push ${{ secrets.DOCR_NAME }}/minha-api:${{ github.sha }}

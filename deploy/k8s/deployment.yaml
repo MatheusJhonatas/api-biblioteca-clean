@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
         - name: api-biblioteca
-          image: 509399615146.dkr.ecr.sa-east-1.amazonaws.com/api-biblioteca-clean:latest
+          image: 
           ports:
             - containerPort: 80
           env:
